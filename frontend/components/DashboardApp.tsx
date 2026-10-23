@@ -921,7 +921,20 @@ function ParentDevelopmentReport({ data, child, onGo }: LooseProps) {
   const hasSharedResult = sharedReviews.length > 0 || sharedReports.length > 0;
   return <div className="parent-development-report">
     {sharedReports.map((report) => <section className="panel parent-doctor-summary quarterly-parent-report" key={report.id}><div className="parent-summary-top"><span className="summary-icon"><Icon name="report" size={18} /></span><Pill tone="sage" dot>Laporan ditinjau dokter</Pill><small>{report.periodStart} – {report.periodEnd}</small></div><h2>Ringkasan perkembangan tiga bulanan</h2><p>{report.summary}</p><div className="quarterly-shared-stats"><strong>{report.observationStats?.total_observations || 0} observasi tercatat</strong>{Object.entries(report.observationStats?.by_aspect || {}).map(([aspect, counts]: [string, any]) => <span key={aspect}>{aspect}: {counts.Teramati || 0} teramati · {counts['Belum teramati'] || 0} belum teramati · {counts['Belum ada kesempatan'] || 0} belum ada kesempatan</span>)}</div><div className="parent-summary-boundary"><Icon name="info" size={15} /><span>Jumlah catatan bukan ukuran kemampuan. Ringkasan ini ditinjau dokter; bukan diagnosis atau estimasi usia perkembangan.</span></div></section>)}
-    {sharedReviews.map((item) => <section className="panel parent-doctor-summary" key={item.id}><div className="parent-summary-top"><span className="summary-icon"><Icon name="review" size={18} /></span><Pill tone="sage" dot>Sudah ditinjau dokter</Pill><small>{item.date}</small></div><h2>Ringkasan hasil KPSP</h2><p>{item.note}</p>{item.kpspResult?.result_code && <div className="parent-summary-kpsp"><span className={`review-kpsp-code review-kpsp-${item.kpspResult.result_code.toLowerCase()}`}>{item.kpspResult.result_code}</span><div><small>HASIL SKRINING KPSP · {item.kpspResult.yes_count}/{item.kpspResult.total_items} JAWABAN YA</small><strong>{item.kpspResult.result_label}</strong><p>Hasil skrining, bukan diagnosis. Penjelasan lebih lanjut dapat diberikan dokter saat konsultasi.</p></div></div>}<div className="parent-summary-boundary"><Icon name="info" size={15} /><span>Ringkasan ini bukan diagnosis. Hubungi dokter untuk penjelasan atau konsultasi.</span></div></section>)}
+    {sharedReviews.map((item) => {
+      const result = item.kpspResult || {};
+      const publishedDate = item.publishedAt || item.reviewedAt || item.date;
+      const note = String(item.note || '').trim();
+      return <section className="panel parent-doctor-summary parent-kpsp-report" key={item.id}>
+        <div className="parent-summary-top"><span className="summary-icon"><Icon name="review" size={18} /></span><Pill tone="sage" dot>Dibagikan dokter</Pill><small>{publishedDate || 'Tanggal tidak tersedia'}</small></div>
+        <h2>Hasil skrining KPSP</h2>
+        <p className="parent-report-intro">Hasil pemeriksaan perkembangan {child?.name || 'anak'} yang sudah ditinjau dan dibagikan oleh dokter.</p>
+        <div className="parent-kpsp-meta"><span><small>USIA SAAT SKRINING</small><strong>{item.screeningAgeMonths ?? '—'} bulan</strong></span><span><small>TANGGAL PEMERIKSAAN</small><strong>{item.screeningDate || item.date || '—'}</strong></span><span><small>STATUS</small><strong>Sudah diterbitkan</strong></span></div>
+        {result.result_code && <div className="parent-summary-kpsp"><span className={`review-kpsp-code review-kpsp-${String(result.result_code).toLowerCase()}`}>{result.result_code}</span><div><small>HASIL SKRINING KPSP · {result.yes_count ?? 0}/{result.total_items ?? 0} JAWABAN YA</small><strong>{result.result_label || 'Hasil skrining tersedia'}</strong><p>Hasil ini adalah skrining, bukan diagnosis atau penilaian kecerdasan anak.</p></div></div>}
+        <div className="parent-doctor-note"><small>CATATAN DAN ARAHAN DOKTER</small><p>{note || 'Dokter telah membagikan hasil skrining tanpa catatan tambahan. Silakan tanyakan kepada dokter bila keluarga membutuhkan penjelasan.'}</p></div>
+        <div className="parent-summary-boundary"><Icon name="info" size={15} /><span>Jawaban mentah KPSP tidak ditampilkan untuk menjaga privasi. Hubungi dokter atau tim daycare bila ingin memahami hasil ini lebih lanjut.</span></div>
+      </section>;
+    })}
     {!hasSharedResult && <section className="panel parent-no-summary"><EmptyState icon="growth" title="Belum ada laporan dokter yang dibagikan" detail="Orang tua hanya melihat laporan tiga bulanan dan hasil KPSP setelah ditinjau serta diterbitkan dokter. Observasi internal dan jawaban mentah tidak ditampilkan." action={<Button variant="outline" onClick={() => onGo('messages')}>Tanya tim daycare</Button>} /></section>}
     <section className="parent-ideas-panel gradient-warm-light"><div><Pill tone="warm">Arahan kegiatan</Pill><h2>Saran dari tinjauan dokter</h2><p>Saran khusus hanya muncul jika dokter meninjau dan membagikannya. Sesuaikan kegiatan dengan usia, minat, dan kenyamanan anak.</p></div><div className="parent-idea-list">{ideas.length ? ideas.map((item) => <article key={item.id}><span className="parent-idea-icon"><Icon name="book" size={16} /></span><div><strong>{item.decision}</strong><small>{item.note}</small></div><Pill tone="sage">Dibagikan dokter</Pill></article>) : <p>Belum ada saran personal yang dibagikan untuk profil ini.</p>}</div></section>
     <div className="info-footnote"><Icon name="privacy" size={15} /><span>Akun keluarga tidak menampilkan skor domain, catatan internal, atau data milik anak lain.</span></div>
@@ -1929,6 +1942,8 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
             answered: record.score?.answered_count ?? record.score?.yes_count,
             totalItems: record.score?.total_items,
             date: createdAt,
+            reviewedAt: record.reviewed_at,
+            publishedAt: record.published_at,
             score: record.score,
             sourceVersion: record.source_version,
             backendConnected: true,
@@ -1957,6 +1972,9 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
           assessmentId: item.id,
           screeningMode: item.screeningMode,
           screeningAgeMonths: item.screeningAgeMonths,
+          screeningDate: item.screeningDate,
+          reviewedAt: item.reviewedAt,
+          publishedAt: item.publishedAt,
           kpspResult: item.score,
         }));
         const anyAssessmentSuccess = assessmentResults.some((result) => result.status === 'fulfilled');

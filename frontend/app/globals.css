@@ -1236,6 +1236,15 @@ button.feed-row:hover { background: #fcfaf7; }
 .review-kpsp-result p, .parent-summary-kpsp p { margin: 0; color: #716763; font-size: 9px; }
 .review-kpsp-result em { color: #90634f; font-size: 8px; font-style: normal; }
 .parent-summary-kpsp { max-width: 700px; margin-top: 12px; background: #fbf7f2; }
+.parent-kpsp-report { border-color: #dce6e3; }
+.parent-report-intro { max-width: 760px; }
+.parent-kpsp-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin: 15px 0 4px; }
+.parent-kpsp-meta span { display: flex; flex-direction: column; gap: 4px; padding: 10px 11px; border: 1px solid #ebe4de; border-radius: 10px; background: #fffdfa; }
+.parent-kpsp-meta small, .parent-doctor-note > small { color: #887b72; font-size: 8px; font-weight: 800; letter-spacing: .08em; }
+.parent-kpsp-meta strong { color: #43383a; font-size: 10px; font-weight: 700; }
+.parent-doctor-note { margin-top: 12px; padding: 12px; border: 1px solid #e8dfd8; border-radius: 12px; background: #fffdfa; }
+.parent-doctor-note p { margin: 6px 0 0; color: #665d5b; font-size: 10px; line-height: 1.6; }
+@media (max-width: 700px) { .parent-kpsp-meta { grid-template-columns: 1fr; } }
 .report-published-summary { margin-top: 14px; padding: 13px 15px; border: 1px solid #eae2db; border-radius: 13px; background: #fcfaf7; }
 .report-published-summary h3 { margin: 5px 0; font: 500 16px Georgia,serif; }
 .report-published-summary p { margin: 0 0 5px; color: #6f6661; font-size: 10px; }
