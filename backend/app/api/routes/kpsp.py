@@ -37,10 +37,7 @@ def list_child_assessments(child_id: str, request: Request, user: dict = Depends
     repository = request.app.state.kpsp_repository
     if child_id not in user.get("child_ids", []):
         raise HTTPException(status_code=403, detail="Akun ini tidak memiliki akses ke profil anak tersebut.")
-    if user["role"] == "parent":
-        if child_id not in user.get("child_ids", []):
-            raise HTTPException(status_code=403, detail="Profil anak ini tidak terhubung ke akun keluarga.")
-        records = repository.list_published_for_child(child_id, include_answers=True)
+    def attach_questionnaire(records: list[dict]) -> list[dict]:
         for record in records:
             try:
                 form = get_form(record["screening_age_months"])
@@ -56,9 +53,16 @@ def list_child_assessments(child_id: str, request: Request, user: dict = Depends
                 }
                 for item in form["items"]
             ]
+        return records
+
+    if user["role"] == "parent":
+        if child_id not in user.get("child_ids", []):
+            raise HTTPException(status_code=403, detail="Profil anak ini tidak terhubung ke akun keluarga.")
+        records = repository.list_published_for_child(child_id, include_answers=True)
+        records = attach_questionnaire(records)
     elif user["role"] == "caregiver":
-        # Pengasuh hanya menerima ringkasan setelah dokter meninjau dan menerbitkan.
-        records = repository.list_published_for_child(child_id)
+        # Pengasuh menerima hasil terbitan beserta butir dan jawaban untuk mendukung sesi.
+        records = attach_questionnaire(repository.list_published_for_child(child_id, include_answers=True))
     elif user["role"] == "doctor":
         records = repository.list_for_child(child_id)
     else:
