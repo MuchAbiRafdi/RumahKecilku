@@ -1694,8 +1694,8 @@ function ModalActivityDetail({ item, child, onClose }: LooseProps) {
     {item.durationMinutes && <div className="detail-line"><span>Durasi</span><strong>{item.durationMinutes} menit</strong></div>}
     {item.waterMl != null && <div className="detail-line"><span>Asupan minum tercatat</span><strong>{item.waterMl} ml</strong></div>}
     {item.mood && <div className="detail-line"><span>Suasana hati</span><strong>{item.mood}</strong></div>}
-    <div className="detail-line"><span>Sumber</span><strong>{item.source}</strong></div>
-    <div className="info-footnote"><Icon name="info" size={15} /><span>Catatan ini adalah observasi kegiatan, bukan kesimpulan klinis. Nilai gizi adalah estimasi katalog per porsi, bukan penilaian kebutuhan diet.</span></div><div className="modal-actions"><Button onClick={onClose}>Tutup detail</Button></div>
+    <div className="detail-line"><span>Sumber catatan</span><strong>{item.source}</strong></div>
+    <div className="info-footnote"><Icon name="info" size={15} /><span>Catatan ini adalah observasi kegiatan, bukan kesimpulan klinis.</span></div><div className="modal-actions"><Button onClick={onClose}>Tutup detail</Button></div>
   </ModalShell>;
 }
 
