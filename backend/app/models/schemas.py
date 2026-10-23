@@ -227,6 +227,20 @@ class MilestoneObservationCreate(BaseModel):
         return normalized
 
 
+class StimulationFeedbackCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    activity_id: str = Field(min_length=1, max_length=100)
+    outcome: Literal["tertarik", "sebagian", "menolak", "belum_dicoba"]
+    duration_minutes: int | None = Field(default=None, ge=1, le=180)
+    note: str = Field(default="", max_length=500)
+
+    @field_validator("note")
+    @classmethod
+    def trim_feedback_note(cls, value: str) -> str:
+        return " ".join(value.split())
+
+
 class KpspReviewCreate(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

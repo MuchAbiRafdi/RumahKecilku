@@ -20,6 +20,7 @@ from app.repositories.message_repository import MessageRepository
 from app.repositories.notification_repository import NotificationRepository
 from app.repositories.observation_repository import ObservationRepository
 from app.repositories.sensor_repository import SensorRepository
+from app.repositories.stimulation_repository import StimulationRepository
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DB_PATH = BACKEND_ROOT / "data" / "rumah_kecilku.sqlite3"
@@ -64,6 +65,8 @@ def create_app(database_path: str | Path | None = None) -> FastAPI:
         meal_repository.initialize()
         development_report_repository = DevelopmentReportRepository(db_path)
         development_report_repository.initialize()
+        stimulation_repository = StimulationRepository(db_path)
+        stimulation_repository.initialize()
         if os.name == "posix" and db_path.exists():
             db_path.chmod(0o600)
 
@@ -77,6 +80,7 @@ def create_app(database_path: str | Path | None = None) -> FastAPI:
         app.state.observation_repository = observation_repository
         app.state.meal_repository = meal_repository
         app.state.development_report_repository = development_report_repository
+        app.state.stimulation_repository = stimulation_repository
         yield
 
     docs_enabled = settings.app_env != "production"

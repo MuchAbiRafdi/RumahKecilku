@@ -155,6 +155,8 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .stat-grid { display: grid; gap: 12px; margin: 15px 0 18px; }
 .stat-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .stat-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.stats-grid { display: flex; flex-direction: row; align-items: stretch; gap: 14px; width: 100%; margin: 0 0 14px; }
+.stats-grid > .stat-card { flex: 1 1 0; width: 0; }
 .stat-card { min-width: 0; min-height: 132px; display: flex; flex-direction: column; padding: 14px 15px 11px; text-align: left; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 18px; }
 button.stat-card { cursor: pointer; }
 button.stat-card:hover { border-color: #d2b9ad; background: #fffdfa; }
@@ -879,6 +881,8 @@ button.feed-row:hover { background: #fcfaf7; }
   .sensor-hero { grid-template-columns: 1fr; }
   .sensor-hero-chart { min-height: 200px; }
   .children-layout { grid-template-columns: minmax(0,1fr); }
+  .stats-grid { flex-wrap: wrap; }
+  .stats-grid > .stat-card { flex: 1 1 calc(50% - 7px); width: auto; }
   .method-details { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 
@@ -1354,9 +1358,31 @@ button.feed-row:hover { background: #fcfaf7; }
 .quarterly-shared-stats > strong { color:#4c5e4d; font-size:10px; }
 .quarterly-shared-stats > span { color:#766d68; font-size:8px; }
 .quarterly-parent-report .parent-summary-boundary { margin-top:10px; }
+.personalized-stimulation-panel { margin-top:20px; }
+.stimulation-card-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:16px; }
+.stimulation-card { display:flex; flex-direction:column; gap:10px; padding:15px; border:1px solid #e8ddd5; border-radius:16px; background:linear-gradient(180deg,#fffdf9,#fbf8f3); }
+.stimulation-card-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.stimulation-card-top > small { color:#847972; font-size:8px; text-align:right; }
+.stimulation-card h3 { margin:0; color:#4d3d44; font-family:Georgia,serif; font-size:18px; line-height:1.2; }
+.stimulation-card > p { margin:0; color:#685e5a; font-size:10px; line-height:1.55; }
+.stimulation-reason { display:flex; flex-direction:column; gap:4px; padding:9px; border-radius:10px; background:#f4edf9; color:#5e4b68; font-size:9px; line-height:1.45; }
+.stimulation-reason strong, .stimulation-meta > strong { color:#594a45; font-size:9px; }
+.stimulation-meta { display:grid; grid-template-columns:52px minmax(0,1fr); gap:5px 8px; align-items:start; color:#766b66; font-size:9px; line-height:1.45; }
+.stimulation-meta ol { margin:0; padding-left:17px; }
+.stimulation-feedback { display:flex; flex-direction:column; gap:8px; padding-top:8px; border-top:1px solid #eee5df; }
+.stimulation-feedback .field { gap:4px; }
+.stimulation-feedback .field span { font-size:8px; }
+.stimulation-feedback .btn { align-self:flex-start; }
+.stimulation-history { margin-top:16px; border-top:1px solid #eee5df; padding-top:12px; }
+.stimulation-history summary { cursor:pointer; color:#5c4b55; font-size:10px; font-weight:720; }
+.stimulation-history-list { display:grid; gap:7px; margin-top:10px; }
+.stimulation-history-list > div { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 10px; padding:8px 10px; border-radius:10px; background:#faf7f3; color:#746a65; font-size:9px; }
+.stimulation-history-list strong { color:#57484f; }
+.stimulation-history-list small { grid-column:1 / -1; color:#8b817b; }
 
 @media(max-width:1050px) {
   .quarterly-domain-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .stimulation-card-grid { grid-template-columns:1fr 1fr; }
 }
 @media(max-width:760px) {
   .meal-catalog-grid { grid-template-columns:1fr; }
@@ -1365,6 +1391,9 @@ button.feed-row:hover { background: #fcfaf7; }
 }
 @media(max-width:560px) {
   .local-insight-grid { grid-template-columns:1fr; }
+  .stimulation-card-grid { grid-template-columns:1fr; }
+  .stats-grid { flex-direction: column; }
+  .stats-grid > .stat-card { flex: 1 1 auto; width: auto; }
   .insight-estimate-note { flex-direction:column; }
   .insight-estimate-note > p { text-align:left; }
   .quarterly-domain-grid { grid-template-columns:1fr 1fr; }

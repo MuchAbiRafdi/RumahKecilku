@@ -7,8 +7,9 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request
 
 from app.ai.development_insights import ENGINE_VERSION, build_local_insights, summarize_observations
 from app.ai.mock_activity_model import model_metadata
+from app.ai.personalized_stimulation import load_catalog, recommend_stimulation
 from app.api.dependencies import get_current_user, require_roles
-from app.models.schemas import DevelopmentReportCreate
+from app.models.schemas import DevelopmentReportCreate, StimulationFeedbackCreate
 
 router = APIRouter(prefix="/development", tags=["Development intelligence"])
 LOCAL_TZ = ZoneInfo("Asia/Jakarta")
@@ -88,6 +89,12 @@ def get_local_insights(
     period_start = today - timedelta(days=days - 1)
     observations = request.app.state.observation_repository.list_for_user("caregiver", user.get("child_ids", []))
     child_observations = [item for item in observations if item["child_id"] == child_id]
+    child = next((item for item in request.app.state.auth_repository.list_child_profiles(user["id"], user["role"]) if item["id"] == child_id), None)
+    if child is None:
+        raise HTTPException(status_code=404, detail="Profil anak tidak ditemukan.")
+    feedback = request.app.state.stimulation_repository.list_for_child(child_id)
+    catalog_titles = {item["id"]: item["title"] for item in load_catalog()}
+    feedback = [{**item, "activity_title": catalog_titles.get(item["activity_id"], item["activity_id"])} for item in feedback]
     return {
         "child_id": child_id,
         **build_local_insights(
@@ -96,7 +103,44 @@ def get_local_insights(
             today,
             synthetic_model_enabled=bool(request.app.state.settings.demo_mode),
         ),
+        "personalized_stimulation": recommend_stimulation(child, child_observations, feedback),
+        "stimulation_feedback": feedback,
     }
+
+
+@router.post("/stimulation/{child_id}/feedback", status_code=201)
+def create_stimulation_feedback(
+    child_id: str,
+    payload: StimulationFeedbackCreate,
+    request: Request,
+    user: dict = Depends(require_roles("caregiver")),
+) -> dict:
+    if child_id not in user.get("child_ids", []):
+        raise HTTPException(status_code=403, detail="Akun ini tidak memiliki akses ke profil anak tersebut.")
+    if payload.activity_id not in {item["id"] for item in load_catalog()}:
+        raise HTTPException(status_code=422, detail="Aktivitas stimulasi tidak tersedia di katalog.")
+    feedback = request.app.state.stimulation_repository.create(
+        child_id=child_id,
+        activity_id=payload.activity_id,
+        outcome=payload.outcome,
+        duration_minutes=payload.duration_minutes,
+        note=payload.note,
+        created_by=user["id"],
+    )
+    doctors = request.app.state.auth_repository.get_user_ids_by_role(
+        "doctor",
+        user.get("organization_ids", []),
+    )
+    notifications = request.app.state.notification_repository.create_for_recipients(
+        recipient_ids=doctors,
+        child_id=child_id,
+        category="activity",
+        title="Feedback aktivitas baru",
+        body="Pengasuh menyimpan hasil percobaan aktivitas stimulasi. Buka Saran stimulasi untuk meninjau konteksnya.",
+        created_by=user["id"],
+        dedupe_key=f"stimulation-feedback:{feedback['id']}",
+    )
+    return {"feedback": feedback, "notifications_created": len(notifications)}
 
 
 @router.get("/reports")

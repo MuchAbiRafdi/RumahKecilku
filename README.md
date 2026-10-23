@@ -19,6 +19,8 @@ npm run dev
 
 `npm run dev` menjalankan Next.js pada port `3000` dan FastAPI pada port `8000`. Next.js meneruskan `/api/*` ke backend, default-nya `http://127.0.0.1:8000`. Atur `BACKEND_ORIGIN` bila backend berjalan di alamat berbeda.
 
+Halaman **Saran stimulasi** untuk pengasuh dan dokter menyediakan katalog aktivitas v1 yang disaring berdasarkan usia, aspek pengamatan, keselamatan, dan feedback percobaan sebelumnya. Rekomendasi ini bersifat nonklinis: sistem tidak mendiagnosis, menilai kemampuan, atau menggantikan KPSP/tinjauan dokter. Setelah aktivitas dicoba, pengasuh dapat menyimpan hasil dan catatan singkat agar rekomendasi berikutnya mempertimbangkan riwayat kegiatan.
+
 Perintah verifikasi:
 
 ```bash

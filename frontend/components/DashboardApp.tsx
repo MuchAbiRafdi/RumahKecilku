@@ -262,6 +262,38 @@ function LocalInsightCards({ insights = [], role }: { insights: DashboardRecord[
   </article>)}</div>;
 }
 
+function PersonalizedStimulation({ data, child, onFeedback, onStartActivity, readOnly = false }: LooseProps): React.JSX.Element | null {
+  const bundle = data?.personalized_stimulation;
+  const recommendations = bundle?.recommendations || [];
+  const [selectedOutcome, setSelectedOutcome] = useState<Record<string, string>>({});
+  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [saving, setSaving] = useState('');
+  if (!bundle || !child) return null;
+  const saveFeedback = async (activityId: string) => {
+    const outcome = selectedOutcome[activityId] || 'belum_dicoba';
+    setSaving(activityId);
+    const saved = await onFeedback(child.id, { activity_id: activityId, outcome, duration_minutes: null, note: notes[activityId] || '' });
+    if (saved) {
+      setSelectedOutcome((current) => ({ ...current, [activityId]: '' }));
+      setNotes((current) => ({ ...current, [activityId]: '' }));
+    }
+    setSaving('');
+  };
+  return <section className="panel personalized-stimulation-panel">
+    <CardTitle eyebrow="Katalog aktivitas · v1" title="Saran stimulasi yang lebih personal" action={<Pill tone="plum">{bundle.catalog_count} aktivitas</Pill>} />
+    <p className="page-description">Saran disaring berdasarkan usia, aspek yang belum banyak terdokumentasi, dan feedback kegiatan sebelumnya. Ini ide aktivitas nonklinis, bukan penilaian kemampuan.</p>
+    <div className="stimulation-card-grid">{recommendations.map((item: DashboardRecord) => <article className="stimulation-card" key={item.id}>
+      <div className="stimulation-card-top"><Pill tone="warm">{item.aspect}</Pill><small>{item.duration_minutes} menit · usia {item.min_age_months}–{item.max_age_months} bln</small></div>
+      <h3>{item.title}</h3><p>{item.goal}</p>
+      <div className="stimulation-reason"><strong>Kenapa disarankan</strong><span>{item.reason}</span></div>
+      <div className="stimulation-meta"><strong>Alat</strong><span>{item.materials.join(' · ')}</span><strong>Langkah</strong><ol>{item.steps.map((step: string) => <li key={step}>{step}</li>)}</ol><strong>Keamanan</strong><span>{item.safety}</span></div>
+      {!readOnly && <div className="stimulation-feedback"><div className="button-row"><Button size="small" variant="outline" icon="activity" onClick={() => onStartActivity(item.title)}>Catat kegiatan</Button></div><label className="field"><span>Hasil percobaan</span><select value={selectedOutcome[item.id] || 'belum_dicoba'} onChange={(event) => setSelectedOutcome((current) => ({ ...current, [item.id]: event.target.value }))}><option value="belum_dicoba">Belum dicoba</option><option value="tertarik">Anak tertarik</option><option value="sebagian">Mencoba sebagian</option><option value="menolak">Belum tertarik / menolak</option></select></label><label className="field"><span>Catatan singkat (opsional)</span><input value={notes[item.id] || ''} onChange={(event) => setNotes((current) => ({ ...current, [item.id]: event.target.value }))} placeholder="Contoh: perlu bantuan di awal" maxLength={500} /></label><Button size="small" icon="check" onClick={() => saveFeedback(item.id)} disabled={saving === item.id}>{saving === item.id ? 'Menyimpan…' : 'Simpan feedback'}</Button></div>}
+    </article>)}</div>
+    {data.stimulation_feedback?.length > 0 && <details className="stimulation-history"><summary>Riwayat feedback aktivitas ({data.stimulation_feedback.length})</summary><div className="stimulation-history-list">{data.stimulation_feedback.slice(0, 8).map((entry: DashboardRecord) => <div key={entry.id}><strong>{entry.activity_title || entry.activity_id}</strong><span>{entry.outcome === 'tertarik' ? 'Anak tertarik' : entry.outcome === 'sebagian' ? 'Mencoba sebagian' : entry.outcome === 'menolak' ? 'Belum tertarik / menolak' : 'Belum dicoba'} · {new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium', timeZone: 'Asia/Jakarta' }).format(new Date(entry.created_at))}</span>{entry.note && <small>{entry.note}</small>}</div>)}</div></details>}
+    <div className="quarterly-analytics-note"><Icon name="info" size={15} /><span>{bundle.method} {bundle.boundary}</span></div>
+  </section>;
+}
+
 function SyntheticDemoNotice({ insightMeta }: LooseProps): React.JSX.Element | null {
   if (!insightMeta?.synthetic_observation_count) return null;
   return <div className="synthetic-demo-banner" role="note"><Icon name="info" size={17} /><span><strong>Data sintetis untuk demo saja</strong><small>{insightMeta.synthetic_demo_notice || `${insightMeta.synthetic_observation_count} catatan demo sintetis. Jangan gunakan untuk keputusan klinis atau pelatihan model.`}</small></span></div>;
@@ -1028,7 +1060,7 @@ function SensorPage({ data, role }: LooseProps) {
   );
 }
 
-function RecommendationsPage({ role, data, children, selectedId, setSelectedId, onStartActivity, onNewObservation, onGo, insightLoadState, insightLoadError, insightStatusChildId, onRefreshInsights }: LooseProps) {
+function RecommendationsPage({ role, data, children, selectedId, setSelectedId, onStartActivity, onNewObservation, onGo, insightLoadState, insightLoadError, insightStatusChildId, onRefreshInsights, onFeedback }: LooseProps) {
   const isParent = role === 'parent';
   const child = children.find((entry) => entry.id === selectedId) || children[0];
   const currentInsightMeta = !isParent && data.insightMeta?.child_id === child?.id ? data.insightMeta : null;
@@ -1067,6 +1099,7 @@ function RecommendationsPage({ role, data, children, selectedId, setSelectedId, 
             : <EmptyState icon="child" title="Pilih profil anak" detail="Pilih profil untuk memuat catatan dan saran lokal." />}
       <div className="quarterly-analytics-note"><Icon name="info" size={15} /><span>{currentInsightMeta?.clinical_boundary || 'Saran bukan diagnosis atau skrining. Hitungan catatan bukan ukuran kemampuan; bila ada kekhawatiran, tindak lanjut ditentukan dokter.'}</span></div>
     </section>}
+    {!isParent && currentLoadState === 'ready' && <PersonalizedStimulation data={currentInsightMeta} child={child} onFeedback={onFeedback} onStartActivity={onStartActivity} readOnly={role === 'doctor'} />}
     {(isParent || role === 'doctor') && <section className="panel recommendation-list-panel">
       <CardTitle eyebrow={isParent ? 'Tinjauan dokter yang dibagikan' : 'Rekomendasi tinjauan yang sudah diterbitkan'} title={isParent ? 'Saran yang dibagikan dokter' : 'Saran dokter untuk keluarga'} />
       {published.length ? <div className="recommendation-grid">{published.map((item) => <article className="recommendation-card" key={item.id}>
@@ -1218,7 +1251,7 @@ function MessagesPage({ role, data, children, onAnnounce, onReminder, onSendDire
         </div> : <section className="panel notifications-center-panel"><div className="notification-center-heading"><div><Pill tone="plum" dot>Pemberitahuan tersimpan</Pill><h2>{unreadNotifications ? `${unreadNotifications} belum dibaca` : 'Semua kabar sudah diperiksa'}</h2><small>Daftar diperbarui otomatis saat aplikasi terbuka.</small></div><Button variant={notificationPermission === 'granted' ? 'soft' : 'outline'} size="small" icon="bell" onClick={onRequestBrowserNotifications}>{notificationPermission === 'granted' ? 'Notifikasi browser aktif' : notificationPermission === 'denied' ? 'Izin browser diblokir' : 'Aktifkan notifikasi browser'}</Button></div>
           <div className="notification-delivery-note"><Icon name="info" size={16} /><span>Pemberitahuan dalam aplikasi tersimpan di server dan dipolling saat aplikasi terbuka. Pop-up browser perlu izin; push saat aplikasi tertutup belum dikonfigurasi.</span></div>
           {visibleNotifications.length ? <div className="notification-center-list">{visibleNotifications.map((item) => <article className={`notification-card ${item.readAt ? 'notification-card-read' : 'notification-card-unread'}`} key={item.id}><span className={`notification-card-icon notification-icon-${item.category}`}>{categoryEmoji(item.category)}</span><div className="notification-card-copy"><div className="notification-card-meta"><Pill tone={item.category === 'reminder' ? 'gold' : item.category === 'photo' ? 'plum' : 'sage'}>{categoryLabel(item.category)}</Pill><small>{displayTime(item.createdAt)}</small></div><h3>{item.title}</h3><p>{item.body}</p>{item.dueAt && <small className="notification-due">Jadwal: {displayTime(item.dueAt)}</small>}{item.completedAt && <Pill tone="sage">Selesai</Pill>}
-              <div className="notification-card-actions"><button type="button" className="text-link" onClick={() => onOpenNotification(item)}>{item.category === 'photo' || item.category === 'activity' ? 'Buka catatan' : item.category === 'message' ? 'Buka percakapan' : 'Buka pusat pesan'} <Icon name="arrow" size={14} /></button>{!item.readAt && <button type="button" className="text-link" onClick={() => onMarkNotificationRead(item)}>Tandai dibaca</button>}{item.category === 'reminder' && !item.completedAt && role !== 'doctor' && <button type="button" className="text-link reminder-complete-link" onClick={() => onCompleteReminder(item)}>Tandai selesai</button>}</div>
+              <div className="notification-card-actions"><button type="button" className="text-link" onClick={() => onOpenNotification(item)}>{item.title === 'Feedback aktivitas baru' ? 'Buka saran stimulasi' : item.category === 'photo' || item.category === 'activity' ? 'Buka catatan' : item.category === 'message' ? 'Buka percakapan' : 'Buka pusat pesan'} <Icon name="arrow" size={14} /></button>{!item.readAt && <button type="button" className="text-link" onClick={() => onMarkNotificationRead(item)}>Tandai dibaca</button>}{item.category === 'reminder' && !item.completedAt && role !== 'doctor' && <button type="button" className="text-link reminder-complete-link" onClick={() => onCompleteReminder(item)}>Tandai selesai</button>}</div>
             </div></article>)}</div> : <EmptyState icon="bell" title="Belum ada pemberitahuan tersimpan" detail={isParent ? 'Kabar kegiatan yang dibagikan, pesan, dan pengingat keluarga akan muncul di sini.' : 'Pesan baru, kegiatan terkait profil, dan pengingat akan muncul di sini.'} />}
         </section>}
       </div>
@@ -2000,6 +2033,17 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
 
   const showToast = (message, type = 'success') => { setToastType(type); setToastMessage(message); };
   const closeToast = () => setToastMessage('');
+  const saveStimulationFeedback = async (childId: string, payload: DashboardRecord) => {
+    try {
+      await apiPost(`development/stimulation/${encodeURIComponent(childId)}/feedback`, payload);
+      showToast('Feedback aktivitas tersimpan. Saran berikutnya akan menyesuaikan riwayat ini.');
+      setInsightReloadCount((count) => count + 1);
+      return true;
+    } catch (cause) {
+      showToast(cause instanceof ApiError ? cause.message : 'Feedback belum tersimpan. Coba lagi.', 'error');
+      return false;
+    }
+  };
   const go = (nextSection) => { setSection(nextSection); setMobileOpen(false); setNotificationsOpen(false); };
   const requestBrowserNotifications = async () => {
     if (typeof window === 'undefined' || !('Notification' in window)) {
@@ -2032,6 +2076,12 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
   };
   const openNotification = async (item) => {
     await markNotificationRead(item);
+    if (item.title === 'Feedback aktivitas baru') {
+      if (item.childId) setSelectedId(item.childId);
+      setNotificationsOpen(false);
+      go('recommendations');
+      return;
+    }
     if ((item.category === 'photo' || item.category === 'activity') && item.relatedActivityId) {
       const activity = data.activities.find((entry) => entry.id === item.relatedActivityId);
       if (activity) { setModal({ type: 'activity-detail', item: activity }); setNotificationsOpen(false); return; }
@@ -2518,7 +2568,7 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
       case 'children': return <ChildrenPage role={role} data={data} selectedId={selectedId} setSelectedId={setSelectedId} search={search} onAddChild={() => setModal({ type: 'child' })} onEditChild={(child) => setModal({ type: 'child-edit', child })} onGo={go} onCheckIn={checkInAttendance} onCheckOut={checkOutAttendance} onMarkAttendance={markAttendanceStatus} />;
       case 'development': return <DevelopmentPage role={role} data={data} children={visibleChildren} selectedId={activeChild?.id || 'a'} setSelectedId={setSelectedId} onGo={go} onNewObservation={() => setModal({ type: 'observation' })} onNewQuarterlyReport={() => setModal({ type: 'quarterly-report' })} onPublishQuarterlyReport={publishQuarterlyReport} insightLoadState={activeInsightLoadState} insightLoadError={activeInsightLoadError} onRefreshInsights={refreshInsights} />;
       case 'sensors': return <SensorPage role={role} data={data} />;
-      case 'recommendations': return <RecommendationsPage role={role} data={data} children={visibleChildren} selectedId={activeChild?.id || 'a'} setSelectedId={setSelectedId} onGo={go} onStartActivity={(titleValue) => setModal({ type: 'activity', title: titleValue })} onNewObservation={() => setModal({ type: 'observation' })} insightLoadState={insightLoadState} insightLoadError={insightLoadError} insightStatusChildId={insightStatusChildId} onRefreshInsights={refreshInsights} />;
+      case 'recommendations': return <RecommendationsPage role={role} data={data} children={visibleChildren} selectedId={activeChild?.id || 'a'} setSelectedId={setSelectedId} onGo={go} onStartActivity={(titleValue) => setModal({ type: 'activity', title: titleValue })} onNewObservation={() => setModal({ type: 'observation' })} insightLoadState={insightLoadState} insightLoadError={insightLoadError} insightStatusChildId={insightStatusChildId} onRefreshInsights={refreshInsights} onFeedback={saveStimulationFeedback} />;
       case 'messages': return <MessagesPage role={role} data={data} children={visibleChildren} onAnnounce={() => setModal({ type: 'announcement' })} onReminder={() => setModal({ type: 'reminder' })} onSendDirectMessage={sendDirectMessage} onOpenNotification={openNotification} onMarkNotificationRead={markNotificationRead} onCompleteReminder={completeReminder} onRequestBrowserNotifications={requestBrowserNotifications} notificationPermission={notificationPermission} requestedChildId={messageTarget.childId} requestedContactId={messageTarget.contactId} onTargetConsumed={() => setMessageTarget({ childId: '', contactId: '' })} />;
       case 'reports': return <ReportsPage role={role} data={data} children={visibleChildren} />;
       case 'privacy': return <PrivacyPage role={role} data={data} child={activeChild || data.children[0]} onToggleConsent={toggleConsent} onReset={onReset} />;
