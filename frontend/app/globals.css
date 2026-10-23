@@ -1433,3 +1433,13 @@ button.feed-row:hover { background: #fcfaf7; }
   .guardian-link-actions, .guardian-invitation-actions, .authorized-pickup-row > .btn { justify-content:flex-start; }
   .pickup-handover-form .btn, .authorized-pickup-form .btn { width:100%; }
 }
+/* Caregiver quick templates keep the first action visible without opening a long form. */
+.caregiver-template-panel { margin-top: 18px; }
+.caregiver-template-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.caregiver-template-button { display: flex; min-height: 92px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; padding: 13px 14px; border: 1px solid var(--line, #dce4df); border-radius: 16px; background: #fffdf9; color: var(--ink, #263c43); text-align: left; cursor: pointer; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.caregiver-template-button:hover { transform: translateY(-2px); border-color: #d38d72; box-shadow: 0 8px 20px rgba(55, 67, 64, .08); }
+.caregiver-template-button span { font-size: 20px; }
+.caregiver-template-button strong { font-size: 13px; }
+.caregiver-template-button small { color: #78857f; font-size: 11px; }
+@media (max-width: 900px) { .caregiver-template-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .caregiver-template-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

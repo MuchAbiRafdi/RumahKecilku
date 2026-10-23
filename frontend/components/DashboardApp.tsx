@@ -372,7 +372,7 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
           <Pill tone="warm" dot>Kegiatan di Rumah Kecilku</Pill>
           <h2>Mulai dari kegiatan yang sudah selesai.</h2>
           <p>Pilih satu kegiatan untuk semua anak yang hadir. Catatan khusus hanya dibuat jika ada anak yang perlu diperhatikan.</p>
-          <div className="hero-actions"><Button icon="plus" onClick={onNewActivity}>Catat kegiatan kelas</Button><Button variant="outline" onClick={() => onGo('activities')}>Buka catatan</Button></div>
+          <div className="hero-actions"><Button icon="plus" onClick={() => onNewActivity()}>Catat kegiatan kelas</Button><Button variant="outline" onClick={() => onGo('activities')}>Buka catatan</Button></div>
         </div>
         <div className="care-hero-art" aria-hidden="true">
           <div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" />
@@ -380,6 +380,15 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
           <div className="hero-note hero-note-mini"><span className="mini-icon mini-sage"><Icon name="drop" size={17} /></span><div><strong>Kondisi ruang</strong><small>Belum ada alat terhubung</small></div></div>
           <div className="hero-note hero-note-bubble"><span>{present}</span><small>hadir</small></div>
         </div>
+      </section>
+      <section className="panel caregiver-template-panel">
+        <CardTitle eyebrow="Pencatatan cepat" title="Template kegiatan favorit" action={<Pill tone="sage">1 klik untuk mulai</Pill>} />
+        <div className="caregiver-template-grid">
+          {[
+            ['🍽️', 'Makan & minum'], ['💤', 'Tidur'], ['🧩', 'Bermain'], ['📚', 'Stimulasi'], ['⚠️', 'Catatan khusus anak'],
+          ].map(([emoji, title]) => <button type="button" className="caregiver-template-button" key={title} onClick={() => onNewActivity(title)}><span>{emoji}</span><strong>{title}</strong><small>Mulai catatan</small></button>)}
+        </div>
+        <small className="caregiver-ai-note">Template hanya mengisi nama kegiatan. Pengasuh tetap memilih konteks, anak, dan catatan faktual sebelum menyimpan.</small>
       </section>
       <div className="stat-grid four">
         <StatCard label="Anak hadir" value={`${present}/${data.children.length}`} note="profil anak contoh" icon="child" tone="coral" trend="hari ini" onClick={() => onGo('children')} />
@@ -390,7 +399,7 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
       <section className="caregiver-action-grid">
         <section className="panel caregiver-priority-panel"><CardTitle eyebrow="Perlu perhatian" title="Kasus dan catatan tertunda" action={<Pill tone={specialCases.length ? 'coral' : 'sage'}>{specialCases.length} kasus</Pill>} />
           {specialCases.length ? <div className="caregiver-priority-list">{specialCases.slice(0, 4).map((item) => <button className="caregiver-priority-row" key={item.id} onClick={() => onOpenActivity(item)}><span className="priority-alert-icon">!</span><span><strong>{item.childName || data.children.find((child) => child.id === item.childId)?.name || 'Anak'}</strong><small>{item.title} · {item.note}</small></span><Icon name="chevron" size={16} /></button>)}{repeatedAttention.length > 0 && <small className="caregiver-pattern-note"><Icon name="spark" size={14} />Pola perhatian berulang terdeteksi pada {repeatedAttention.length} profil hari ini. Periksa catatan dan konsultasikan ke dokter bila diperlukan.</small>}</div> : <EmptyState icon="check" title="Tidak ada kasus khusus" detail="Kasus sakit, mood kurang baik, atau kejadian akan muncul di sini." />}
-          {pendingChildren.length > 0 && <button className="caregiver-pending-note" onClick={onNewActivity}><Icon name="info" size={15} />{pendingChildren.length} anak hadir belum punya catatan hari ini · Catat sekarang</button>}
+          {pendingChildren.length > 0 && <button className="caregiver-pending-note" onClick={() => onNewActivity()}><Icon name="info" size={15} />{pendingChildren.length} anak hadir belum punya catatan hari ini · Catat sekarang</button>}
         </section>
         <section className="panel caregiver-ai-summary"><CardTitle eyebrow="Ringkasan catatan" title="Ringkasan hari ini" action={<Pill tone="plum">Bantuan lokal</Pill>} /><p className="caregiver-ai-lead">{dailySummary}</p><div className="caregiver-ai-metrics"><div><strong>{weeklyActivities.length}</strong><small>catatan 2 hari</small></div><div><strong>{specialCases.length}</strong><small>perlu diperiksa</small></div><div><strong>{todayActivities.filter((item) => item.shared).length}</strong><small>sudah dibagikan</small></div></div><small className="caregiver-ai-note">Ringkasan hanya mengelompokkan catatan tersimpan; bukan penilaian perkembangan.</small></section>
       </section>
@@ -406,7 +415,7 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
                 <span className="feed-right"><Pill tone={item.shared ? 'sage' : 'neutral'}>{item.shared ? 'Dibagikan' : 'Belum dibagikan'}</Pill><Icon name="chevron" size={16} /></span>
               </button>;
             })}
-          </div> : <EmptyState title="Belum ada kegiatan yang dicatat" detail="Catatan akan muncul setelah pengasuh menyimpan kegiatan." action={<Button size="small" onClick={onNewActivity}>Catat kegiatan</Button>} />}
+          </div> : <EmptyState title="Belum ada kegiatan yang dicatat" detail="Catatan akan muncul setelah pengasuh menyimpan kegiatan." action={<Button size="small" onClick={() => onNewActivity()}>Catat kegiatan</Button>} />}
         </section>
         <section className="panel task-panel">
           <CardTitle eyebrow="Daftar cek" title="Sebelum pergantian sesi" />
@@ -937,10 +946,17 @@ function QuarterlyReportPanel({ role, reports, observations, child, onCreate, on
 }
 
 function DevelopmentPage({ role, data, children, selectedId, setSelectedId, onGo, onNewObservation, onNewQuarterlyReport, onPublishQuarterlyReport, insightLoadState, insightLoadError, onRefreshInsights, onFeedback, onStartActivity }: LooseProps) {
+  const [period, setPeriod] = useState('90');
   const child = children.find((entry) => entry.id === selectedId) || children[0];
-  const selectedObservations = (data.observations || []).filter((item) => item.childId === child?.id);
-  const selectedActivities = data.activities.filter((item) => item.childId === child?.id);
-  const selectedAssessments = (data.assessments || []).filter((item) => item.childId === child?.id);
+  const periodStart = period === 'all' ? 0 : Date.now() - Number(period) * 24 * 60 * 60 * 1000;
+  const inPeriod = (item) => {
+    const value = item.createdAtIso || item.createdAt || item.created_at || item.date;
+    const timestamp = value ? Date.parse(value) : NaN;
+    return period === 'all' || (Number.isFinite(timestamp) && timestamp >= periodStart);
+  };
+  const selectedObservations = (data.observations || []).filter((item) => item.childId === child?.id && inPeriod(item));
+  const selectedActivities = data.activities.filter((item) => item.childId === child?.id && inPeriod(item));
+  const selectedAssessments = (data.assessments || []).filter((item) => item.childId === child?.id && inPeriod(item));
   const selectedReports = (data.developmentReports || []).filter((item) => item.childId === child?.id);
   const currentInsightMeta = data.insightMeta?.child_id === child?.id ? data.insightMeta : null;
   const currentInsights = currentInsightMeta ? (data.insights || []) : [];
@@ -957,7 +973,7 @@ function DevelopmentPage({ role, data, children, selectedId, setSelectedId, onGo
   }
   return <>
     <PageTitle eyebrow="Skrining & perkembangan anak · analitik per anak" title="Skrining, analitik, dan saran stimulasi" description="Satu halaman untuk melihat hasil KPSP, catatan pengamatan, serta ide kegiatan yang sesuai konteks anak." action={role === 'doctor' ? <Button icon="clipboard" onClick={() => onGo('kpsp')}>Input KPSP</Button> : <Button icon="plus" onClick={onNewObservation}>Catat pengamatan</Button>} />
-    <div className="child-context-row"><span><Icon name="child" size={16} />Profil anak</span><select value={child?.id || ''} onChange={(event) => setSelectedId(event.target.value)} aria-label="Pilih profil anak">{children.map((entry) => <option value={entry.id} key={entry.id}>{entry.name} · {entry.ageMonths} bulan</option>)}</select><span className="context-divider" /><span><Icon name="calendar" size={16} />KPSP diinput dokter sesuai jadwal usia.</span></div>
+    <div className="child-context-row"><span><Icon name="child" size={16} />Profil anak</span><select value={child?.id || ''} onChange={(event) => setSelectedId(event.target.value)} aria-label="Pilih profil anak">{children.map((entry) => <option value={entry.id} key={entry.id}>{entry.name} · {entry.ageMonths} bulan</option>)}</select><span className="context-divider" /><span><Icon name="calendar" size={16} />Rentang data</span><select value={period} onChange={(event) => setPeriod(event.target.value)} aria-label="Pilih rentang analitik"><option value="7">7 hari</option><option value="30">30 hari</option><option value="90">3 bulan</option><option value="all">Semua riwayat</option></select></div>
     <section className="development-hero gradient-lilac"><div className="development-hero-copy"><Pill tone="plum" dot>{child?.name || 'Profil anak'} · {child?.ageMonths ?? '—'} bulan</Pill><h2>{selectedObservations.length ? 'Ringkasan berbasis catatan, tanpa skor perkembangan.' : 'Belum cukup catatan untuk ringkasan individual.'}</h2><p>Catatan diurutkan per aspek. Perubahan jumlah catatan tidak membuktikan kemajuan atau keterlambatan. Hasil KPSP tetap perlu tinjauan dokter.</p><div className="dev-hero-metrics"><div><strong>{selectedObservations.length}</strong><small>pengamatan tersimpan</small></div><span /><div><strong>{selectedAssessments.length}</strong><small>hasil KPSP yang boleh dilihat peran ini</small></div></div></div><div className="development-hero-visual"><div className="dev-chart-label"><span>CAKUPAN OBSERVASI</span><Pill tone="neutral">Data faktual</Pill></div><div className="development-aspect-list">{DEVELOPMENT_ASPECTS.map((aspect) => { const count = selectedObservations.filter((item) => item.aspect === aspect.label).length; return <div className="development-aspect-row" key={aspect.id}><span className={`aspect-status-mark aspect-status-${aspect.color}`}><Icon name={aspect.icon} size={15} /></span><strong>{aspect.label}</strong><span>{count} catatan</span></div>; })}</div><p className="dev-chart-caption">KPSP skrining, bukan diagnosis.</p></div></section>
     <div className="domain-grid">{DEVELOPMENT_ASPECTS.map((aspect) => { const rows = selectedObservations.filter((item) => item.aspect === aspect.label); const observed = rows.filter((item) => item.result === 'Teramati').length; const notObserved = rows.filter((item) => item.result === 'Belum teramati').length; const noOpportunity = rows.filter((item) => item.result === 'Belum ada kesempatan').length; return <article className={`domain-card domain-${aspect.color}`} key={aspect.id}><div className="domain-card-head"><span className={`domain-bullet bullet-${aspect.color}`}><Icon name={aspect.icon} size={17} /></span><Pill tone="neutral">{rows.length} catatan</Pill></div><h3>{aspect.label}</h3><div className="domain-score"><strong>{observed} teramati · {notObserved} belum</strong><span>{noOpportunity} belum ada kesempatan</span></div><div className="domain-evidence-state"><i className={rows.length ? 'evidence-state-present' : ''} />Jumlah catatan tersimpan; bukan skor.</div><div className="domain-card-foot"><span>Tanpa kesimpulan otomatis</span><button className="text-link" onClick={onNewObservation}>Catat observasi <Icon name="arrow" size={14} /></button></div></article>; })}</div>
     <section className="panel local-insights-panel"><CardTitle eyebrow="Insight lokal · tanpa API AI eksternal" title="Saran berbasis catatan pengamatan" action={<Pill tone={currentInsightMeta?.ml_demo_enabled ? 'plum' : 'gold'}>{currentInsightMeta?.ml_demo_enabled ? 'ML demo · data sintetis' : 'Aturan lokal · tanpa model klinis'}</Pill>} /><p>{currentInsightMeta?.method || 'Ringkasan memakai aturan lokal transparan. Model klinis tervalidasi tidak tersedia.'}</p><SyntheticDemoNotice insightMeta={currentInsightMeta} />{insightLoadState === 'ready' ? currentInsights.length ? <LocalInsightCards insights={currentInsights} role={role} /> : <EmptyState icon="spark" title="Belum ada hasil saran" detail="Insight berhasil dimuat, tetapi belum ada aspek yang dapat ditampilkan. Coba muat ulang atau periksa catatan." action={<Button size="small" variant="outline" onClick={onRefreshInsights}>Muat ulang</Button>} /> : insightLoadState === 'error' ? <InsightLoadMessage status="error" error={insightLoadError} onRetry={onRefreshInsights} /> : insightLoadState === 'loading' ? <InsightLoadMessage status="loading" /> : <EmptyState icon="spark" title="Menunggu profil anak" detail="Pilih profil anak untuk memuat catatan dan saran." />}<div className="insight-estimate-note"><span><Pill tone="neutral">Estimasi perkembangan</Pill><strong>Belum dapat dihitung dengan aman</strong></span><p>{currentInsightMeta?.trend_estimate || 'Frekuensi catatan saja tidak cukup untuk mengestimasi perkembangan anak.'}</p></div><div className="quarterly-analytics-note"><Icon name="info" size={15} /><span>{currentInsightMeta?.clinical_boundary || 'Ide aktivitas bukan terapi/diagnosis. Tidak ada estimasi usia perkembangan klinis atau model klinis tervalidasi.'}</span></div></section>
@@ -2579,7 +2595,7 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
           : <ParentNoChildPage onGo={go} />;
         if (role === 'doctor') return <DoctorHome data={data} onGo={go} onOpenReview={(item) => setModal({ type: 'review', item })} />;
         if (role === 'admin') return <AdminHome data={data} onGo={go} />;
-        return <CaregiverHome data={data} onGo={go} onNewActivity={() => setModal({ type: 'activity' })} onOpenActivity={openActivity} onOpenReview={(item) => setModal({ type: 'review', item })} onToggleTask={updateTask} />;
+        return <CaregiverHome data={data} onGo={go} onNewActivity={(title = '') => setModal({ type: 'activity', title })} onOpenActivity={openActivity} onOpenReview={(item) => setModal({ type: 'review', item })} onToggleTask={updateTask} />;
       case 'activities': return <ActivityPage role={role} data={data} children={visibleChildren} search={search} filter={filter} setFilter={setFilter} onOpenActivity={openActivity} onNewActivity={() => setModal({ type: 'activity' })} />;
       case 'meals': return <MealCatalogPage role={role} data={data} onAddMeal={() => setModal({ type: 'meal' })} />;
       case 'children': return <ChildrenPage role={role} data={data} selectedId={selectedId} setSelectedId={setSelectedId} search={search} onAddChild={() => setModal({ type: 'child' })} onEditChild={(child) => setModal({ type: 'child-edit', child })} onGo={go} onCheckIn={checkInAttendance} onCheckOut={checkOutAttendance} onMarkAttendance={markAttendanceStatus} />;
@@ -2591,7 +2607,7 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
       case 'privacy': return <PrivacyPage role={role} data={data} child={activeChild || data.children[0]} onToggleConsent={toggleConsent} onReset={onReset} />;
       case 'queue': return <QueuePage data={data} search={search} onOpenReview={(item) => setModal({ type: 'review', item })} />;
       case 'kpsp': return <KpspWorkspace data={data} children={visibleChildren} onSave={saveKpsp} />;
-      default: return <CaregiverHome data={data} onGo={go} onNewActivity={() => setModal({ type: 'activity' })} onOpenActivity={openActivity} onOpenReview={(item) => setModal({ type: 'review', item })} onToggleTask={updateTask} />;
+      default: return <CaregiverHome data={data} onGo={go} onNewActivity={(title = '') => setModal({ type: 'activity', title })} onOpenActivity={openActivity} onOpenReview={(item) => setModal({ type: 'review', item })} onToggleTask={updateTask} />;
     }
   })();
 
