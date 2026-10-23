@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import base64
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
 from app.ai.messacare import create_activity_announcement
 from app.api.dependencies import require_roles
@@ -36,10 +36,11 @@ def get_activity_photo(
         # Avoid confirming whether an unshared photo exists to an unrelated family account.
         raise HTTPException(status_code=404, detail="Foto tidak ditemukan atau belum dibagikan.")
     content, content_type = image
-    return {
-        "content_type": content_type,
-        "data_url": f"data:{content_type};base64,{base64.b64encode(content).decode('ascii')}",
-    }
+    return Response(
+        content=content,
+        media_type=content_type,
+        headers={"Content-Disposition": "inline"},
+    )
 
 
 @router.post("")

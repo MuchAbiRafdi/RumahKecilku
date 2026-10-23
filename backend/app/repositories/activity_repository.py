@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import hashlib
 import json
 import sqlite3
 from datetime import datetime, timedelta, timezone
@@ -15,6 +16,7 @@ class ActivityRepository:
     def __init__(self, database_path: str | Path) -> None:
         self.database_path = Path(database_path)
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
+        self._normalized_media_cache: dict[str, tuple[bytes, str]] = {}
 
     def _connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(self.database_path, timeout=5)
@@ -141,7 +143,12 @@ class ActivityRepository:
         photo_blob, photo_content_type = self._decode_photo(payload.get("photo_data_url"))
         media_blob, media_content_type = self._decode_photo(payload.get("media_data_url"))
         if media_blob and media_content_type and media_content_type.startswith("video/"):
-            media_blob, media_content_type = normalize_video(media_blob, media_content_type)
+            cache_key = hashlib.sha256(media_blob).hexdigest()
+            cached_media = self._normalized_media_cache.get(cache_key)
+            if cached_media is None:
+                cached_media = normalize_video(media_blob, media_content_type)
+                self._normalized_media_cache[cache_key] = cached_media
+            media_blob, media_content_type = cached_media
         if media_blob:
             photo_blob, photo_content_type = media_blob, media_content_type
         record = {

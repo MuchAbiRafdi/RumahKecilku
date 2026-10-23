@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DEMO_SEED, ROLE_LABELS } from '../lib/demo-data';
 import { Icon } from './icons';
 import KpspWorkspace from './kpsp/KpspWorkspace';
-import { ApiError, apiGet, apiPatch, apiPost, hasSessionToken } from '../lib/api';
+import { ApiError, apiGet, apiGetBlob, apiPatch, apiPost, hasSessionToken } from '../lib/api';
 import { approximateBirthDate, calculateAgeAt, todayIsoDate } from '../lib/kpsp-age';
 import type { AuthUser, DashboardData, DashboardRecord, IconName, Role } from '../lib/types';
 
@@ -1641,11 +1641,12 @@ function ModalReview({ item, child, onSave, onPublish, onClose }: LooseProps) {
 function ActivityPhoto({ item, alt = 'Foto kegiatan tersimpan' }: LooseProps) {
   const [source, setSource] = useState('');
   const [failed, setFailed] = useState(false);
+  useEffect(() => () => { if (source) URL.revokeObjectURL(source); }, [source]);
   useEffect(() => {
     let active = true;
     if (!item?.mediaAvailable && !item?.photoAvailable) { setSource(''); return () => { active = false; }; }
-    apiGet(`activities/${encodeURIComponent(item.id)}/photo`).then((result) => {
-      if (active) setSource(result.data_url || '');
+    apiGetBlob(`activities/${encodeURIComponent(item.id)}/photo`).then((blob) => {
+      if (active) setSource(URL.createObjectURL(blob));
     }).catch(() => { if (active) setFailed(true); });
     return () => { active = false; };
   }, [item?.id, item?.photoAvailable, item?.mediaAvailable]);

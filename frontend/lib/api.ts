@@ -100,6 +100,17 @@ export function apiGet<T = any>(path: string): Promise<T> {
   return request<T>(path, { method: 'GET' });
 }
 
+export async function apiGetBlob(path: string): Promise<Blob> {
+  const normalizedPath = String(path).replace(/^\/+/, '');
+  const sessionToken = getSessionToken();
+  const headers = new Headers();
+  if (sessionToken) headers.set('Authorization', `Bearer ${sessionToken}`);
+  if (sessionToken) headers.set('X-Rumah-Kecilku-Session', sessionToken);
+  const response = await fetch(`${API_BASE}/${normalizedPath}`, { headers, credentials: 'same-origin', cache: 'no-store' });
+  if (!response.ok) throw new ApiError(`Media tidak dapat dimuat (${response.status}).`, response.status);
+  return response.blob();
+}
+
 export function apiPost<T = any>(path: string, body: unknown): Promise<T> {
   return request<T>(path, { method: 'POST', body: JSON.stringify(body) });
 }
