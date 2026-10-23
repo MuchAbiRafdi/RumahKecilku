@@ -3,7 +3,7 @@ from __future__ import annotations
 import base64
 import json
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
@@ -60,6 +60,35 @@ class ActivityRepository:
             connection.execute(
                 "CREATE INDEX IF NOT EXISTS idx_daycare_activity_child_created ON daycare_activities(child_id, created_at DESC)"
             )
+
+    def seed_demo_samples(self) -> int:
+        """Seed synthetic activity history for preview analytics only."""
+        now = datetime.now(timezone.utc).replace(microsecond=0)
+        inserted = 0
+        with self._connect() as connection:
+            for index, child_id in enumerate("abcdefghijklmnop"):
+                special = index in {3, 10}
+                category = "Kejadian" if special else ("Makan & minum" if index % 3 == 0 else "Stimulasi")
+                title = "Kasus khusus perlu diperiksa" if special else ("Waktu makan dan minum" if category == "Makan & minum" else "Permainan sesuai kelompok usia")
+                cursor = connection.execute(
+                    """INSERT OR IGNORE INTO daycare_activities (
+                        id, child_id, child_name, category, title, note, session, time,
+                        share_to_parent, announcement_json, created_by, created_at,
+                        duration_minutes, mood, participation, water_ml, meal_id, meal_servings,
+                        meal_snapshot_json, photo_blob, photo_content_type, media_blob, media_content_type
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL)""",
+                    (
+                        f"demo-activity-{child_id}-1", child_id, "Profil simulasi", category, title,
+                        "DATA SINTETIS DEMO: catatan untuk menguji alur analitik dan bukan catatan anak nyata.",
+                        ("Pagi", "Siang", "Sore")[index % 3], f"{8 + index % 4:02d}:{15 + (index % 3) * 15:02d}",
+                        1 if index == 0 else 0, "demo-caregiver",
+                        (now - timedelta(days=index % 7)).isoformat(timespec="seconds"),
+                        10 + index % 15, "Membutuhkan dukungan" if special else "Tenang",
+                        "Dengan dukungan" if index % 4 == 0 else "Mengamati",
+                    ),
+                )
+                inserted += cursor.rowcount
+        return inserted
 
     @staticmethod
     def _decode_photo(data_url: str | None) -> tuple[bytes | None, str | None]:

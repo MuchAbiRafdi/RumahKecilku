@@ -58,6 +58,24 @@ class ObservationRepository:
             ("demo-observation-c-gross-2", "c", "Motorik kasar", "Bergerak menuju benda pilihan di alas bermain", "Teramati", "Bermain bebas dengan pengasuh", "Bergerak menuju benda pilihan; pengasuh berada dekat untuk mendampingi.", 4, "09:45"),
             ("demo-observation-e-fine-1", "e", "Motorik halus", "Memindahkan benda besar ke wadah", "Belum ada kesempatan", "Sesi membaca dan mendengarkan cerita", "Kegiatan sesi ini tidak memberi kesempatan mengamati perilaku sasaran.", 6, "09:25"),
         )
+        # Add one age-band coverage sample for every synthetic profile so the preview
+        # can exercise analytics and recommendation loading across the full KPSP range.
+        coverage_aspects = ("Motorik kasar", "Motorik halus", "Bahasa", "Sosial-emosional")
+        coverage_samples = tuple(
+            (
+                f"demo-observation-{child_id}-coverage-1",
+                child_id,
+                coverage_aspects[index % len(coverage_aspects)],
+                "Mengikuti kegiatan sesuai kesempatan yang diberikan",
+                "Teramati" if index % 3 else "Belum ada kesempatan",
+                "Sesi simulasi sesuai kelompok usia",
+                "DATA SINTETIS DEMO: perilaku dicatat untuk menguji alur analitik; bukan penilaian kemampuan anak.",
+                index + 1,
+                f"{9 + index % 3:02d}:{15 + index % 4 * 10:02d}",
+            )
+            for index, child_id in enumerate("abcdefghijklmnop")
+        )
+        samples = samples + coverage_samples
         inserted = 0
         with self._connect() as connection:
             for row_id, child_id, aspect, milestone, result, context, note, age_days, time in samples:

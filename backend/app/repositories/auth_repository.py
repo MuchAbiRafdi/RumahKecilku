@@ -15,7 +15,7 @@ DEMO_ACCOUNTS = (
     {"name": "Rani · Pengasuh demo", "email": "pengasuh@rumahkecilku.demo", "role": "caregiver"},
     {"name": "dr. Dita · Dokter demo", "email": "dokter@rumahkecilku.demo", "role": "doctor"},
     {"name": "Admin operasional · demo", "email": "admin@rumahkecilku.demo", "role": "admin"},
-    {"name": "Keluarga Ananda A · demo", "email": "orangtua@rumahkecilku.demo", "role": "parent"},
+    {"name": "Keluarga Irfan · demo", "email": "orangtua@rumahkecilku.demo", "role": "parent"},
 )
 DEMO_ORGANIZATION = {
     "id": "org-demo-rumah-kecilku",
@@ -276,18 +276,38 @@ class AuthRepository:
                         (DEMO_ORGANIZATION["id"], demo_user["id"], demo_user["role"], created_at),
                     )
 
+                # Synthetic preview roster: one profile for every official KPSP age band (3–72 months).
+                # These names and dates are fictional and must never be treated as real child data.
                 demo_children = (
-                    ("a", "Ananda A", "2024-10-15", "Ruang Melati"),
-                    ("b", "Ananda B", "2025-10-15", "Ruang Kenanga"),
-                    ("c", "Ananda C", "2023-10-15", "Ruang Melati"),
-                    ("d", "Ananda D", "2022-10-15", "Ruang Anggrek"),
-                    ("e", "Ananda E", "2024-10-15", "Ruang Kenanga"),
+                    ("a", "Irfan", "2024-10-23", "Ruang Melati"),
+                    ("b", "Rian", "2025-10-23", "Ruang Kenanga"),
+                    ("c", "Raka", "2023-10-23", "Ruang Melati"),
+                    ("d", "Siti", "2022-10-23", "Ruang Anggrek"),
+                    ("e", "Alya", "2026-07-23", "Ruang Kenanga"),
+                    ("f", "Bima", "2026-04-23", "Ruang Melati"),
+                    ("g", "Citra", "2026-01-23", "Ruang Kenanga"),
+                    ("h", "Dafa", "2025-07-23", "Ruang Anggrek"),
+                    ("i", "Elsa", "2025-04-23", "Ruang Melati"),
+                    ("j", "Fajar", "2025-01-23", "Ruang Kenanga"),
+                    ("k", "Gita", "2024-04-23", "Ruang Anggrek"),
+                    ("l", "Hana", "2023-04-23", "Ruang Melati"),
+                    ("m", "Intan", "2022-04-23", "Ruang Kenanga"),
+                    ("n", "Jovan", "2021-10-23", "Ruang Anggrek"),
+                    ("o", "Kirana", "2021-04-23", "Ruang Melati"),
+                    ("p", "Lala", "2020-10-23", "Ruang Kenanga"),
                 )
                 for child_id, child_name, birth_date, room in demo_children:
                     connection.execute(
-                        """INSERT OR IGNORE INTO child_profiles
+                        """INSERT INTO child_profiles
                            (id, organization_id, name, birth_date, room, status, created_at, updated_at)
-                           VALUES (?, ?, ?, ?, ?, 'active', ?, ?)""",
+                           VALUES (?, ?, ?, ?, ?, 'active', ?, ?)
+                           ON CONFLICT(id) DO UPDATE SET
+                               organization_id = excluded.organization_id,
+                               name = excluded.name,
+                               birth_date = excluded.birth_date,
+                               room = excluded.room,
+                               status = 'active',
+                               updated_at = excluded.updated_at""",
                         (child_id, DEMO_ORGANIZATION["id"], child_name, birth_date, room, created_at, created_at),
                     )
 

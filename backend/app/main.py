@@ -44,11 +44,15 @@ def create_app(database_path: str | Path | None = None) -> FastAPI:
 
         repository = KpspRepository(db_path)
         repository.initialize()
+        if settings.demo_sample_data:
+            repository.seed_demo_samples()
         auth_repository = AuthRepository(db_path)
         auth_repository.initialize(include_demo_accounts=settings.demo_mode)
         auth_repository.prune_expired_sessions()
         activity_repository = ActivityRepository(db_path)
         activity_repository.initialize()
+        if settings.demo_sample_data:
+            activity_repository.seed_demo_samples()
         message_repository = MessageRepository(db_path)
         message_repository.initialize()
         notification_repository = NotificationRepository(db_path)

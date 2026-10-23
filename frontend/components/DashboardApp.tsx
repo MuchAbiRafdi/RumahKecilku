@@ -366,6 +366,7 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
   return (
     <>
       <PageTitle eyebrow={dateLabel} title="Ruang kerja pengasuh" description="Selesaikan catatan penting dengan beberapa klik." action={<Button variant="soft" icon="calendar" onClick={() => onGo('children')}>Lihat jadwal anak</Button>} />
+      <div className="demo-data-banner"><Icon name="info" size={16} /><span><strong>Simulasi aktif:</strong> 16 profil sintetis dari usia 3 sampai 72 bulan tersedia untuk menguji alur KPSP, analitik, dan saran stimulasi.</span></div>
       <section className="care-hero gradient-warm">
         <div className="care-hero-copy">
           <Pill tone="warm" dot>Kegiatan di Rumah Kecilku</Pill>

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
@@ -66,6 +66,35 @@ class KpspRepository:
             connection.execute(
                 "CREATE INDEX IF NOT EXISTS idx_kpsp_child_created ON kpsp_assessments(child_id, created_at DESC)"
             )
+
+    def seed_demo_samples(self) -> int:
+        """Seed complete synthetic KPSP submissions for every official age band."""
+        from app.services.kpsp_service import get_form, score_assessment
+
+        now = datetime.now(timezone.utc).replace(microsecond=0)
+        ages = (24, 12, 36, 48, 3, 6, 9, 15, 18, 21, 30, 42, 54, 60, 66, 72)
+        inserted = 0
+        with self._connect() as connection:
+            for index, (child_id, age) in enumerate(zip("abcdefghijklmnop", ages)):
+                form = get_form(age)
+                item_numbers = [int(item["number"]) for item in form["items"]]
+                answers = {number: ("Tidak" if (number + index) % 7 == 0 else "Ya") for number in item_numbers}
+                score = score_assessment(age, answers, "submitted")
+                assessment_id = f"demo-kpsp-{child_id}-{age}"
+                cursor = connection.execute(
+                    """INSERT OR IGNORE INTO kpsp_assessments (
+                        id, child_id, actual_age_months, birth_date, screening_date,
+                        screening_age_months, screening_mode, status, answers_json,
+                        score_json, source_version, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, 'routine', 'submitted', ?, ?, 'KPSP-PDF-SYNTHETIC-DEMO', ?)""",
+                    (
+                        assessment_id, child_id, age, None, now.date().isoformat(), age,
+                        json.dumps(answers, ensure_ascii=False), json.dumps(score, ensure_ascii=False),
+                        (now - timedelta(days=index % 12)).isoformat(timespec="seconds"),
+                    ),
+                )
+                inserted += cursor.rowcount
+        return inserted
 
     def create(self, payload: dict[str, Any], score: dict[str, Any], source_version: str) -> dict[str, Any]:
         assessment_id = f"kpsp-{uuid4().hex[:12]}"

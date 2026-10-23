@@ -180,6 +180,7 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .caregiver-ai-metrics small, .caregiver-ai-note { color: var(--muted); font-size: 11px; }
 .caregiver-ai-note { display: block; margin-top: 14px; line-height: 1.4; }
 .caregiver-pattern-note { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding: 9px 10px; border-radius: 10px; background: #fff6e8; color: #89633c; line-height: 1.4; }
+.demo-data-banner { display: flex; align-items: flex-start; gap: 9px; margin: 14px 0; padding: 12px 14px; border: 1px solid #ead6a2; border-radius: 13px; background: #fff9e9; color: #765b2d; font-size: 12px; line-height: 1.45; }
 .parent-weekly-summary { margin-top: 18px; background: linear-gradient(135deg, #fffaf4, #f6fbf6); }
 .parent-weekly-summary p { margin: 6px 0 12px; color: var(--ink); font-size: 17px; }
 .parent-weekly-summary > small { display: block; margin-top: 10px; color: var(--muted); }
