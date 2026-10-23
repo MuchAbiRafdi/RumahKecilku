@@ -133,6 +133,19 @@ def create_activity(
     notification_repository = request.app.state.notification_repository
     sender = {"id": user["id"], "name": user["name"], "role": user["role"]}
     contacts = auth_repository.get_chat_contacts_for_child(user["id"], payload.child_id)
+    special_case = payload.category == "Kejadian" or payload.mood == "Membutuhkan dukungan"
+    if special_case:
+        doctor_ids = [contact["id"] for contact in contacts if contact["role"] == "doctor"]
+        notification_repository.create_for_recipients(
+            recipient_ids=doctor_ids,
+            child_id=payload.child_id,
+            category="message",
+            title="Kasus khusus perlu diperiksa",
+            body=f"Ada catatan khusus untuk {payload.child_name}: {payload.title}.",
+            created_by=user["id"],
+            dedupe_key=f"special-case:{activity['id']}",
+            related_activity_id=activity["id"],
+        )
     is_photo = bool(payload.photo_data_url)
     is_media = bool(payload.photo_data_url or payload.media_data_url)
     if payload.share_to_parent:

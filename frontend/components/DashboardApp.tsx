@@ -355,18 +355,22 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
   const latest = data.activities.slice(0, 4);
   const todayActivities = data.activities.filter((item) => item.createdAt === shortDateLabel);
   const todayCount = (category: string) => todayActivities.filter((item) => category === 'Makan & minum' ? ['Makan & minum', 'Makan', 'Minum'].includes(item.category) : item.category === category).length;
-  const todayCategories = [['makan', todayCount('Makan')], ['minum', todayCount('Minum')], ['istirahat', todayCount('Tidur')], ['bermain/belajar', todayCount('Bermain') + todayCount('Belajar') + todayCount('Stimulasi')]].filter(([, count]) => count > 0).map(([label, count]) => `${count} ${label}`).join(' · ');
+  const todayCategories = [['makan & minum', todayCount('Makan & minum')], ['istirahat', todayCount('Tidur')], ['bermain/stimulasi', todayCount('Bermain') + todayCount('Belajar') + todayCount('Stimulasi')]].filter(([, count]) => count > 0).map(([label, count]) => `${count} ${label}`).join(' · ');
   const localSummary = todayActivities.length ? `Tersimpan ${todayActivities.length} catatan (${todayCategories || 'kategori lain'}); ${todayActivities.filter((item) => !item.shared).length} belum dibagikan.` : 'Belum ada catatan hari ini; ringkasan menunggu data yang tersimpan.';
+  const specialCases = data.activities.filter((item) => item.createdAt === shortDateLabel && (item.category === 'Kejadian' || item.mood === 'Membutuhkan dukungan'));
+  const pendingChildren = data.children.filter((child) => child.attendance === 'Hadir' && !todayActivities.some((item) => item.childId === child.id));
+  const weeklyActivities = data.activities.filter((item) => item.createdAt === shortDateLabel || item.createdAt === new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).format(new Date(Date.now() - 24 * 60 * 60 * 1000)));
+  const dailySummary = todayActivities.length ? `Hari ini tercatat ${todayActivities.length} kegiatan untuk ${new Set(todayActivities.map((item) => item.childId)).size} anak.` : 'Belum ada cukup catatan untuk membuat ringkasan.';
   const hasSensorReading = Number.isFinite(data.sensor?.temperature) && Number.isFinite(data.sensor?.humidity);
   return (
     <>
-      <PageTitle eyebrow={dateLabel} title="Selamat pagi, tim pengasuh" description="Catatan kecil yang rapi membantu setiap keluarga mengikuti hari anaknya." action={<Button variant="soft" icon="calendar" onClick={() => onGo('children')}>Lihat jadwal anak</Button>} />
+      <PageTitle eyebrow={dateLabel} title="Ruang kerja pengasuh" description="Selesaikan catatan penting dengan beberapa klik." action={<Button variant="soft" icon="calendar" onClick={() => onGo('children')}>Lihat jadwal anak</Button>} />
       <section className="care-hero gradient-warm">
         <div className="care-hero-copy">
           <Pill tone="warm" dot>Kegiatan di Rumah Kecilku</Pill>
           <h2>Mulai dari kegiatan yang sudah selesai.</h2>
-          <p>Catat kegiatan setelah berlangsung. Kabar hanya dikirim ke keluarga saat pengasuh memilih untuk membagikannya.</p>
-          <div className="hero-actions"><Button icon="plus" onClick={onNewActivity}>Catat sesi selesai</Button><Button variant="outline" onClick={() => onGo('sensors')}>Periksa kondisi ruang</Button></div>
+          <p>Pilih satu kegiatan untuk semua anak yang hadir. Catatan khusus hanya dibuat jika ada anak yang perlu diperhatikan.</p>
+          <div className="hero-actions"><Button icon="plus" onClick={onNewActivity}>Catat kegiatan kelas</Button><Button variant="outline" onClick={() => onGo('activities')}>Buka catatan</Button></div>
         </div>
         <div className="care-hero-art" aria-hidden="true">
           <div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" />
@@ -381,6 +385,13 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
         <StatCard label="Tinjauan dokter" value={data.queue.filter((item) => !item.reviewed).length} note="hasil menunggu tinjauan dokter" icon="review" tone="plum" trend="lintas peran" onClick={() => onGo('development')} />
         <StatCard label="Catatan belum dibagikan" value={data.activities.filter((item) => !item.shared).length} note="periksa sebelum akhir sesi" icon="message" tone="gold" trend="tindak lanjut" onClick={() => onGo('activities')} />
       </div>
+      <section className="caregiver-action-grid">
+        <section className="panel caregiver-priority-panel"><CardTitle eyebrow="Perlu perhatian" title="Kasus dan catatan tertunda" action={<Pill tone={specialCases.length ? 'coral' : 'sage'}>{specialCases.length} kasus</Pill>} />
+          {specialCases.length ? <div className="caregiver-priority-list">{specialCases.slice(0, 4).map((item) => <button className="caregiver-priority-row" key={item.id} onClick={() => onOpenActivity(item)}><span className="priority-alert-icon">!</span><span><strong>{item.childName || data.children.find((child) => child.id === item.childId)?.name || 'Anak'}</strong><small>{item.title} · {item.note}</small></span><Icon name="chevron" size={16} /></button>)}</div> : <EmptyState icon="check" title="Tidak ada kasus khusus" detail="Kasus sakit, mood kurang baik, atau kejadian akan muncul di sini." />}
+          {pendingChildren.length > 0 && <button className="caregiver-pending-note" onClick={onNewActivity}><Icon name="info" size={15} />{pendingChildren.length} anak hadir belum punya catatan hari ini · Catat sekarang</button>}
+        </section>
+        <section className="panel caregiver-ai-summary"><CardTitle eyebrow="Ringkasan catatan" title="Ringkasan hari ini" action={<Pill tone="plum">Bantuan lokal</Pill>} /><p className="caregiver-ai-lead">{dailySummary}</p><div className="caregiver-ai-metrics"><div><strong>{weeklyActivities.length}</strong><small>catatan 2 hari</small></div><div><strong>{specialCases.length}</strong><small>perlu diperiksa</small></div><div><strong>{todayActivities.filter((item) => item.shared).length}</strong><small>sudah dibagikan</small></div></div><small className="caregiver-ai-note">Ringkasan hanya mengelompokkan catatan tersimpan; bukan penilaian perkembangan.</small></section>
+      </section>
       <div className="dashboard-grid dashboard-grid-main">
         <section className="panel panel-large">
           <CardTitle eyebrow="Alur hari ini" title="Catatan aktivitas terbaru" action={<button className="text-link" onClick={() => onGo('activities')}>Lihat semua <Icon name="arrow" size={15} /></button>} />
