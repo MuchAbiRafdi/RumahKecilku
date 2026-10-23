@@ -134,16 +134,17 @@ def create_activity(
     sender = {"id": user["id"], "name": user["name"], "role": user["role"]}
     contacts = auth_repository.get_chat_contacts_for_child(user["id"], payload.child_id)
     is_photo = bool(payload.photo_data_url)
+    is_media = bool(payload.photo_data_url or payload.media_data_url)
     if payload.share_to_parent:
         parent_ids = auth_repository.get_parent_user_ids(payload.child_id)
         notifications = notification_repository.create_for_recipients(
             recipient_ids=parent_ids,
             child_id=payload.child_id,
-            category="photo" if is_photo else "activity",
-            title="Foto kegiatan dibagikan" if is_photo else "Catatan kegiatan dibagikan",
+            category="photo" if is_media else "activity",
+            title="Media kegiatan dibagikan" if is_media else "Catatan kegiatan dibagikan",
             body=(
-                "Pengasuh membagikan foto kegiatan. Buka catatan aktivitas untuk melihatnya."
-                if is_photo
+                "Pengasuh membagikan foto atau video kegiatan. Buka catatan aktivitas untuk melihatnya."
+                if is_media
                 else f"Pengasuh membagikan catatan kegiatan: {payload.title}."
             ),
             created_by=user["id"],
@@ -155,7 +156,7 @@ def create_activity(
             sender=sender,
             recipients=contacts,
             text=announcement["text"],
-            kind="Foto kegiatan dibagikan" if is_photo else "Kegiatan dibagikan",
+            kind="Media kegiatan dibagikan" if is_media else "Kegiatan dibagikan",
             related_activity_id=activity["id"],
         )
         for event in chat_events:

@@ -41,12 +41,10 @@ const NAV: Record<Role, NavGroup[]> = {
     { group: 'SmartDayCare AI', items: [
       { id: 'home', label: 'Ringkasan harian', icon: 'home' },
       { id: 'activities', label: 'Catatan harian', icon: 'activity' },
-      { id: 'meals', label: 'Menu & nilai gizi', icon: 'leaf' },
       { id: 'sensors', label: 'Suhu & kelembapan', icon: 'sensor' },
     ] },
-    { group: 'Child Development Intelligence', items: [
-      { id: 'development', label: 'Analitik perkembangan', icon: 'growth' },
-      { id: 'recommendations', label: 'Saran stimulasi', icon: 'book' },
+    { group: 'Skrining & perkembangan anak', items: [
+      { id: 'development', label: 'Skrining & perkembangan', icon: 'growth' },
     ] },
     { group: 'Operasional', items: [
       { id: 'children', label: 'Anak & jadwal', icon: 'child' },
@@ -60,13 +58,11 @@ const NAV: Record<Role, NavGroup[]> = {
   doctor: [
     { group: 'SmartDayCare AI', items: [
       { id: 'activities', label: 'Catatan harian', icon: 'activity' },
-      { id: 'meals', label: 'Katalog menu & gizi', icon: 'leaf' },
     ] },
-    { group: 'Child Development Intelligence', items: [
-      { id: 'development', label: 'Analitik perkembangan', icon: 'growth' },
+    { group: 'Skrining & perkembangan anak', items: [
+      { id: 'development', label: 'Skrining & perkembangan', icon: 'growth' },
       { id: 'queue', label: 'Tinjauan dokter', icon: 'review' },
       { id: 'kpsp', label: 'Input KPSP', icon: 'clipboard' },
-      { id: 'recommendations', label: 'Saran stimulasi', icon: 'book' },
     ] },
     { group: 'Ruang dokter', items: [
       { id: 'home', label: 'Beranda dokter', icon: 'home' },
@@ -78,14 +74,12 @@ const NAV: Record<Role, NavGroup[]> = {
   parent: [
     { group: 'SmartDayCare AI', items: [
       { id: 'activities', label: 'Kegiatan yang dibagikan', icon: 'activity' },
-      { id: 'meals', label: 'Menu & nilai gizi', icon: 'leaf' },
     ] },
-    { group: 'Child Development Intelligence', items: [
-      { id: 'development', label: 'Laporan perkembangan', icon: 'growth' },
+    { group: 'Skrining & perkembangan anak', items: [
+      { id: 'development', label: 'Skrining & perkembangan', icon: 'growth' },
     ] },
     { group: 'Anak & daycare', items: [
       { id: 'home', label: 'Ringkasan hari ini', icon: 'home' },
-      { id: 'recommendations', label: 'Ide stimulasi rumah', icon: 'book' },
       { id: 'messages', label: 'Pesan daycare', icon: 'message' },
       { id: 'reports', label: 'Laporan anak', icon: 'report' },
       { id: 'privacy', label: 'Izin & data saya', icon: 'privacy' },
@@ -95,7 +89,6 @@ const NAV: Record<Role, NavGroup[]> = {
     { group: 'Operasional daycare', items: [
       { id: 'home', label: 'Ringkasan operasional', icon: 'home' },
       { id: 'children', label: 'Daftar anak', icon: 'child' },
-      { id: 'meals', label: 'Katalog menu & gizi', icon: 'leaf' },
       { id: 'sensors', label: 'Sensor ruang', icon: 'sensor' },
     ] },
   ],
@@ -106,7 +99,7 @@ const TITLES: Record<string, string> = {
   activities: 'Catatan harian · SmartDayCare AI',
   meals: 'Menu & nilai gizi · SmartDayCare AI',
   children: 'Anak & jadwal',
-  development: 'Analitik perkembangan · Child Development Intelligence',
+  development: 'Skrining & perkembangan anak',
   sensors: 'Kondisi ruang · SmartDayCare AI',
   recommendations: 'Rencana stimulasi',
   messages: 'Pesan keluarga',
@@ -342,18 +335,16 @@ function AdminHome({ data, onGo }: LooseProps): React.JSX.Element {
   const activeChildren = data.children.filter((child) => child.status !== 'inactive');
   const presentCount = activeChildren.filter((child) => child.attendance === 'Hadir').length;
   return <>
-    <PageTitle eyebrow="Admin operasional · akses minimum" title="Ringkasan operasional daycare" description="Kelola roster, kehadiran, dan katalog menu. Catatan klinis mentah serta jawaban KPSP tidak termasuk akses admin bawaan." />
+    <PageTitle eyebrow="Admin operasional · akses minimum" title="Ringkasan operasional daycare" description="Kelola roster, kehadiran, dan kondisi ruang. Catatan klinis serta jawaban KPSP tidak termasuk akses admin bawaan." />
     <div className="stats-grid">
       <StatCard label="Profil aktif" value={activeChildren.length} note="Dalam daftar daycare ini" icon="child" tone="coral" onClick={() => onGo('children')} />
       <StatCard label="Hadir hari ini" value={presentCount} note="Dari kehadiran tersimpan" icon="check" tone="sage" onClick={() => onGo('children')} />
-      <StatCard label="Pilihan katalog" value={(data.meals || []).length} note="Menu dan sumber yang tersedia" icon="leaf" tone="plum" onClick={() => onGo('meals')} />
     </div>
     <section className="panel" style={{ marginTop: 20 }}>
       <CardTitle eyebrow="Ruang kerja admin" title="Pengelolaan operasional" />
       <p className="page-description">Informasi yang ditampilkan di sini berasal dari roster, kehadiran, dan katalog menu. Data kesehatan atau perkembangan tidak disalin ke ringkasan admin.</p>
       <div className="button-row" style={{ marginTop: 16 }}>
         <Button variant="outline" icon="child" onClick={() => onGo('children')}>Buka daftar anak</Button>
-        <Button variant="outline" icon="leaf" onClick={() => onGo('meals')}>Kelola katalog menu</Button>
       </div>
     </section>
   </>;
@@ -363,7 +354,7 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
   const present = data.children.filter((child) => child.attendance === 'Hadir').length;
   const latest = data.activities.slice(0, 4);
   const todayActivities = data.activities.filter((item) => item.createdAt === shortDateLabel);
-  const todayCount = (category: string) => todayActivities.filter((item) => item.category === category).length;
+  const todayCount = (category: string) => todayActivities.filter((item) => category === 'Makan & minum' ? ['Makan & minum', 'Makan', 'Minum'].includes(item.category) : item.category === category).length;
   const todayCategories = [['makan', todayCount('Makan')], ['minum', todayCount('Minum')], ['istirahat', todayCount('Tidur')], ['bermain/belajar', todayCount('Bermain') + todayCount('Belajar') + todayCount('Stimulasi')]].filter(([, count]) => count > 0).map(([label, count]) => `${count} ${label}`).join(' · ');
   const localSummary = todayActivities.length ? `Tersimpan ${todayActivities.length} catatan (${todayCategories || 'kategori lain'}); ${todayActivities.filter((item) => !item.shared).length} belum dibagikan.` : 'Belum ada catatan hari ini; ringkasan menunggu data yang tersimpan.';
   const hasSensorReading = Number.isFinite(data.sensor?.temperature) && Number.isFinite(data.sensor?.humidity);
@@ -517,12 +508,13 @@ function QueuePreview({ data, pending, onOpenReview }: LooseProps) {
 function ActivityPage({ role, data, children, search, filter, setFilter, onOpenActivity, onNewActivity }: LooseProps) {
   const visibleIds = new Set(children.map((child) => child.id));
   const visible = role === 'parent' ? data.activities.filter((item) => visibleIds.has(item.childId) && item.shared) : data.activities;
-  const filtered = visible.filter((item) => (filter === 'Semua' || item.category === filter) && (!search || `${item.title} ${item.note} ${data.children.find((c) => c.id === item.childId)?.name}`.toLowerCase().includes(search.toLowerCase())));
-  const filters = ['Semua', 'Makan', 'Minum', 'Tidur', 'Stimulasi', 'Bermain', 'Belajar', 'Kesejahteraan', 'Kebersihan', 'Kejadian'];
+  const isMealCategory = (category: string) => category === 'Makan & minum' || category === 'Makan' || category === 'Minum';
+  const filtered = visible.filter((item) => (filter === 'Semua' || (filter === 'Makan & minum' ? isMealCategory(item.category) : item.category === filter)) && (!search || `${item.title} ${item.note} ${data.children.find((c) => c.id === item.childId)?.name}`.toLowerCase().includes(search.toLowerCase())));
+  const filters = ['Semua', 'Makan & minum', 'Tidur', 'Stimulasi', 'Bermain', 'Belajar', 'Kejadian'];
   const todayActivities = data.activities.filter((item) => item.createdAt === shortDateLabel);
   const presentCount = data.children.filter((child) => child.attendance === 'Hadir').length;
   const unsharedCount = todayActivities.filter((item) => !item.shared).length;
-  const categoryCount = (category) => todayActivities.filter((item) => item.category === category).length;
+  const categoryCount = (category) => todayActivities.filter((item) => category === 'Makan & minum' ? isMealCategory(item.category) : item.category === category).length;
   return (
     <>
       <PageTitle eyebrow="SmartDayCare AI · rutinitas dan catatan pengasuh" title={role === 'parent' ? 'Kegiatan yang dibagikan' : 'Pencatatan harian terstruktur'} description={role === 'parent' ? 'Orang tua hanya membaca catatan kegiatan yang dibagikan untuk profil anak yang terhubung.' : 'Catat waktu, sesi, durasi, partisipasi, kebutuhan makan/minum, catatan faktual, dan foto ilustrasi/dummy. Ini bukan penilaian perkembangan.'} action={role !== 'parent' && <Button icon="plus" onClick={onNewActivity}>Catat kegiatan</Button>} />
@@ -535,7 +527,7 @@ function ActivityPage({ role, data, children, search, filter, setFilter, onOpenA
         <div className="table-toolbar"><div><CardTitle eyebrow="Riwayat kegiatan" title="Catatan sesi" /></div><div className="toolbar-actions"><div className="filter-tabs" role="group" aria-label="Filter kategori aktivitas">{filters.map((item) => <button key={item} className={filter === item ? 'filter-active' : ''} onClick={() => setFilter(item)}>{item}</button>)}</div></div></div>
         {filtered.length ? <div className="table-scroll"><table className="data-table"><thead><tr><th>KEGIATAN</th><th>ANAK</th><th>SESI & WAKTU</th><th>SUMBER</th><th>KE KELUARGA</th><th><span className="sr-only">Detail</span></th></tr></thead><tbody>{filtered.map((item) => {
           const child = data.children.find((entry) => entry.id === item.childId);
-          return <tr key={item.id}><td><div className="table-primary"><span className={`table-icon ${item.category === 'Stimulasi' ? 'table-icon-coral' : item.category === 'Tidur' ? 'table-icon-plum' : 'table-icon-sage'}`}><Icon name={item.category === 'Stimulasi' ? 'book' : item.category === 'Tidur' ? 'clock' : 'activity'} size={16} /></span><span><strong>{item.title}</strong><small>{item.category} · {item.note}</small>{item.meal?.nutrition && <small>Gizi tercatat: {item.meal.nutrition.energy_kcal} kkal · protein {item.meal.nutrition.protein_g} g</small>}{item.photoAvailable && <Pill tone="neutral">Foto terlampir</Pill>}</span></div></td><td>{child?.name || 'Profil anak'}</td><td>{item.session}<small className="cell-sub">{item.createdAt} · {item.time}</small></td><td>{item.source}</td><td><Pill tone={item.shared ? 'sage' : 'neutral'} dot>{item.shared ? 'Dibagikan' : 'Belum dibagikan'}</Pill></td><td><button className="icon-button table-more" aria-label={`Lihat catatan ${item.title}`} onClick={() => onOpenActivity(item)}><Icon name="chevron" /></button></td></tr>;
+          return <tr key={item.id}><td><div className="table-primary"><span className={`table-icon ${item.category === 'Stimulasi' ? 'table-icon-coral' : item.category === 'Tidur' ? 'table-icon-plum' : 'table-icon-sage'}`}><Icon name={item.category === 'Stimulasi' ? 'book' : item.category === 'Tidur' ? 'clock' : 'activity'} size={16} /></span><span><strong>{item.title}</strong><small>{item.category} · {item.note}</small>{item.mediaAvailable && <Pill tone="neutral">{item.mediaContentType?.startsWith('video/') ? 'Video terlampir' : 'Foto terlampir'}</Pill>}</span></div></td><td>{child?.name || 'Profil anak'}</td><td>{item.session}<small className="cell-sub">{item.createdAt} · {item.time}</small></td><td>{item.source}</td><td><Pill tone={item.shared ? 'sage' : 'neutral'} dot>{item.shared ? 'Dibagikan' : 'Belum dibagikan'}</Pill></td><td><button className="icon-button table-more" aria-label={`Lihat catatan ${item.title}`} onClick={() => onOpenActivity(item)}><Icon name="chevron" /></button></td></tr>;
         })}</tbody></table></div> : <EmptyState title="Tidak ada catatan pada filter ini" detail="Ubah kategori atau tambahkan catatan sesi baru." action={role !== 'parent' && <Button size="small" onClick={onNewActivity}>Catat sesi selesai</Button>} />}
       </section>
       <div className="info-footnote"><Icon name="info" size={16} /><span>Aktivitas harian menggambarkan konteks pengasuhan. Aktivitas bukan pengganti skrining atau pemeriksaan dokter.</span></div>
@@ -927,7 +919,7 @@ function QuarterlyReportPanel({ role, reports, observations, child, onCreate, on
   </section>;
 }
 
-function DevelopmentPage({ role, data, children, selectedId, setSelectedId, onGo, onNewObservation, onNewQuarterlyReport, onPublishQuarterlyReport, insightLoadState, insightLoadError, onRefreshInsights }: LooseProps) {
+function DevelopmentPage({ role, data, children, selectedId, setSelectedId, onGo, onNewObservation, onNewQuarterlyReport, onPublishQuarterlyReport, insightLoadState, insightLoadError, onRefreshInsights, onFeedback, onStartActivity }: LooseProps) {
   const child = children.find((entry) => entry.id === selectedId) || children[0];
   const selectedObservations = (data.observations || []).filter((item) => item.childId === child?.id);
   const selectedActivities = data.activities.filter((item) => item.childId === child?.id);
@@ -942,16 +934,17 @@ function DevelopmentPage({ role, data, children, selectedId, setSelectedId, onGo
   ].slice(0, 8);
   if (role === 'parent') {
     return <>
-      <PageTitle eyebrow="Child Development Intelligence · laporan keluarga" title="Laporan perkembangan anak" description="Orang tua hanya membaca laporan tiga bulanan dan hasil KPSP setelah ditinjau serta dibagikan dokter. KPSP adalah skrining, bukan diagnosis." />
+      <PageTitle eyebrow="Skrining & perkembangan anak · laporan keluarga" title="Laporan perkembangan anak" description="Ringkasan KPSP dan kegiatan yang telah ditinjau dokter." />
       <ParentDevelopmentReport data={data} child={child} onGo={onGo} />
     </>;
   }
   return <>
-    <PageTitle eyebrow="Child Development Intelligence · analitik per anak" title="Analitik perkembangan individual" description="Gabungkan pengamatan milestone pengasuh, aktivitas, dan hasil KPSP dokter. Angka berikut menunjukkan cakupan catatan—bukan skor, diagnosis, atau estimasi usia perkembangan." action={role === 'doctor' ? <Button icon="clipboard" onClick={() => onGo('kpsp')}>Input KPSP</Button> : <Button icon="plus" onClick={onNewObservation}>Catat milestone</Button>} />
+    <PageTitle eyebrow="Skrining & perkembangan anak · analitik per anak" title="Skrining, analitik, dan saran stimulasi" description="Satu halaman untuk melihat hasil KPSP, catatan pengamatan, serta ide kegiatan yang sesuai konteks anak." action={role === 'doctor' ? <Button icon="clipboard" onClick={() => onGo('kpsp')}>Input KPSP</Button> : <Button icon="plus" onClick={onNewObservation}>Catat pengamatan</Button>} />
     <div className="child-context-row"><span><Icon name="child" size={16} />Profil anak</span><select value={child?.id || ''} onChange={(event) => setSelectedId(event.target.value)} aria-label="Pilih profil anak">{children.map((entry) => <option value={entry.id} key={entry.id}>{entry.name} · {entry.ageMonths} bulan</option>)}</select><span className="context-divider" /><span><Icon name="calendar" size={16} />KPSP diinput dokter sesuai jadwal usia.</span></div>
     <section className="development-hero gradient-lilac"><div className="development-hero-copy"><Pill tone="plum" dot>{child?.name || 'Profil anak'} · {child?.ageMonths ?? '—'} bulan</Pill><h2>{selectedObservations.length ? 'Ringkasan berbasis catatan, tanpa skor perkembangan.' : 'Belum cukup catatan untuk ringkasan individual.'}</h2><p>Catatan diurutkan per aspek. Perubahan jumlah catatan tidak membuktikan kemajuan atau keterlambatan. Hasil KPSP tetap perlu tinjauan dokter.</p><div className="dev-hero-metrics"><div><strong>{selectedObservations.length}</strong><small>pengamatan tersimpan</small></div><span /><div><strong>{selectedAssessments.length}</strong><small>hasil KPSP yang boleh dilihat peran ini</small></div></div></div><div className="development-hero-visual"><div className="dev-chart-label"><span>CAKUPAN OBSERVASI</span><Pill tone="neutral">Data faktual</Pill></div><div className="development-aspect-list">{DEVELOPMENT_ASPECTS.map((aspect) => { const count = selectedObservations.filter((item) => item.aspect === aspect.label).length; return <div className="development-aspect-row" key={aspect.id}><span className={`aspect-status-mark aspect-status-${aspect.color}`}><Icon name={aspect.icon} size={15} /></span><strong>{aspect.label}</strong><span>{count} catatan</span></div>; })}</div><p className="dev-chart-caption">KPSP skrining, bukan diagnosis.</p></div></section>
     <div className="domain-grid">{DEVELOPMENT_ASPECTS.map((aspect) => { const rows = selectedObservations.filter((item) => item.aspect === aspect.label); const observed = rows.filter((item) => item.result === 'Teramati').length; const notObserved = rows.filter((item) => item.result === 'Belum teramati').length; const noOpportunity = rows.filter((item) => item.result === 'Belum ada kesempatan').length; return <article className={`domain-card domain-${aspect.color}`} key={aspect.id}><div className="domain-card-head"><span className={`domain-bullet bullet-${aspect.color}`}><Icon name={aspect.icon} size={17} /></span><Pill tone="neutral">{rows.length} catatan</Pill></div><h3>{aspect.label}</h3><div className="domain-score"><strong>{observed} teramati · {notObserved} belum</strong><span>{noOpportunity} belum ada kesempatan</span></div><div className="domain-evidence-state"><i className={rows.length ? 'evidence-state-present' : ''} />Jumlah catatan tersimpan; bukan skor.</div><div className="domain-card-foot"><span>Tanpa kesimpulan otomatis</span><button className="text-link" onClick={onNewObservation}>Catat observasi <Icon name="arrow" size={14} /></button></div></article>; })}</div>
     <section className="panel local-insights-panel"><CardTitle eyebrow="Insight lokal · tanpa API AI eksternal" title="Saran berbasis catatan pengamatan" action={<Pill tone={currentInsightMeta?.ml_demo_enabled ? 'plum' : 'gold'}>{currentInsightMeta?.ml_demo_enabled ? 'ML demo · data sintetis' : 'Aturan lokal · tanpa model klinis'}</Pill>} /><p>{currentInsightMeta?.method || 'Ringkasan memakai aturan lokal transparan. Model klinis tervalidasi tidak tersedia.'}</p><SyntheticDemoNotice insightMeta={currentInsightMeta} />{insightLoadState === 'ready' ? currentInsights.length ? <LocalInsightCards insights={currentInsights} role={role} /> : <EmptyState icon="spark" title="Belum ada hasil saran" detail="Insight berhasil dimuat, tetapi belum ada aspek yang dapat ditampilkan. Coba muat ulang atau periksa catatan." action={<Button size="small" variant="outline" onClick={onRefreshInsights}>Muat ulang</Button>} /> : insightLoadState === 'error' ? <InsightLoadMessage status="error" error={insightLoadError} onRetry={onRefreshInsights} /> : insightLoadState === 'loading' ? <InsightLoadMessage status="loading" /> : <EmptyState icon="spark" title="Menunggu profil anak" detail="Pilih profil anak untuk memuat catatan dan saran." />}<div className="insight-estimate-note"><span><Pill tone="neutral">Estimasi perkembangan</Pill><strong>Belum dapat dihitung dengan aman</strong></span><p>{currentInsightMeta?.trend_estimate || 'Frekuensi catatan saja tidak cukup untuk mengestimasi perkembangan anak.'}</p></div><div className="quarterly-analytics-note"><Icon name="info" size={15} /><span>{currentInsightMeta?.clinical_boundary || 'Ide aktivitas bukan terapi/diagnosis. Tidak ada estimasi usia perkembangan klinis atau model klinis tervalidasi.'}</span></div></section>
+    {insightLoadState === 'ready' && <PersonalizedStimulation data={currentInsightMeta} child={child} onFeedback={onFeedback} onStartActivity={onStartActivity} readOnly={role === 'doctor'} />}
     <QuarterlyReportPanel role={role} reports={selectedReports} observations={selectedObservations} child={child} onCreate={onNewQuarterlyReport} onPublish={onPublishQuarterlyReport} />
     <div className="dashboard-grid development-lower-grid"><section className="panel evidence-panel"><CardTitle eyebrow="Catatan tersimpan" title="Pengamatan, kegiatan, dan KPSP" />{evidence.length ? <div className="evidence-list">{evidence.map((item) => <div className="evidence-row" key={item.key}><span className="evidence-icon"><Icon name={item.icon} size={16} /></span><div><strong>{item.title}</strong><small>{item.detail}</small></div><time>{item.time}</time></div>)}</div> : <EmptyState icon="activity" title="Belum ada catatan untuk profil ini" detail="Observasi milestone dan KPSP yang tersimpan akan muncul di sini." action={role === 'caregiver' ? <Button variant="outline" size="small" onClick={onNewObservation}>Catat pengamatan</Button> : <Button variant="outline" size="small" onClick={() => onGo('kpsp')}>Buka formulir KPSP</Button>} />}<div className="evidence-footer"><Icon name="info" size={15} /><span>Orang tua dan pengasuh hanya menerima ringkasan KPSP setelah ditinjau dan diterbitkan dokter.</span></div></section><section className="panel review-gate-panel"><Pill tone="plum">Tinjauan dokter</Pill><h3>Laporan dibagikan hanya setelah ditinjau.</h3><p>Orang tua tidak melihat jawaban mentah KPSP atau observasi internal.</p>{role === 'doctor' ? <Button variant="outline" size="small" onClick={() => onGo('queue')}>Buka antrean KPSP</Button> : <Button variant="outline" size="small" onClick={() => onGo('reports')}>Lihat laporan</Button>}</section></div>
   </>;
@@ -1313,6 +1306,8 @@ function PrivacyPage({ role, data, child, onToggleConsent, onReset }: LooseProps
 
 function ModalActivityForm({ children, linkedChildIds = [], initialChildId, initialTitle, meals = [], onSave, onClose }: LooseProps) {
   const [childId, setChildId] = useState(initialChildId || children[0]?.id || 'a');
+  const [logAllChildren, setLogAllChildren] = useState(true);
+  const [specialCase, setSpecialCase] = useState(false);
   const [category, setCategory] = useState('Stimulasi');
   const [title, setTitle] = useState(initialTitle || '');
   const [mealSelections, setMealSelections] = useState([{ mealId: '', servings: '1' }]);
@@ -1323,13 +1318,14 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
   const [mood, setMood] = useState('');
   const [participation, setParticipation] = useState('');
   const [note, setNote] = useState('');
-  const [photoDataUrl, setPhotoDataUrl] = useState('');
-  const [photoName, setPhotoName] = useState('');
-  const [photoConsentConfirmed, setPhotoConsentConfirmed] = useState(false);
+  const [mediaDataUrl, setMediaDataUrl] = useState('');
+  const [mediaName, setMediaName] = useState('');
+  const [mediaType, setMediaType] = useState('');
+  const [mediaConsentConfirmed, setMediaConsentConfirmed] = useState(false);
   const [shared, setShared] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const canShare = linkedChildIds.includes(childId);
+  const canShare = !logAllChildren && linkedChildIds.includes(childId);
   const selectedMeals = mealSelections.map((selection) => ({
     ...selection,
     meal: meals.find((meal) => meal.id === selection.mealId),
@@ -1344,7 +1340,7 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
     total.grams += selection.meal.servingGrams * selection.servings;
     return total;
   }, { energyKcal: 0, proteinG: 0, carbohydrateG: 0, fatG: 0, fiberG: 0, grams: 0 });
-  const canUseMealCatalog = category === 'Makan' && meals.length > 0;
+  const canUseMealCatalog = false;
   const updateMealSelection = (index: number, patch: { mealId?: string; servings?: string }) => {
     const next = mealSelections.map((selection, rowIndex) => rowIndex === index ? { ...selection, ...patch } : selection);
     setMealSelections(next);
@@ -1362,23 +1358,24 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
   const applyQuickActivity = (nextCategory: string, defaultTitle: string) => {
     setCategory(nextCategory);
     setTitle(defaultTitle);
-    if (nextCategory !== 'Makan') setMealSelections([{ mealId: '', servings: '1' }]);
+    if (nextCategory !== 'Makan & minum') setMealSelections([{ mealId: '', servings: '1' }]);
   };
 
-  const handlePhoto = (file) => {
+  const handleMedia = (file) => {
     setError('');
-    setPhotoDataUrl('');
-    setPhotoName('');
-    setPhotoConsentConfirmed(false);
+    setMediaDataUrl('');
+    setMediaName('');
+    setMediaType('');
+    setMediaConsentConfirmed(false);
     if (!file) return;
-    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) { setError('Pilih foto JPEG, PNG, atau WebP.'); return; }
-    if (file.size > 2 * 1024 * 1024) { setError('Ukuran foto maksimal 2 MB.'); return; }
+    if (!['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm', 'video/quicktime'].includes(file.type)) { setError('Pilih foto JPEG/PNG/WebP atau video MP4/WebM/MOV.'); return; }
+    if (file.size > 6 * 1024 * 1024) { setError('Ukuran foto atau video maksimal 6 MB.'); return; }
     const reader = new FileReader();
     reader.onload = () => {
-      if (typeof reader.result === 'string') { setPhotoDataUrl(reader.result); setPhotoName(file.name); }
-      else setError('Foto tidak dapat dibaca. Pilih berkas lain.');
+      if (typeof reader.result === 'string') { setMediaDataUrl(reader.result); setMediaName(file.name); setMediaType(file.type); }
+      else setError('Media tidak dapat dibaca. Pilih berkas lain.');
     };
-    reader.onerror = () => setError('Foto tidak dapat dibaca. Pilih berkas lain.');
+    reader.onerror = () => setError('Media tidak dapat dibaca. Pilih berkas lain.');
     reader.readAsDataURL(file);
   };
 
@@ -1387,38 +1384,37 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
     if (busy) return;
     if (!title.trim() || !note.trim()) { setError('Isi nama kegiatan dan catatan faktual sebelum menyimpan.'); return; }
     if (canUseMealCatalog && !selectedMeals.length) { setError('Pilih setidaknya satu bahan dari katalog agar nilai gizi dapat dihitung.'); return; }
-    if (photoDataUrl && !photoConsentConfirmed) { setError('Konfirmasi privasi foto sebelum menyimpan.'); return; }
+    if (mediaDataUrl && !mediaConsentConfirmed) { setError('Konfirmasi privasi media sebelum menyimpan.'); return; }
     setBusy(true);
     setError('');
     try {
       await onSave({
-        childId, category, title: title.trim(), session, time, note: note.trim(), shared,
+        childId, childIds: specialCase || !logAllChildren ? [childId] : children.map((child) => child.id), category, title: title.trim(), session, time, note: note.trim(), shared,
         mealItems: selectedMeals.map((selection) => ({ mealId: selection.mealId, servings: selection.servings })), 
         durationMinutes: durationMinutes ? Number(durationMinutes) : null,
         waterMl: waterMl ? Number(waterMl) : null,
         mood: mood || null, participation: participation || null,
-        photoDataUrl: photoDataUrl || null, photoConsentConfirmed,
+        mediaDataUrl: mediaDataUrl || null, mediaConsentConfirmed, specialCase,
       });
     } finally { setBusy(false); }
   };
   return <ModalShell title="Catat kegiatan harian" subtitle="Isi konteks kegiatan yang sudah berlangsung. Catatan dan foto tidak membuat penilaian perkembangan otomatis." onClose={onClose} width="wide">
     <form className="modal-form" onSubmit={submit}>
-      <div className="quick-log-strip" role="group" aria-label="Pilih alur pencatatan cepat"><span>Catat cepat</span>{[['🍽️', 'Makan', 'Makan'], ['🥤', 'Minum', 'Minum'], ['💤', 'Tidur', 'Tidur'], ['🧩', 'Bermain', 'Bermain'], ['📚', 'Stimulasi', 'Stimulasi']].map(([emoji, label, nextCategory]) => <button type="button" key={label} className={category === nextCategory ? 'quick-log-active' : ''} onClick={() => applyQuickActivity(nextCategory, label)}><span>{emoji}</span>{label}</button>)}</div>
+      <div className="quick-log-strip" role="group" aria-label="Pilih alur pencatatan cepat"><span>Catat cepat</span>{[['🍽️', 'Makan & minum', 'Makan & minum'], ['💤', 'Tidur', 'Tidur'], ['🧩', 'Bermain', 'Bermain'], ['📚', 'Stimulasi', 'Stimulasi'], ['⚠️', 'Kejadian khusus', 'Kejadian']].map(([emoji, label, nextCategory]) => <button type="button" key={label} className={category === nextCategory ? 'quick-log-active' : ''} onClick={() => applyQuickActivity(nextCategory, label)}><span>{emoji}</span>{label}</button>)}</div>
+      <section className="activity-target-panel field-full"><strong>Siapa yang dicatat?</strong><label className="quick-choice"><input type="checkbox" checked={logAllChildren && !specialCase} onChange={(event) => { setLogAllChildren(event.target.checked); if (event.target.checked) setSpecialCase(false); }} /> Semua anak yang hadir</label><label className="quick-choice"><input type="checkbox" checked={specialCase} onChange={(event) => { setSpecialCase(event.target.checked); if (event.target.checked) { setLogAllChildren(false); setCategory('Kejadian'); setTitle('Catatan khusus anak'); } }} /> Kasus khusus satu anak (mood kurang baik, sakit, atau kejadian)</label>{(specialCase || !logAllChildren) && <label className="field"><span>Pilih anak</span><select value={childId} onChange={(event) => setChildId(event.target.value)}>{children.map((child) => <option key={child.id} value={child.id}>{child.name} · {child.ageMonths} bulan</option>)}</select></label>}{logAllChildren && !specialCase && <small>Kegiatan umum akan dibuat otomatis untuk semua anak dalam satu kali simpan.</small>}</section>
       <div className="form-grid">
-        <label className="field"><span>Profil anak</span><select value={childId} onChange={(event) => setChildId(event.target.value)}>{children.map((child) => <option key={child.id} value={child.id}>{child.name} · {child.ageMonths} bulan</option>)}</select></label>
-        <label className="field"><span>Kategori sesi</span><select value={category} onChange={(event) => { setCategory(event.target.value); if (event.target.value !== 'Makan') setMealSelections([{ mealId: '', servings: '1' }]); }}>{['Makan', 'Minum', 'Tidur', 'Stimulasi', 'Bermain', 'Belajar', 'Kesejahteraan', 'Kebersihan', 'Kejadian'].map((item) => <option key={item}>{item}</option>)}</select></label>
+        <label className="field"><span>Kategori sesi</span><select value={category} onChange={(event) => { setCategory(event.target.value); if (event.target.value !== 'Makan & minum') setMealSelections([{ mealId: '', servings: '1' }]); }}>{['Makan & minum', 'Tidur', 'Stimulasi', 'Bermain', 'Belajar', 'Kejadian'].map((item) => <option key={item}>{item}</option>)}</select></label>
         {canUseMealCatalog && <section className="meal-builder field-full"><div className="meal-builder-heading"><div><strong>Pilih bahan yang disajikan</strong><small>Tambahkan beberapa pilihan, misalnya nasi + sayur. Nilai dijumlahkan dari porsi katalog.</small></div><Pill tone="sage">{meals.length} pilihan</Pill></div><div className="meal-selection-list">{mealSelections.map((selection, index) => <div className="meal-selection-row" key={`meal-${index}`}><label className="field"><span>{index === 0 ? 'Pilih menu bergizi' : `Bahan tambahan ${index + 1}`}</span><select value={selection.mealId} aria-label={index === 0 ? 'Pilih menu bergizi' : `Pilih bahan tambahan ${index + 1}`} onChange={(event) => updateMealSelection(index, { mealId: event.target.value })}><option value="">Pilih dari katalog dokter</option>{meals.map((meal) => <option value={meal.id} key={meal.id} disabled={mealSelections.some((other, otherIndex) => otherIndex !== index && other.mealId === meal.id)}>{meal.name} · {meal.energyKcal} kkal / {meal.servingLabel}</option>)}</select></label><label className="field meal-quantity-field"><span>Jumlah porsi</span><input aria-label={`Jumlah porsi bahan ${index + 1}`} type="number" min="0.25" max="5" step="0.25" value={selection.servings} onChange={(event) => updateMealSelection(index, { servings: event.target.value })} /></label>{mealSelections.length > 1 && <button type="button" className="icon-button meal-remove-button" aria-label={`Hapus bahan ${index + 1}`} onClick={() => removeMealSelection(index)}><Icon name="close" size={15} /></button>}</div>)}</div><div className="meal-builder-actions"><button type="button" className="text-link" onClick={() => setMealSelections((current) => current.length < 8 ? [...current, { mealId: '', servings: '1' }] : current)} disabled={mealSelections.length >= 8}>＋ Tambah bahan</button><span>Contoh porsi total: {mealTotals.grams.toLocaleString('id-ID', { maximumFractionDigits: 1 })} g</span></div><div className="field meal-selected-summary"><span>Perkiraan total gizi dari pilihan di atas</span>{selectedMeals.length ? <small>{mealTotals.energyKcal.toFixed(1)} kkal · protein {mealTotals.proteinG.toFixed(2)} g · karbohidrat {mealTotals.carbohydrateG.toFixed(2)} g · lemak {mealTotals.fatG.toFixed(2)} g · serat {mealTotals.fiberG.toFixed(2)} g</small> : <small>Pilih satu atau beberapa bahan untuk melihat perhitungan per porsi.</small>}</div><div className="meal-builder-note"><Icon name="info" size={14} />Tidak menghitung minyak, saus, bumbu, atau perubahan akibat cara memasak yang tidak tercantum pada katalog.</div></section>}
-        <label className="field"><span>Nama kegiatan</span><input value={title} onChange={(event) => setTitle(event.target.value)} placeholder={category === 'Makan' ? 'Contoh: makan siang' : 'Contoh: membaca bersama'} /></label>
+        <label className="field"><span>Nama kegiatan</span><input value={title} onChange={(event) => setTitle(event.target.value)} placeholder={category === 'Makan & minum' ? 'Contoh: makan siang dan minum' : 'Contoh: membaca bersama'} /></label>
         <label className="field"><span>Waktu selesai</span><input type="time" value={time} onChange={(event) => setTime(event.target.value)} /></label>
         <label className="field"><span>Sesi</span><select value={session} onChange={(event) => setSession(event.target.value)}>{['Pagi', 'Siang', 'Sore'].map((item) => <option key={item}>{item}</option>)}</select></label>
         <label className="field"><span>Durasi (menit, opsional)</span><input type="number" min="1" max="720" step="1" value={durationMinutes} onChange={(event) => setDurationMinutes(event.target.value)} placeholder={category === 'Tidur' ? 'Lama istirahat' : '—'} /></label>
-        {category === 'Minum' && <label className="field"><span>Jumlah minum (ml, opsional)</span><input type="number" min="0" max="3000" step="10" value={waterMl} onChange={(event) => setWaterMl(event.target.value)} placeholder="Misalnya 120" /></label>}
+        {category === 'Makan & minum' && <label className="field"><span>Jumlah minum (ml, opsional)</span><input type="number" min="0" max="3000" step="10" value={waterMl} onChange={(event) => setWaterMl(event.target.value)} placeholder="Misalnya 120" /></label>}
         <div className="field field-full mood-field"><span>Suasana hati (opsional)</span><div className="emoji-choice-row" role="group" aria-label="Suasana hati (opsional)">{[{ value: 'Senang', emoji: '😊', label: 'Senang' }, { value: 'Tenang', emoji: '😌', label: 'Tenang' }, { value: 'Membutuhkan dukungan', emoji: '🥺', label: 'Butuh dukungan' }, { value: '', emoji: '😐', label: 'Belum dicatat' }].map((item) => <button type="button" key={item.label} className={mood === item.value && (item.value || !mood) ? 'emoji-choice emoji-choice-active' : 'emoji-choice'} aria-pressed={mood === item.value && Boolean(item.value || !mood)} onClick={() => setMood(item.value)}><span>{item.emoji}</span><small>{item.label}</small></button>)}</div><small className="field-helper">Pilih hanya suasana yang benar-benar diamati saat kegiatan.</small></div>
         <div className="field field-full participation-field"><span>Partisipasi (opsional)</span><div className="quick-choice-row" role="group" aria-label="Partisipasi dalam kegiatan">{[{ value: 'Mandiri', label: 'Mandiri' }, { value: 'Dengan dukungan', label: 'Dengan dukungan' }, { value: 'Mengamati', label: 'Mengamati' }, { value: '', label: 'Belum dicatat' }].map((item) => <button type="button" key={item.label} className={participation === item.value && (item.value || !participation) ? 'quick-choice quick-choice-active' : 'quick-choice'} aria-pressed={participation === item.value && Boolean(item.value || !participation)} onClick={() => setParticipation(item.value)}>{item.label}</button>)}</div></div>
       </div>
-      {category === 'Makan' && !meals.length && <div className="form-hint"><Icon name="leaf" size={15} />Katalog belum tersedia. Catatan makan tetap dapat disimpan sebagai teks, tetapi nilai gizinya tidak dihitung. Dokter dapat menambahkan menu di halaman Menu & nilai gizi.</div>}
       <label className="field"><span>Catatan faktual (wajib)</span><textarea rows={3} value={note} onChange={(event) => setNote(event.target.value)} placeholder="Tulis apa yang disajikan/dilakukan dan respons yang benar-benar terlihat; hindari label atau kesimpulan klinis." /></label>
-      <section className="photo-upload-panel"><label className="field"><span>Foto kegiatan (opsional, maks. 2 MB)</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => handlePhoto(event.target.files?.[0])} /></label><p>Foto disimpan di basis data versi uji dan aksesnya mengikuti sesi serta izin berbagi catatan; penyimpanan belum terenkripsi untuk penggunaan produksi. Pada versi uji ini, gunakan hanya gambar dummy/ilustrasi—jangan unggah foto anak nyata.</p>{photoDataUrl && <div className="photo-upload-preview"><img src={photoDataUrl} alt="Pratinjau gambar yang dipilih" /><span>{photoName}</span><button type="button" className="text-link" onClick={() => { setPhotoDataUrl(''); setPhotoName(''); setPhotoConsentConfirmed(false); }}>Hapus foto</button></div>}{photoDataUrl && <label className="photo-consent"><input type="checkbox" checked={photoConsentConfirmed} onChange={(event) => setPhotoConsentConfirmed(event.target.checked)} /><span>Saya memahami bahwa foto adalah data sensitif, memiliki persetujuan yang sesuai, dan hanya memakai gambar dummy/ilustrasi pada versi uji.</span></label>}</section>
+      <section className="photo-upload-panel"><label className="field"><span>Foto atau video kegiatan (opsional, maks. 6 MB)</span><input type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" onChange={(event) => handleMedia(event.target.files?.[0])} /></label><p>Gunakan media dummy/ilustrasi pada versi uji. Media mengikuti hak akses catatan dan hanya dibagikan jika Anda memilih berbagi.</p>{mediaDataUrl && <div className="photo-upload-preview">{mediaType.startsWith('video/') ? <video src={mediaDataUrl} controls aria-label="Pratinjau video kegiatan" /> : <img src={mediaDataUrl} alt="Pratinjau foto kegiatan" />}<span>{mediaName}</span><button type="button" className="text-link" onClick={() => { setMediaDataUrl(''); setMediaName(''); setMediaType(''); setMediaConsentConfirmed(false); }}>Hapus media</button></div>}{mediaDataUrl && <label className="photo-consent"><input type="checkbox" checked={mediaConsentConfirmed} onChange={(event) => setMediaConsentConfirmed(event.target.checked)} /><span>Saya memahami bahwa media adalah data sensitif dan hanya memakai gambar/video dummy pada versi uji.</span></label>}</section>
       <label className={`share-checkbox ${!canShare ? 'share-checkbox-disabled' : ''}`}><input type="checkbox" checked={shared} disabled={!canShare} onChange={(event) => setShared(event.target.checked)} /><span className="share-checkbox-copy"><strong>Bagikan catatan ini ke keluarga</strong><small>{canShare ? 'Foto dan kabar mengikuti status berbagi; hasil perkembangan tidak ikut terkirim.' : 'Belum ada akun keluarga yang terhubung ke profil ini.'}</small></span></label>
       {error && <div className="form-error" role="alert">{error}</div>}
       <div className="modal-actions"><Button variant="outline" onClick={onClose} disabled={busy}>Batal</Button><Button type="submit" icon="check" disabled={busy}>{busy ? 'Menyimpan catatan…' : 'Simpan catatan kegiatan'}</Button></div>
@@ -1619,15 +1615,15 @@ function ActivityPhoto({ item, alt = 'Foto kegiatan tersimpan' }: LooseProps) {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     let active = true;
-    if (!item?.photoAvailable) { setSource(''); return () => { active = false; }; }
+    if (!item?.mediaAvailable && !item?.photoAvailable) { setSource(''); return () => { active = false; }; }
     apiGet(`activities/${encodeURIComponent(item.id)}/photo`).then((result) => {
       if (active) setSource(result.data_url || '');
     }).catch(() => { if (active) setFailed(true); });
     return () => { active = false; };
-  }, [item?.id, item?.photoAvailable]);
-  if (!item?.photoAvailable) return null;
-  if (failed) return <div className="activity-photo-fallback">Foto tidak dapat dimuat untuk akun ini.</div>;
-  return source ? <figure className="activity-photo-preview"><img src={source} alt={alt} /><figcaption>Foto privat · akses mengikuti hak catatan kegiatan</figcaption></figure> : <div className="activity-photo-fallback">Memuat foto dengan sesi akun…</div>;
+  }, [item?.id, item?.photoAvailable, item?.mediaAvailable]);
+  if (!item?.mediaAvailable && !item?.photoAvailable) return null;
+  if (failed) return <div className="activity-photo-fallback">Media tidak dapat dimuat untuk akun ini.</div>;
+  return source ? <figure className="activity-photo-preview">{item.mediaContentType?.startsWith('video/') ? <video src={source} controls aria-label={alt} /> : <img src={source} alt={alt} />}<figcaption>Media privat · akses mengikuti hak catatan kegiatan</figcaption></figure> : <div className="activity-photo-fallback">Memuat media dengan sesi akun…</div>;
 }
 
 function ModalActivityDetail({ item, child, onClose }: LooseProps) {
@@ -1806,6 +1802,8 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
           mealServings: record.meal_servings,
           meal: record.meal,
           photoAvailable: record.photo_available,
+          mediaAvailable: record.media_available,
+          mediaContentType: record.media_content_type,
         })) : null;
         const observations = observationPayload ? (observationPayload.observations || []).map((record) => ({
           id: record.id,
@@ -2199,11 +2197,13 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
   };
 
   const saveActivity = async (payload) => {
-    const child = data.children.find((item) => item.id === payload.childId);
-    let result;
+    const childIds = payload.childIds?.length ? payload.childIds : [payload.childId];
+    const savedItems = [];
     try {
-      result = await apiPost('activities', {
-        child_id: payload.childId,
+      for (const childId of childIds) {
+        const child = data.children.find((item) => item.id === childId);
+        const result = await apiPost('activities', {
+        child_id: childId,
         child_name: child?.name || 'Profil anak',
         category: payload.category,
         title: payload.title,
@@ -2216,43 +2216,31 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
         participation: payload.participation,
         water_ml: payload.waterMl,
         meal_items: (payload.mealItems || []).map((item) => ({ meal_id: item.mealId, servings: item.servings })),
-        photo_data_url: payload.photoDataUrl,
-        photo_consent_confirmed: payload.photoConsentConfirmed,
-      });
+        media_data_url: payload.mediaDataUrl,
+        media_consent_confirmed: payload.mediaConsentConfirmed,
+        });
+        const record = result.activity;
+        const createdAt = record.created_at
+          ? new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).format(new Date(record.created_at))
+          : shortDateLabel;
+        savedItems.push({
+          id: record.id, childId: record.child_id, category: record.category, title: record.title,
+          note: record.note, session: record.session, time: record.time, shared: record.shared,
+          source: 'Pengasuh', createdAt, announcement: record.announcement,
+          durationMinutes: record.duration_minutes, mood: record.mood, participation: record.participation,
+          waterMl: record.water_ml, mealId: record.meal_id, mealServings: record.meal_servings,
+          meal: record.meal, photoAvailable: record.photo_available,
+          mediaAvailable: record.media_available, mediaContentType: record.media_content_type,
+        });
+      }
     } catch (cause) {
       showToast(cause instanceof ApiError ? cause.message : 'Catatan belum tersimpan. Coba lagi.', 'error');
       return;
     }
-    const record = result.activity;
-    const createdAt = record.created_at
-      ? new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).format(new Date(record.created_at))
-      : shortDateLabel;
-    const item = {
-      id: record.id,
-      childId: record.child_id,
-      category: record.category,
-      title: record.title,
-      note: record.note,
-      session: record.session,
-      time: record.time,
-      shared: record.shared,
-      source: 'Pengasuh',
-      createdAt,
-      announcement: record.announcement,
-      durationMinutes: record.duration_minutes,
-      mood: record.mood,
-      participation: record.participation,
-      waterMl: record.water_ml,
-      mealId: record.meal_id,
-      mealServings: record.meal_servings,
-      meal: record.meal,
-      photoAvailable: record.photo_available,
-    };
-    setData((current) => ({ ...current, activities: [item, ...current.activities.filter((entry) => entry.id !== item.id)], __role: role, audit: addAudit({ ...current, __role: role }, record.shared ? 'Catatan kegiatan disimpan dan dibagikan' : 'Catatan kegiatan disimpan', record.child_id, `Aktivitas · ${record.category} · ${record.time} · format pesan tetap`) }));
+    const first = savedItems[0];
+    setData((current) => ({ ...current, activities: [...savedItems, ...current.activities.filter((entry) => !savedItems.some((item) => item.id === entry.id))], __role: role, audit: addAudit({ ...current, __role: role }, first.shared ? 'Catatan kegiatan disimpan dan dibagikan' : 'Catatan kegiatan disimpan', first.childId, `${savedItems.length} profil · Aktivitas · ${first.category} · ${first.time}`) }));
     setModal(null);
-    showToast(record.shared
-      ? 'Catatan tersimpan dan dibagikan ke keluarga. Kabar tidak memuat penilaian perkembangan otomatis.'
-      : 'Catatan tersimpan dan belum dibagikan ke keluarga.');
+    showToast(`${savedItems.length} catatan tersimpan${first.shared ? ' dan dibagikan ke keluarga' : ''}.`);
   };
 
   const saveMeal = async (payload) => {
@@ -2566,7 +2554,7 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
       case 'activities': return <ActivityPage role={role} data={data} children={visibleChildren} search={search} filter={filter} setFilter={setFilter} onOpenActivity={openActivity} onNewActivity={() => setModal({ type: 'activity' })} />;
       case 'meals': return <MealCatalogPage role={role} data={data} onAddMeal={() => setModal({ type: 'meal' })} />;
       case 'children': return <ChildrenPage role={role} data={data} selectedId={selectedId} setSelectedId={setSelectedId} search={search} onAddChild={() => setModal({ type: 'child' })} onEditChild={(child) => setModal({ type: 'child-edit', child })} onGo={go} onCheckIn={checkInAttendance} onCheckOut={checkOutAttendance} onMarkAttendance={markAttendanceStatus} />;
-      case 'development': return <DevelopmentPage role={role} data={data} children={visibleChildren} selectedId={activeChild?.id || 'a'} setSelectedId={setSelectedId} onGo={go} onNewObservation={() => setModal({ type: 'observation' })} onNewQuarterlyReport={() => setModal({ type: 'quarterly-report' })} onPublishQuarterlyReport={publishQuarterlyReport} insightLoadState={activeInsightLoadState} insightLoadError={activeInsightLoadError} onRefreshInsights={refreshInsights} />;
+      case 'development': return <DevelopmentPage role={role} data={data} children={visibleChildren} selectedId={activeChild?.id || 'a'} setSelectedId={setSelectedId} onGo={go} onNewObservation={() => setModal({ type: 'observation' })} onNewQuarterlyReport={() => setModal({ type: 'quarterly-report' })} onPublishQuarterlyReport={publishQuarterlyReport} insightLoadState={activeInsightLoadState} insightLoadError={activeInsightLoadError} onRefreshInsights={refreshInsights} onFeedback={saveStimulationFeedback} onStartActivity={(titleValue) => setModal({ type: 'activity', title: titleValue })} />;
       case 'sensors': return <SensorPage role={role} data={data} />;
       case 'recommendations': return <RecommendationsPage role={role} data={data} children={visibleChildren} selectedId={activeChild?.id || 'a'} setSelectedId={setSelectedId} onGo={go} onStartActivity={(titleValue) => setModal({ type: 'activity', title: titleValue })} onNewObservation={() => setModal({ type: 'observation' })} insightLoadState={insightLoadState} insightLoadError={insightLoadError} insightStatusChildId={insightStatusChildId} onRefreshInsights={refreshInsights} onFeedback={saveStimulationFeedback} />;
       case 'messages': return <MessagesPage role={role} data={data} children={visibleChildren} onAnnounce={() => setModal({ type: 'announcement' })} onReminder={() => setModal({ type: 'reminder' })} onSendDirectMessage={sendDirectMessage} onOpenNotification={openNotification} onMarkNotificationRead={markNotificationRead} onCompleteReminder={completeReminder} onRequestBrowserNotifications={requestBrowserNotifications} notificationPermission={notificationPermission} requestedChildId={messageTarget.childId} requestedContactId={messageTarget.contactId} onTargetConsumed={() => setMessageTarget({ childId: '', contactId: '' })} />;

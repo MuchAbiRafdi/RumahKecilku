@@ -51,6 +51,8 @@ class ActivityRepository:
                 "meal_snapshot_json": "TEXT",
                 "photo_blob": "BLOB",
                 "photo_content_type": "TEXT",
+                "media_blob": "BLOB",
+                "media_content_type": "TEXT",
             }
             for column, column_type in additive_columns.items():
                 if column not in columns:
@@ -72,6 +74,7 @@ class ActivityRepository:
         keys = set(row.keys())
         snapshot_json = row["meal_snapshot_json"] if "meal_snapshot_json" in keys else None
         photo_blob = row["photo_blob"] if "photo_blob" in keys else None
+        media_blob = row["media_blob"] if "media_blob" in keys else None
         return {
             "id": row["id"],
             "child_id": row["child_id"],
@@ -92,6 +95,8 @@ class ActivityRepository:
             "meal_servings": row["meal_servings"] if "meal_servings" in keys else 1,
             "meal": json.loads(snapshot_json) if snapshot_json else None,
             "photo_available": bool(photo_blob),
+            "media_available": bool(media_blob or photo_blob),
+            "media_content_type": row["media_content_type"] if "media_content_type" in keys and row["media_content_type"] else (row["photo_content_type"] if "photo_content_type" in keys else None),
         }
 
     def create(
@@ -103,6 +108,9 @@ class ActivityRepository:
     ) -> dict[str, Any]:
         created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
         photo_blob, photo_content_type = self._decode_photo(payload.get("photo_data_url"))
+        media_blob, media_content_type = self._decode_photo(payload.get("media_data_url"))
+        if media_blob:
+            photo_blob, photo_content_type = media_blob, media_content_type
         record = {
             "id": f"activity-{uuid4().hex[:12]}",
             "child_id": payload["child_id"],
@@ -133,7 +141,8 @@ class ActivityRepository:
                     share_to_parent, announcement_json, created_by, created_at,
                     duration_minutes, mood, participation, water_ml, meal_id, meal_servings,
                     meal_snapshot_json, photo_blob, photo_content_type
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    , media_blob, media_content_type
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     record["id"], record["child_id"], record["child_name"], record["category"],
@@ -144,7 +153,7 @@ class ActivityRepository:
                     record["participation"], record["water_ml"], record["meal_id"],
                     record["meal_servings"],
                     json.dumps(meal_snapshot, ensure_ascii=False) if meal_snapshot else None,
-                    photo_blob, photo_content_type,
+                    photo_blob, photo_content_type, media_blob, media_content_type,
                 ),
             )
         return record

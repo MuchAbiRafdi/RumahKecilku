@@ -66,8 +66,7 @@ class DaycareActivityCreate(BaseModel):
     child_id: str = Field(min_length=1, max_length=80)
     child_name: str = Field(min_length=1, max_length=80)
     category: Literal[
-        "Makan", "Minum", "Tidur", "Stimulasi", "Bermain", "Belajar",
-        "Kesejahteraan", "Kebersihan", "Kejadian",
+        "Makan & minum", "Tidur", "Stimulasi", "Bermain", "Belajar", "Kejadian",
     ]
     title: str = Field(min_length=1, max_length=120)
     note: str = Field(min_length=1, max_length=1000)
@@ -83,6 +82,8 @@ class DaycareActivityCreate(BaseModel):
     meal_items: list[MealSelection] = Field(default_factory=list, max_length=8)
     photo_data_url: str | None = Field(default=None, max_length=2_800_000)
     photo_consent_confirmed: bool = False
+    media_data_url: str | None = Field(default=None, max_length=8_500_000)
+    media_consent_confirmed: bool = False
 
     @field_validator("child_name", "title", "note")
     @classmethod
@@ -125,12 +126,31 @@ class DaycareActivityCreate(BaseModel):
             raise ValueError("Jenis berkas foto tidak sesuai dengan isinya.")
         return value
 
+    @field_validator("media_data_url")
+    @classmethod
+    def validate_media_data_url(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        try:
+            header, encoded = value.split(",", 1)
+            match = re.fullmatch(r"data:(image/(?:jpeg|png|webp)|video/(?:mp4|webm|quicktime));base64", header)
+            if not match:
+                raise ValueError("Video harus berupa MP4, WebM, atau MOV; foto tetap mendukung JPEG, PNG, atau WebP.")
+            media = base64.b64decode(encoded, validate=True)
+        except (ValueError, binascii.Error) as exc:
+            raise ValueError("Berkas media tidak dapat dibaca.") from exc
+        if not media or len(media) > 6 * 1024 * 1024:
+            raise ValueError("Ukuran media maksimal 6 MB.")
+        return value
+
     @model_validator(mode="after")
     def confirm_photo_privacy(self) -> "DaycareActivityCreate":
         if self.photo_data_url and not self.photo_consent_confirmed:
             raise ValueError("Konfirmasi privasi dan persetujuan diperlukan sebelum menyimpan foto.")
-        if (self.meal_id or self.meal_items) and self.category != "Makan":
-            raise ValueError("Menu makanan hanya dapat dilampirkan pada catatan kategori Makan.")
+        if (self.meal_id or self.meal_items) and self.category != "Makan & minum":
+            raise ValueError("Menu makanan hanya dapat dilampirkan pada catatan Makan & minum.")
+        if self.media_data_url and not self.media_consent_confirmed:
+            raise ValueError("Konfirmasi privasi media sebelum menyimpan foto atau video.")
         if self.meal_id and self.meal_items:
             raise ValueError("Gunakan pilihan menu majemuk atau menu tunggal, bukan keduanya.")
         if len({item.meal_id for item in self.meal_items}) != len(self.meal_items):

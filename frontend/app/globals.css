@@ -157,6 +157,13 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .stat-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .stats-grid { display: flex; flex-direction: row; align-items: stretch; gap: 14px; width: 100%; margin: 0 0 14px; }
 .stats-grid > .stat-card { flex: 1 1 0; width: 0; }
+
+.activity-target-panel { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 16px; background: #fbfaf6; }
+.activity-target-panel strong { margin-right: 4px; color: var(--ink); }
+.activity-target-panel .quick-choice { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border-radius: 10px; background: #fff; }
+.activity-target-panel .field { flex-basis: 100%; max-width: 360px; margin: 0; }
+.activity-target-panel > small { flex-basis: 100%; color: var(--muted); }
+.photo-upload-preview video { display: block; width: min(100%, 420px); max-height: 260px; border-radius: 14px; background: #18252a; }
 .stat-card { min-width: 0; min-height: 132px; display: flex; flex-direction: column; padding: 14px 15px 11px; text-align: left; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 18px; }
 button.stat-card { cursor: pointer; }
 button.stat-card:hover { border-color: #d2b9ad; background: #fffdfa; }
