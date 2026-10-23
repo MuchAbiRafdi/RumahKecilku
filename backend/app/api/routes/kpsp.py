@@ -40,7 +40,22 @@ def list_child_assessments(child_id: str, request: Request, user: dict = Depends
     if user["role"] == "parent":
         if child_id not in user.get("child_ids", []):
             raise HTTPException(status_code=403, detail="Profil anak ini tidak terhubung ke akun keluarga.")
-        records = repository.list_published_for_child(child_id)
+        records = repository.list_published_for_child(child_id, include_answers=True)
+        for record in records:
+            try:
+                form = get_form(record["screening_age_months"])
+            except KpspFormNotFound:
+                form = {"items": []}
+            answers = record.get("answers") or {}
+            record["questions"] = [
+                {
+                    "number": item["number"],
+                    "question": item["question"],
+                    "domains": item.get("domains") or [],
+                    "answer": answers.get(str(item["number"]), answers.get(item["number"])),
+                }
+                for item in form["items"]
+            ]
     elif user["role"] == "caregiver":
         # Pengasuh hanya menerima ringkasan setelah dokter meninjau dan menerbitkan.
         records = repository.list_published_for_child(child_id)

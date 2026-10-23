@@ -736,6 +736,15 @@ button.feed-row:hover { background: #fcfaf7; }
 .report-kpsp-facts strong { color:#43383a; font-size:10px; }
 .report-doctor-note { margin-top:10px; padding:10px 11px; border:1px solid #e8dfd8; border-radius:10px; background:#fffdfa; }
 .report-doctor-note p { margin:5px 0 0; color:#665d5b; font-size:10px; line-height:1.55; }
+.report-kpsp-questionnaire { margin-top:13px; border-top:1px solid #e8dfd8; padding-top:11px; }
+.report-kpsp-questionnaire summary { cursor:pointer; color:#513d55; font-size:10px; font-weight:800; }
+.report-kpsp-question-list { display:flex; flex-direction:column; gap:7px; margin-top:10px; }
+.report-kpsp-question { display:grid; grid-template-columns:28px minmax(0,1fr) auto; align-items:start; gap:9px; padding:10px; border:1px solid #eee7e0; border-radius:10px; background:#fffdfa; }
+.report-kpsp-question-number { display:grid; place-items:center; width:27px; height:27px; border-radius:8px; background:#f3e9e3; color:#9b563d; font-size:9px; font-weight:800; }
+.report-kpsp-question p { margin:0; color:#43383a; font-size:10px; line-height:1.5; }
+.report-kpsp-question small { display:block; margin-top:4px; color:#887b72; font-size:8px; }
+.report-kpsp-missing { margin:10px 0 0; color:#9b563d; font-size:9px; }
+@media (max-width:700px) { .report-kpsp-question { grid-template-columns:28px minmax(0,1fr); } .report-kpsp-question > .pill { grid-column:2; justify-self:start; } }
 @media (max-width:700px) { .report-kpsp-facts { grid-template-columns:1fr; } .report-published-heading { align-items:flex-start; flex-direction:column; } }
 .parent-summary-top { display: flex; align-items: center; gap: 9px; }
 .parent-summary-top small { margin-left: auto; color: #827874; font-size: 8px; }

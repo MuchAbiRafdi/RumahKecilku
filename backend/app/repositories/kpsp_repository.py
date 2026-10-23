@@ -192,7 +192,7 @@ class KpspRepository:
             ).fetchall()
         return [self._serialize(row) for row in rows]
 
-    def list_published_for_child(self, child_id: str) -> list[dict[str, Any]]:
+    def list_published_for_child(self, child_id: str, include_answers: bool = False) -> list[dict[str, Any]]:
         with self._connect() as connection:
             rows = connection.execute(
                 """
@@ -202,7 +202,7 @@ class KpspRepository:
                 """,
                 (child_id,),
             ).fetchall()
-        return [self._serialize(row, include_answers=False) for row in rows]
+        return [self._serialize(row, include_answers=include_answers) for row in rows]
 
     def save_review(self, assessment_id: str, reviewer_id: str, decision: str, note: str) -> dict[str, Any] | None:
         reviewed_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
