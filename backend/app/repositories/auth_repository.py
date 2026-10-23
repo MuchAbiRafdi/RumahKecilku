@@ -246,7 +246,11 @@ class AuthRepository:
                                 created_at,
                             ),
                         )
-                    elif current["role"] != account["role"] or not verify_password(DEMO_PASSWORD, current["password_hash"]):
+                    elif (
+                        current["name"] != account["name"]
+                        or current["role"] != account["role"]
+                        or not verify_password(DEMO_PASSWORD, current["password_hash"])
+                    ):
                         # Reserved demo identities are rotated only in explicitly enabled preview mode.
                         connection.execute(
                             "UPDATE auth_users SET name = ?, role = ?, password_hash = ? WHERE email = ? COLLATE NOCASE",
@@ -322,9 +326,7 @@ class AuthRepository:
                                verification_method = 'synthetic_demo_seed',
                                institution_verified_at = COALESCE(auth_user_children.institution_verified_at, excluded.institution_verified_at),
                                parent_confirmed_at = COALESCE(auth_user_children.parent_confirmed_at, excluded.parent_confirmed_at),
-                               revoked_at = NULL, revoked_by = NULL
-                           WHERE auth_user_children.status = 'pending'
-                             AND auth_user_children.institution_verified_at IS NULL""",
+                               revoked_at = NULL, revoked_by = NULL""",
                         (demo_parent["id"], "a", created_at, created_at, created_at),
                     )
 
