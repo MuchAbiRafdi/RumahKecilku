@@ -1336,6 +1336,7 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
   const [participation, setParticipation] = useState('');
   const [note, setNote] = useState('');
   const [mediaDataUrl, setMediaDataUrl] = useState('');
+  const [mediaPreviewUrl, setMediaPreviewUrl] = useState('');
   const [mediaName, setMediaName] = useState('');
   const [mediaType, setMediaType] = useState('');
   const [mediaConsentConfirmed, setMediaConsentConfirmed] = useState(false);
@@ -1374,6 +1375,7 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
     if (names.length) setTitle(names.join(' + '));
   };
   useEffect(() => { if (!canShare) setShared(false); }, [canShare]);
+  useEffect(() => () => { if (mediaPreviewUrl) URL.revokeObjectURL(mediaPreviewUrl); }, [mediaPreviewUrl]);
 
   const applyQuickActivity = (nextCategory: string, defaultTitle: string) => {
     setCategory(nextCategory);
@@ -1384,12 +1386,14 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
   const handleMedia = (file) => {
     setError('');
     setMediaDataUrl('');
+    setMediaPreviewUrl('');
     setMediaName('');
     setMediaType('');
     setMediaConsentConfirmed(false);
     if (!file) return;
     if (!['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm', 'video/quicktime'].includes(file.type)) { setError('Pilih foto JPEG/PNG/WebP atau video MP4/WebM/MOV.'); return; }
     if (file.size > 300 * 1024 * 1024) { setError('Ukuran foto atau video maksimal 300 MB.'); return; }
+    setMediaPreviewUrl(URL.createObjectURL(file));
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === 'string') { setMediaDataUrl(reader.result); setMediaName(file.name); setMediaType(file.type); }
@@ -1434,7 +1438,7 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
         <div className="field field-full participation-field"><span>Partisipasi (opsional)</span><div className="quick-choice-row" role="group" aria-label="Partisipasi dalam kegiatan">{[{ value: 'Mandiri', label: 'Mandiri' }, { value: 'Dengan dukungan', label: 'Dengan dukungan' }, { value: 'Mengamati', label: 'Mengamati' }, { value: '', label: 'Belum dicatat' }].map((item) => <button type="button" key={item.label} className={participation === item.value && (item.value || !participation) ? 'quick-choice quick-choice-active' : 'quick-choice'} aria-pressed={participation === item.value && Boolean(item.value || !participation)} onClick={() => setParticipation(item.value)}>{item.label}</button>)}</div></div>
       </div>
       <label className="field"><span>Catatan faktual (wajib)</span><textarea rows={3} value={note} onChange={(event) => setNote(event.target.value)} placeholder="Tulis apa yang disajikan/dilakukan dan respons yang benar-benar terlihat; hindari label atau kesimpulan klinis." /></label>
-      <section className="photo-upload-panel"><label className="field"><span>Foto atau video kegiatan (opsional, maks. 300 MB)</span><input type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" onChange={(event) => handleMedia(event.target.files?.[0])} /></label><p>Media mengikuti hak akses catatan dan hanya dibagikan jika Anda memilih berbagi. Pada versi uji, gunakan media dummy/ilustrasi.</p>{mediaDataUrl && <div className="photo-upload-preview">{mediaType.startsWith('video/') ? <video src={mediaDataUrl} controls aria-label="Pratinjau video kegiatan" /> : <img src={mediaDataUrl} alt="Pratinjau foto kegiatan" />}<span>{mediaName}</span><button type="button" className="text-link" onClick={() => { setMediaDataUrl(''); setMediaName(''); setMediaType(''); setMediaConsentConfirmed(false); }}>Hapus media</button></div>}{mediaDataUrl && <label className="photo-consent"><input type="checkbox" checked={mediaConsentConfirmed} onChange={(event) => setMediaConsentConfirmed(event.target.checked)} /><span>Saya memahami bahwa media adalah data sensitif dan hanya memakai gambar/video dummy pada versi uji.</span></label>}</section>
+      <section className="photo-upload-panel"><label className="field"><span>Foto atau video kegiatan (opsional, maks. 300 MB)</span><input type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" onChange={(event) => handleMedia(event.target.files?.[0])} /></label><p>Media mengikuti hak akses catatan dan hanya dibagikan jika Anda memilih berbagi. Pada versi uji, gunakan media dummy/ilustrasi.</p>{mediaDataUrl && <div className="photo-upload-preview">{mediaType.startsWith('video/') ? <video src={mediaPreviewUrl || mediaDataUrl} controls preload="metadata" aria-label="Pratinjau video kegiatan" onLoadedMetadata={(event) => { if (!Number.isFinite(event.currentTarget.duration) || event.currentTarget.duration <= 0) setError('Video tidak dapat diputar browser. Ubah video WhatsApp ke MP4 H.264 atau WebM sebelum mengunggah.'); }} onError={() => setError('Video tidak dapat diputar browser. Ubah video WhatsApp ke MP4 H.264 atau WebM sebelum mengunggah.')} /> : <img src={mediaPreviewUrl || mediaDataUrl} alt="Pratinjau foto kegiatan" />}<span>{mediaName}</span><button type="button" className="text-link" onClick={() => { setMediaDataUrl(''); setMediaPreviewUrl(''); setMediaName(''); setMediaType(''); setMediaConsentConfirmed(false); }}>Hapus media</button></div>}{mediaDataUrl && <label className="photo-consent"><input type="checkbox" checked={mediaConsentConfirmed} onChange={(event) => setMediaConsentConfirmed(event.target.checked)} /><span>Saya memahami bahwa media adalah data sensitif dan hanya memakai gambar/video dummy pada versi uji.</span></label>}</section>
       <label className={`share-checkbox ${!canShare ? 'share-checkbox-disabled' : ''}`}><input type="checkbox" checked={shared} disabled={!canShare} onChange={(event) => setShared(event.target.checked)} /><span className="share-checkbox-copy"><strong>Bagikan catatan ini ke keluarga</strong><small>{canShare ? (logAllChildren ? `Catatan semua anak tetap dibuat. Yang menerima hanya akun keluarga tertaut${shareableChildNames ? `: ${shareableChildNames}` : ''}.` : `Catatan ${shareChild?.name || 'anak terpilih'} dibagikan ke keluarganya.`) : 'Belum ada akun keluarga yang terhubung ke profil ini.'}</small></span></label>
       {error && <div className="form-error" role="alert">{error}</div>}
       <div className="modal-actions"><Button variant="outline" onClick={onClose} disabled={busy}>Batal</Button><Button type="submit" icon="check" disabled={busy}>{busy ? 'Menyimpan catatan…' : 'Simpan catatan kegiatan'}</Button></div>
