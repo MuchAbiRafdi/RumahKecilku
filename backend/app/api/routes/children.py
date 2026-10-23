@@ -16,7 +16,10 @@ def list_child_links(
 ) -> dict:
     # The server derives this list from active organization membership; the browser
     # never supplies or expands the staff member's child scope.
-    return {"child_ids": user.get("child_ids", [])}
+    return {
+        "child_ids": user.get("child_ids", []),
+        "family_child_ids": request.app.state.auth_repository.get_children_with_linked_parent_ids(),
+    }
 
 
 @router.get("")

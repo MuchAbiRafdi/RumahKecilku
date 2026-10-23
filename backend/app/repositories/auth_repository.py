@@ -841,6 +841,30 @@ class AuthRepository:
             ).fetchone()
         return row is not None
 
+    def get_children_with_linked_parent_ids(self) -> list[str]:
+        with self._connect() as connection:
+            rows = connection.execute(
+                """SELECT DISTINCT profile.id
+                   FROM child_profiles AS profile
+                   JOIN daycare_organizations AS organization
+                     ON organization.id = profile.organization_id AND organization.status = 'active'
+                   WHERE profile.status = 'active'
+                     AND EXISTS (
+                       SELECT 1
+                       FROM auth_user_children AS links
+                       JOIN auth_users AS users
+                         ON users.id = links.user_id AND users.role = 'parent'
+                       JOIN organization_memberships AS membership
+                         ON membership.user_id = users.id
+                        AND membership.organization_id = profile.organization_id
+                        AND membership.role = 'parent'
+                        AND membership.status = 'active'
+                       WHERE links.child_id = profile.id AND links.status = 'verified'
+                     )
+                   ORDER BY profile.id"""
+            ).fetchall()
+        return [row["id"] for row in rows]
+
     def get_parent_user_ids(self, child_id: str) -> list[str]:
         with self._connect() as connection:
             rows = connection.execute(

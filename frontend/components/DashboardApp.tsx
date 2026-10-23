@@ -1958,7 +1958,7 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
           });
           const childrenChanged = JSON.stringify(nextChildren.map((child) => [child.id, child.name, child.room, child.ageMonths, child.attendance, child.checkIn, child.checkOut, child.pickupPersonName, child.status]))
             !== JSON.stringify(current.children.map((child) => [child.id, child.name, child.room, child.ageMonths, child.attendance, child.checkIn, child.checkOut, child.pickupPersonName, child.status]));
-          const nextLinkedChildIds = linkPayload?.child_ids ?? (current.linkedChildIds || []);
+          const nextLinkedChildIds = linkPayload?.family_child_ids ?? linkPayload?.child_ids ?? (current.linkedChildIds || []);
           const linkedChildrenChanged = JSON.stringify(nextLinkedChildIds) !== JSON.stringify(current.linkedChildIds || []);
           const nextAssessments = role === 'admin' ? [] : (assessmentReadSucceeded ? mappedAssessments : current.assessments);
           const nextQueue = role === 'admin' ? [] : (assessmentReadSucceeded ? remoteQueue : current.queue);
