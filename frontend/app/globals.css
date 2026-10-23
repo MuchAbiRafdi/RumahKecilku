@@ -728,6 +728,15 @@ button.feed-row:hover { background: #fcfaf7; }
 .parent-no-summary { min-height: 190px; display: flex; align-items: center; }
 .parent-no-summary .empty-state { max-width: 610px; }
 .parent-doctor-summary { padding: 19px; background: linear-gradient(128deg,#fff 0%,#fbf7f3 70%,#f7f0ea 100%); }
+.report-published-kpsp { margin-top: 14px; }
+.report-published-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.report-kpsp-facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:12px 0; }
+.report-kpsp-facts span { display:flex; flex-direction:column; gap:3px; padding:9px 10px; border:1px solid #e9e1da; border-radius:10px; background:#fffdfa; }
+.report-kpsp-facts small, .report-doctor-note > small { color:#887b72; font-size:8px; font-weight:800; letter-spacing:.08em; }
+.report-kpsp-facts strong { color:#43383a; font-size:10px; }
+.report-doctor-note { margin-top:10px; padding:10px 11px; border:1px solid #e8dfd8; border-radius:10px; background:#fffdfa; }
+.report-doctor-note p { margin:5px 0 0; color:#665d5b; font-size:10px; line-height:1.55; }
+@media (max-width:700px) { .report-kpsp-facts { grid-template-columns:1fr; } .report-published-heading { align-items:flex-start; flex-direction:column; } }
 .parent-summary-top { display: flex; align-items: center; gap: 9px; }
 .parent-summary-top small { margin-left: auto; color: #827874; font-size: 8px; }
 .parent-doctor-summary h2 { margin: 12px 0 6px; font-family: Georgia, serif; font-size: 24px; font-weight: 400; letter-spacing: -.035em; }
