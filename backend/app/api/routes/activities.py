@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from app.ai.messacare import create_activity_announcement
 from app.api.dependencies import require_roles
 from app.models.schemas import DaycareActivityCreate, MessaCareAnnouncementRequest
+from app.services.media_service import MediaProcessingError
 
 
 router = APIRouter(prefix="/activities", tags=["Aktivitas"])
@@ -123,12 +124,15 @@ def create_activity(
             "items": item_snapshots,
         }
 
-    activity = _repository(request).create(
-        payload.model_dump(),
-        announcement,
-        user["id"],
-        meal_snapshot=meal_snapshot,
-    )
+    try:
+        activity = _repository(request).create(
+            payload.model_dump(),
+            announcement,
+            user["id"],
+            meal_snapshot=meal_snapshot,
+        )
+    except MediaProcessingError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     auth_repository = request.app.state.auth_repository
     notification_repository = request.app.state.notification_repository
     sender = {"id": user["id"], "name": user["name"], "role": user["role"]}

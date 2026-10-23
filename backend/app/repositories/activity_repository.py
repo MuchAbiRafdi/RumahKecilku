@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
+from app.services.media_service import normalize_video
+
 
 class ActivityRepository:
     def __init__(self, database_path: str | Path) -> None:
@@ -138,6 +140,8 @@ class ActivityRepository:
         created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
         photo_blob, photo_content_type = self._decode_photo(payload.get("photo_data_url"))
         media_blob, media_content_type = self._decode_photo(payload.get("media_data_url"))
+        if media_blob and media_content_type and media_content_type.startswith("video/"):
+            media_blob, media_content_type = normalize_video(media_blob, media_content_type)
         if media_blob:
             photo_blob, photo_content_type = media_blob, media_content_type
         record = {

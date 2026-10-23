@@ -134,9 +134,9 @@ class DaycareActivityCreate(BaseModel):
             return None
         try:
             header, encoded = value.split(",", 1)
-            match = re.fullmatch(r"data:(image/(?:jpeg|png|webp)|video/(?:mp4|webm|quicktime));base64", header)
+            match = re.fullmatch(r"data:(image/(?:jpeg|png|webp)|video/[a-z0-9.+-]+);base64", header, re.IGNORECASE)
             if not match:
-                raise ValueError("Video harus berupa MP4, WebM, atau MOV; foto tetap mendukung JPEG, PNG, atau WebP.")
+                raise ValueError("Format media tidak dikenali. Pilih foto atau berkas video yang valid.")
             media = base64.b64decode(encoded, validate=True)
         except (ValueError, binascii.Error) as exc:
             raise ValueError("Berkas media tidak dapat dibaca.") from exc
