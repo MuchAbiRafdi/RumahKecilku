@@ -82,7 +82,8 @@ class DaycareActivityCreate(BaseModel):
     meal_items: list[MealSelection] = Field(default_factory=list, max_length=8)
     photo_data_url: str | None = Field(default=None, max_length=2_800_000)
     photo_consent_confirmed: bool = False
-    media_data_url: str | None = Field(default=None, max_length=8_500_000)
+    # 300 MB binary media becomes roughly 400 MB as base64 data URL.
+    media_data_url: str | None = Field(default=None, max_length=420_000_000)
     media_consent_confirmed: bool = False
 
     @field_validator("child_name", "title", "note")
@@ -139,8 +140,8 @@ class DaycareActivityCreate(BaseModel):
             media = base64.b64decode(encoded, validate=True)
         except (ValueError, binascii.Error) as exc:
             raise ValueError("Berkas media tidak dapat dibaca.") from exc
-        if not media or len(media) > 6 * 1024 * 1024:
-            raise ValueError("Ukuran media maksimal 6 MB.")
+        if not media or len(media) > 300 * 1024 * 1024:
+            raise ValueError("Ukuran foto atau video maksimal 300 MB.")
         return value
 
     @model_validator(mode="after")
