@@ -1375,7 +1375,6 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
     if (names.length) setTitle(names.join(' + '));
   };
   useEffect(() => { if (!canShare) setShared(false); }, [canShare]);
-  useEffect(() => () => { if (mediaPreviewUrl) URL.revokeObjectURL(mediaPreviewUrl); }, [mediaPreviewUrl]);
 
   const applyQuickActivity = (nextCategory: string, defaultTitle: string) => {
     setCategory(nextCategory);
