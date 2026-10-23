@@ -1342,7 +1342,8 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
   const [shared, setShared] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const canShare = !logAllChildren && linkedChildIds.includes(childId);
+  const canShare = linkedChildIds.map(String).includes(String(childId));
+  const shareChild = children.find((child) => String(child.id) === String(childId));
   const selectedMeals = mealSelections.map((selection) => ({
     ...selection,
     meal: meals.find((meal) => meal.id === selection.mealId),
@@ -1432,7 +1433,7 @@ function ModalActivityForm({ children, linkedChildIds = [], initialChildId, init
       </div>
       <label className="field"><span>Catatan faktual (wajib)</span><textarea rows={3} value={note} onChange={(event) => setNote(event.target.value)} placeholder="Tulis apa yang disajikan/dilakukan dan respons yang benar-benar terlihat; hindari label atau kesimpulan klinis." /></label>
       <section className="photo-upload-panel"><label className="field"><span>Foto atau video kegiatan (opsional, maks. 300 MB)</span><input type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" onChange={(event) => handleMedia(event.target.files?.[0])} /></label><p>Media mengikuti hak akses catatan dan hanya dibagikan jika Anda memilih berbagi. Pada versi uji, gunakan media dummy/ilustrasi.</p>{mediaDataUrl && <div className="photo-upload-preview">{mediaType.startsWith('video/') ? <video src={mediaDataUrl} controls aria-label="Pratinjau video kegiatan" /> : <img src={mediaDataUrl} alt="Pratinjau foto kegiatan" />}<span>{mediaName}</span><button type="button" className="text-link" onClick={() => { setMediaDataUrl(''); setMediaName(''); setMediaType(''); setMediaConsentConfirmed(false); }}>Hapus media</button></div>}{mediaDataUrl && <label className="photo-consent"><input type="checkbox" checked={mediaConsentConfirmed} onChange={(event) => setMediaConsentConfirmed(event.target.checked)} /><span>Saya memahami bahwa media adalah data sensitif dan hanya memakai gambar/video dummy pada versi uji.</span></label>}</section>
-      <label className={`share-checkbox ${!canShare ? 'share-checkbox-disabled' : ''}`}><input type="checkbox" checked={shared} disabled={!canShare} onChange={(event) => setShared(event.target.checked)} /><span className="share-checkbox-copy"><strong>Bagikan catatan ini ke keluarga</strong><small>{canShare ? 'Foto dan kabar mengikuti status berbagi; hasil perkembangan tidak ikut terkirim.' : logAllChildren ? 'Pilih satu anak untuk mengaktifkan berbagi ke keluarga.' : 'Belum ada akun keluarga yang terhubung ke profil ini.'}</small></span></label>
+      <label className={`share-checkbox ${!canShare ? 'share-checkbox-disabled' : ''}`}><input type="checkbox" checked={shared} disabled={!canShare} onChange={(event) => { if (event.target.checked && logAllChildren) { setLogAllChildren(false); setSpecialCase(false); } setShared(event.target.checked); }} /><span className="share-checkbox-copy"><strong>Bagikan catatan ini ke keluarga</strong><small>{canShare ? (logAllChildren ? `Saat dipilih, catatan hanya dibuat untuk ${shareChild?.name || 'anak terpilih'} dan dibagikan ke keluarganya.` : 'Foto dan kabar mengikuti status berbagi; hasil perkembangan tidak ikut terkirim.') : 'Belum ada akun keluarga yang terhubung ke profil ini.'}</small></span></label>
       {error && <div className="form-error" role="alert">{error}</div>}
       <div className="modal-actions"><Button variant="outline" onClick={onClose} disabled={busy}>Batal</Button><Button type="submit" icon="check" disabled={busy}>{busy ? 'Menyimpan catatan…' : 'Simpan catatan kegiatan'}</Button></div>
     </form>
