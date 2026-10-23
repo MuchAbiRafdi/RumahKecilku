@@ -359,7 +359,8 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
   const localSummary = todayActivities.length ? `Tersimpan ${todayActivities.length} catatan (${todayCategories || 'kategori lain'}); ${todayActivities.filter((item) => !item.shared).length} belum dibagikan.` : 'Belum ada catatan hari ini; ringkasan menunggu data yang tersimpan.';
   const specialCases = data.activities.filter((item) => item.createdAt === shortDateLabel && (item.category === 'Kejadian' || item.mood === 'Membutuhkan dukungan'));
   const pendingChildren = data.children.filter((child) => child.attendance === 'Hadir' && !todayActivities.some((item) => item.childId === child.id));
-  const weeklyActivities = data.activities.filter((item) => item.createdAt === shortDateLabel || item.createdAt === new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).format(new Date(Date.now() - 24 * 60 * 60 * 1000)));
+  const weeklyActivities = data.activities.filter((item) => item.createdAtIso ? Date.now() - Date.parse(item.createdAtIso) <= 7 * 24 * 60 * 60 * 1000 : item.createdAt === shortDateLabel);
+  const repeatedAttention = Object.entries(specialCases.reduce((counts, item) => ({ ...counts, [item.childId]: (counts[item.childId] || 0) + 1 }), {} as Record<string, number>)).filter(([, count]) => Number(count) > 1);
   const dailySummary = todayActivities.length ? `Hari ini tercatat ${todayActivities.length} kegiatan untuk ${new Set(todayActivities.map((item) => item.childId)).size} anak.` : 'Belum ada cukup catatan untuk membuat ringkasan.';
   const hasSensorReading = Number.isFinite(data.sensor?.temperature) && Number.isFinite(data.sensor?.humidity);
   return (
@@ -387,7 +388,7 @@ function CaregiverHome({ data, onGo, onNewActivity, onOpenActivity, onOpenReview
       </div>
       <section className="caregiver-action-grid">
         <section className="panel caregiver-priority-panel"><CardTitle eyebrow="Perlu perhatian" title="Kasus dan catatan tertunda" action={<Pill tone={specialCases.length ? 'coral' : 'sage'}>{specialCases.length} kasus</Pill>} />
-          {specialCases.length ? <div className="caregiver-priority-list">{specialCases.slice(0, 4).map((item) => <button className="caregiver-priority-row" key={item.id} onClick={() => onOpenActivity(item)}><span className="priority-alert-icon">!</span><span><strong>{item.childName || data.children.find((child) => child.id === item.childId)?.name || 'Anak'}</strong><small>{item.title} · {item.note}</small></span><Icon name="chevron" size={16} /></button>)}</div> : <EmptyState icon="check" title="Tidak ada kasus khusus" detail="Kasus sakit, mood kurang baik, atau kejadian akan muncul di sini." />}
+          {specialCases.length ? <div className="caregiver-priority-list">{specialCases.slice(0, 4).map((item) => <button className="caregiver-priority-row" key={item.id} onClick={() => onOpenActivity(item)}><span className="priority-alert-icon">!</span><span><strong>{item.childName || data.children.find((child) => child.id === item.childId)?.name || 'Anak'}</strong><small>{item.title} · {item.note}</small></span><Icon name="chevron" size={16} /></button>)}{repeatedAttention.length > 0 && <small className="caregiver-pattern-note"><Icon name="spark" size={14} />Pola perhatian berulang terdeteksi pada {repeatedAttention.length} profil hari ini. Periksa catatan dan konsultasikan ke dokter bila diperlukan.</small>}</div> : <EmptyState icon="check" title="Tidak ada kasus khusus" detail="Kasus sakit, mood kurang baik, atau kejadian akan muncul di sini." />}
           {pendingChildren.length > 0 && <button className="caregiver-pending-note" onClick={onNewActivity}><Icon name="info" size={15} />{pendingChildren.length} anak hadir belum punya catatan hari ini · Catat sekarang</button>}
         </section>
         <section className="panel caregiver-ai-summary"><CardTitle eyebrow="Ringkasan catatan" title="Ringkasan hari ini" action={<Pill tone="plum">Bantuan lokal</Pill>} /><p className="caregiver-ai-lead">{dailySummary}</p><div className="caregiver-ai-metrics"><div><strong>{weeklyActivities.length}</strong><small>catatan 2 hari</small></div><div><strong>{specialCases.length}</strong><small>perlu diperiksa</small></div><div><strong>{todayActivities.filter((item) => item.shared).length}</strong><small>sudah dibagikan</small></div></div><small className="caregiver-ai-note">Ringkasan hanya mengelompokkan catatan tersimpan; bukan penilaian perkembangan.</small></section>
@@ -440,6 +441,7 @@ function DoctorHome({ data, onGo, onOpenReview }: LooseProps) {
   const reviewed = authorizedQueue.filter((item) => item.reviewed).length;
   const draftAssessments = data.assessments.filter((item) => item.status === 'draft').length;
   const submittedAssessments = data.assessments.filter((item) => item.status === 'submitted').length;
+  const attentionCases = data.activities.filter((item) => item.category === 'Kejadian' || item.mood === 'Membutuhkan dukungan');
   return (
     <>
       <PageTitle eyebrow={dateLabel} title="Periksa hasil sebelum berbagi" description="Lihat pemeriksaan KPSP yang dikirim, baca catatan yang tersedia, lalu tulis ringkasan untuk keluarga." action={<Button icon="clipboard" onClick={() => onGo('kpsp')}>Buka pemeriksaan KPSP</Button>} />
@@ -447,10 +449,11 @@ function DoctorHome({ data, onGo, onOpenReview }: LooseProps) {
         <div className="doctor-hero-copy"><Pill tone="plum" dot>Ruang dokter</Pill><h2>Mulai dari hasil yang dikirim untuk ditinjau.</h2><p>Baca jawaban dan catatan sebelum menulis ringkasan. Hasil tidak dibagikan kepada keluarga sebelum dokter meninjaunya.</p><div className="hero-actions"><Button onClick={() => onGo('queue')}>Buka daftar tinjauan</Button><Button variant="outline" onClick={() => onGo('development')}>Lihat catatan perkembangan</Button></div></div>
         <div className="doctor-hero-stat"><span className="doctor-ring"><span>{pending.length}</span><small>menunggu</small></span><div><strong>{authorizedQueue.length} hasil masuk</strong><small>Hasil berubah saat pemeriksaan dikirim.</small></div></div>
       </section>
-      <div className="stat-grid three">
+      <div className="stat-grid four">
         <StatCard label="Perlu ditinjau" value={pending.length} note="hasil menunggu dokter" icon="review" tone="plum" trend="antrean" onClick={() => onGo('queue')} />
         <StatCard label="KPSP tercatat" value={data.assessments.length} note={`${draftAssessments} jawaban sementara · ${submittedAssessments} terkirim`} icon="clipboard" tone="coral" trend="form" onClick={() => onGo('kpsp')} />
         <StatCard label="Sudah ditinjau" value={reviewed} note="riwayat pemeriksaan" icon="check" tone="sage" trend="riwayat" onClick={() => onGo('queue')} />
+        <StatCard label="Kasus khusus" value={attentionCases.length} note="catatan yang perlu dibaca" icon="info" tone="gold" trend="perhatian" onClick={() => onGo('activities')} />
       </div>
       <div className="dashboard-grid dashboard-grid-main">
         <section className="panel panel-large">
@@ -469,6 +472,7 @@ function DoctorHome({ data, onGo, onOpenReview }: LooseProps) {
 
 function ParentHome({ data, child, onGo, onOpenMessage, onToggleConsent }: LooseProps) {
   const childActivities = data.activities.filter((item) => item.childId === child.id && item.shared).slice(0, 3);
+  const weeklyShared = data.activities.filter((item) => item.childId === child.id && item.shared && (!item.createdAtIso || Date.now() - Date.parse(item.createdAtIso) <= 7 * 24 * 60 * 60 * 1000));
   const newest = childActivities[0];
   const allowed = data.consents[child.id] === true;
   const childMessages = data.messages.filter((message) => message.role !== 'parent' && (message.childId === child.id || message.childId === 'all')).slice(0, 2);
@@ -491,6 +495,7 @@ function ParentHome({ data, child, onGo, onOpenMessage, onToggleConsent }: Loose
           <Button variant="outline" size="small" onClick={() => onGo('messages')}>Buka ruang pesan</Button>
         </section>
       </div>
+      <section className="panel parent-weekly-summary"><CardTitle eyebrow="Ringkasan mingguan" title="Kabar singkat untuk keluarga" /><p>Minggu ini ada <strong>{weeklyShared.length}</strong> catatan kegiatan yang dibagikan oleh tim daycare.</p><div className="button-row"><Button size="small" variant="outline" onClick={() => onGo('reports')}>Buka laporan lengkap</Button></div><small>Ringkasan berdasarkan catatan yang dibagikan, bukan penilaian medis.</small></section>
       <section className="parent-lower-grid">
         <div className="panel growth-gate-card">
           <div className="growth-gate-icon"><Icon name="growth" size={20} /></div><div><Pill tone={allowed ? 'sage' : 'gold'}>{allowed ? 'Saran ditampilkan' : 'Saran disembunyikan'}</Pill><h3>Ringkasan perkembangan</h3><p>Hasil hanya muncul setelah dokter meninjau dan membagikannya. Pengaturan di bawah hanya mengubah tampilan saran pada akun ini.</p><button className="text-link" onClick={() => onGo('development')}>Lihat ringkasan yang dibagikan <Icon name="arrow" size={15} /></button></div>
@@ -1804,6 +1809,7 @@ export default function App({ user, onLogout }: AppProps): React.JSX.Element {
           shared: record.shared,
           source: 'Pengasuh',
           createdAt: new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Jakarta' }).format(new Date(record.created_at)),
+          createdAtIso: record.created_at,
           announcement: record.announcement,
           durationMinutes: record.duration_minutes,
           mood: record.mood,
