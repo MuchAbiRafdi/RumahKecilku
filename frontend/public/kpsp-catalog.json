@@ -1,0 +1,1648 @@
+{
+  "source": {
+    "file": "pdf-kpsp-depkes_compress.pdf",
+    "label": "PDF KPSP yang dilampirkan pengguna",
+    "page_count": 23,
+    "source_version": "transkripsi demo 0.1",
+    "notes": "Wording mengikuti butir PDF; pemenggalan, artefak OCR/encoding dan label kolom yang menimpa teks dirapikan. Ilustrasi butir diekstrak langsung dari halaman PDF."
+  },
+  "schedule_months": [
+    3,
+    6,
+    9,
+    12,
+    15,
+    18,
+    21,
+    24,
+    30,
+    36,
+    42,
+    48,
+    54,
+    60,
+    66,
+    72
+  ],
+  "forms": [
+    {
+      "age_months": 3,
+      "title": "KPSP pada bayi 3 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        2,
+        3
+      ],
+      "source_pages_printed": [
+        22,
+        23
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Pada waktu bayi telentang, apakah masing-masing lengan dan tungkai bergerak dengan mudah? Jawab TIDAK bila salah satu atau kedua tungkai atau lengan bayi bergerak tak terarah/tak terkendali.",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Pada waktu bayi telentang apakah ia melihat dan menatap wajah anda?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Apakah bayi dapat mengeluarkan suara-suara lain (ngoceh), disamping menangis?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Pada waktu bayi telentang, apakah ia dapat mengikuti gerakan anda dengan menggerakkan kepalanya dari kanan/kiri ke tengah?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-02-image-01.png",
+            "alt": "Ilustrasi bayi mengikuti gerakan ke arah tengah.",
+            "source_page_pdf": "02"
+          }
+        },
+        {
+          "number": 5,
+          "question": "Pada waktu bayi telentang, apakah ia dapat mengikuti gerakan anda dengan menggerakkan kepalanya dari satu sisi hampir sampai pada sisi yang lain?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-03-image-01.png",
+            "alt": "Ilustrasi bayi mengikuti gerakan kepala.",
+            "source_page_pdf": "03"
+          }
+        },
+        {
+          "number": 6,
+          "question": "Pada waktu anda mengajak bayi berbicara dan tersenyum, apakah ia tersenyum kembali kepada anda?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Pada waktu bayi telungkup di alas yang datar, apakah ia dapat mengangkat kepalanya seperti pada gambar ini?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-03-image-02.png",
+            "alt": "Gambar posisi kepala bayi saat tengkurap.",
+            "source_page_pdf": "03"
+          }
+        },
+        {
+          "number": 8,
+          "question": "Pada waktu bayi telungkup di alas yang datar, apakah ia dapat mengangkat kepalanya sehingga membentuk sudut 45° seperti pada gambar?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-03-image-03.png",
+            "alt": "Gambar kepala bayi terangkat sekitar 45 derajat.",
+            "source_page_pdf": "03"
+          }
+        },
+        {
+          "number": 9,
+          "question": "Pada waktu bayi telungkup di alas yang datar, apakah ia dapat mengangkat kepalanya dengan tegak seperti pada gambar?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-03-image-04.png",
+            "alt": "Gambar kepala bayi terangkat tegak.",
+            "source_page_pdf": "03"
+          }
+        },
+        {
+          "number": 10,
+          "question": "Apakah bayi suka tertawa keras walau tidak digelitik atau diraba-raba?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 6,
+      "title": "Kuesioner Praskrining untuk Bayi 6 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        4,
+        5
+      ],
+      "source_pages_printed": [
+        24,
+        25
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Pada waktu bayi telentang, apakah ia dapat mengikuti gerakan anda dengan menggerakkan kepala sepenuhnya dari satu sisi ke sisi yang lain?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-04-image-01.png",
+            "alt": "Ilustrasi bayi mengikuti gerakan dari sisi ke sisi.",
+            "source_page_pdf": "04"
+          }
+        },
+        {
+          "number": 2,
+          "question": "Dapatkah bayi mempertahankan posisi kepala dalam keadaan tegak dan stabil? Jawab TIDAK bila kepala bayi cenderung jatuh ke kanan/kiri atau ke dadanya",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Sentuhkan pensil di punggung tangan atau ujung jari bayi. (jangan meletakkan di atas telapak tangan bayi). Apakah bayi dapat menggenggam pensil itu selama beberapa detik?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-04-image-02.png",
+            "alt": "Ilustrasi pemeriksaan genggaman pensil.",
+            "source_page_pdf": "04"
+          }
+        },
+        {
+          "number": 4,
+          "question": "Ketika bayi telungkup di alas datar, apakah ia dapat mengangkat dada dengan kedua lengannya sebagai penyangga seperti pada gambar?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-04-image-03.png",
+            "alt": "Gambar bayi menyangga dada dengan kedua lengan.",
+            "source_page_pdf": "04"
+          }
+        },
+        {
+          "number": 5,
+          "question": "Pernahkah bayi mengeluarkan suara gembira bernada tinggi atau memekik tetapi bukan menangis?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Pernahkah bayi berbalik paling sedikit dua kali, dari telentang ke telungkup atau sebaliknya?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Pernahkah anda melihat bayi tersenyum ketika melihat mainan yang lucu, gambar atau binatang peliharaan pada saat ia bermain sendiri?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Dapatkah bayi mengarahkan matanya pada benda kecil sebesar kacang, kismis atau uang logam? Jawab TIDAK jika ia tidak dapat mengarahkan matanya.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Dapatkah bayi meraih mainan yang diletakkan agak jauh namun masih berada dalam jangkauan tangannya?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Pada posisi bayi telentang, pegang kedua tangannya lalu tarik perlahan-lahan ke posisi duduk. Dapatkah bayi mempertahankan lehernya secara kaku seperti gambar di sebelah kiri? Jawab TIDAK bila kepala bayi jatuh kembali seperti gambar sebelah kanan.",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-05-image-01.png",
+            "alt": "Ilustrasi posisi kepala bayi saat ditarik ke posisi duduk.",
+            "source_page_pdf": "05"
+          }
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 9,
+      "title": "Kuesioner Praskrining untuk Bayi 9 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        5,
+        6
+      ],
+      "source_pages_printed": [
+        25,
+        26
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Pada posisi bayi telentang, pegang kedua tangannya lalu tarik perlahan-lahan ke posisi duduk. Dapatkah bayi mempertahankan lehernya secara kaku seperti gambar di sebelah kiri? Jawab TIDAK bila kepala bayi jatuh kembali seperti gambar sebelah kanan.",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-05-image-01.png",
+            "alt": "Ilustrasi posisi kepala bayi saat ditarik ke posisi duduk.",
+            "source_page_pdf": "05"
+          }
+        },
+        {
+          "number": 2,
+          "question": "Pernahkah anda melihat bayi memindahkan mainan atau kue kering dari satu tangan ke tangan yang lain? Benda-benda panjang seperti sendok atau kerincingan bertangkai tidak ikut dinilai.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Tarik perhatian bayi dengan memperlihatkan selendang, sapu tangan atau serbet, kemudian jatuhkan ke lantai. Apakah bayi mencoba mencarinya? Misalnya mencari di bawah meja atau di belakang kursi?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Apakah bayi dapat memungut dua benda seperti mainan/kue kering, dan masing-masing tangan memegang satu benda pada saat yang sama? Jawab TIDAK bila bayi tidak pernah melakukan perbuatan ini.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Jika anda mengangkat bayi melalui ketiaknya ke posisi berdiri, dapatkah ia menyangga sebagian berat badan dengan kedua kakinya? Jawab YA bila ia mencoba berdiri dan sebagian berat badan tertumpu pada kedua kakinya.",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Dapatkah bayi memungut dengan tangannya benda-benda kecil seperti kismis, kacang-kacangan, potongan biskuit, dengan gerakan miring atau menggerapai seperti gambar?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-06-image-01.jpg",
+            "alt": "Ilustrasi bayi mengambil benda kecil.",
+            "source_page_pdf": "06"
+          }
+        },
+        {
+          "number": 7,
+          "question": "Tanpa disangga oleh bantal, kursi atau dinding, dapatkah bayi duduk sendiri selama 60 detik?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-06-image-02.png",
+            "alt": "Ilustrasi posisi bayi duduk sendiri.",
+            "source_page_pdf": "06"
+          }
+        },
+        {
+          "number": 8,
+          "question": "Apakah bayi dapat makan kue kering sendiri?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Pada waktu bayi bermain sendiri dan anda diam-diam datang berdiri di belakangnya, apakah ia menengok ke belakang seperti mendengar kedatangan anda? Suara keras tidak ikut dihitung. Jawab YA hanya jika anda melihat reaksinya terhadap suara yang perlahan atau bisikan.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Letakkan suatu mainan yang dinginkannya di luar jangkauan bayi, apakah ia mencoba mendapatkannya dengan mengulurkan lengan atau badannya?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 12,
+      "title": "Kuesioner Praskrining untuk Bayi 12 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        7
+      ],
+      "source_pages_printed": [
+        27
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Jika anda bersembunyi di belakang sesuatu/di pojok, kemudian muncul dan menghilang secara berulang-ulang di hadapan anak, apakah ia mencari anda atau mengharapkan anda muncul kembali?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Letakkan pensil di telapak tangan bayi. Coba ambil pensil tersebut dengan perlahan-lahan. Sulitkah anda mendapatkan pensil itu kembali?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Apakah anak dapat berdiri selama 30 detik atau lebih dengan berpegangan pada kursi/meja?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Apakah anak dapat mengatakan 2 suku kata yang sama, misalnya: “ma-ma”, “da-da” atau “pa-pa”. Jawab YA bila ia mengeluarkan salah satu suara tadi.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Apakah anak dapat mengangkat badannya ke posisi berdiri tanpa bantuan anda?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Apakah anak dapat membedakan anda dengan orang yang belum ia kenal? Ia akan menunjukkan sikap malu-malu atau ragu-ragu pada saat permulaan bertemu dengan orang yang belum dikenalnya.",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Apakah anak dapat mengambil benda kecil seperti kacang atau kismis, dengan meremas di antara ibu jari dan jarinya seperti pada gambar?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-07-image-01.png",
+            "alt": "Ilustrasi gerakan jari untuk mengambil benda kecil.",
+            "source_page_pdf": "07"
+          }
+        },
+        {
+          "number": 8,
+          "question": "Apakah anak dapat duduk sendiri tanpa bantuan?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Sebut 2-3 kata yang dapat ditiru oleh anak (tidak perlu kata-kata yang lengkap). Apakah ia mencoba meniru menyebutkan kata-kata tadi?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Tanpa bantuan, apakah anak dapat mempertemukan dua kubus kecil yang ia pegang? Kerincingan bertangkai dan tutup panel tidak ikut dinilai.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 15,
+      "title": "Kuesioner Praskrining untuk 15 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        8
+      ],
+      "source_pages_printed": [
+        28
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Tanpa bantuan, apakah anak dapat mempertemukan dua kubus kecil yang ia pegang? Kerincingan bertangkai dan tutup panci tidak ikut dinilai.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Apakah anak dapat jalan sendiri atau jalan dengan berpegangan?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Tanpa bantuan, apakah anak dapat bertepuk tangan atau melambai-lambai? Jawab TIDAK bila ia membutuhkan bantuan.",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Apakah anak dapat mengatakan \"papa\" ketika ia memanggil/melihat ayahnya, atau mengatakan \"mama\" jika memanggil/melihat ibunya? Jawab YA bila anak mengatakan salah satu diantaranya.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Dapatkah anak berdiri sendiri tanpa berpegangan selama kira-kira 5 detik?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Dapatkah anak berdiri sendiri tanpa berpegangan selama 30 detik atau lebih?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Tanpa berpegangan atau menyentuh lantai, apakah anak dapat membungkuk untuk memungut mainan di lantai dan kemudian berdiri kembali?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Apakah anak dapat menunjukkan apa yang diinginkannya tanpa menangis atau merengek? Jawab YA bila ia menunjuk, menarik atau mengeluarkan suara yang menyenangkan",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Apakah anak dapat berjalan di sepanjang ruangan tanpa jatuh atau terhuyung-huyung?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Apakah anak dapat mengambil benda kecil seperti kacang, kismis, atau potongan biskuit dengan menggunakan ibu jari seperti pada gambar ini?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-08-image-01.png",
+            "alt": "Ilustrasi tangan mengambil benda kecil.",
+            "source_page_pdf": "08"
+          }
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 18,
+      "title": "Kuesioner Praskrining untuk Anak 18 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        9
+      ],
+      "source_pages_printed": [
+        29
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Tanpa bantuan, apakah anak dapat bertepuk tangan atau melambai-lambai? Jawab TIDAK bila ia membutuhkan bantuan.",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Apakah anak dapat mengatakan \"papa\" ketika ia memanggil/melihat ayahnya, atau mengatakan \"mama\" jika memanggil/melihat ibunya?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Apakah anak dapat berdiri sendiri tanpa berpegangan selama kira-kira 5 detik?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Apakah anak dapat berdiri sendiri tanpa berpegangan selama 30 detik atau lebih?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Tanpa berpegangan atau menyentuh lantai, apakah anak dapat membungkuk untuk memungut mainan di lantai dan kemudian berdiri kembali?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Apakah anak dapat menunjukkan apa yang diinginkannya tanpa menangis atau merengek? Jawab YA bila ia menunjuk, menarik atau mengeluarkan suara yang menyenangkan.",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Apakah anak dapat berjalan di sepanjang ruangan tanpa jatuh atau terhuyung-huyung?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Apakah anak dapat mengambil benda kecil seperti kacang, kismis, atau potongan biskuit dengan menggunakan ibu jari dan jari telunjuk seperti pada gambar?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-09-image-01.png",
+            "alt": "Ilustrasi gerakan ibu jari dan telunjuk saat mengambil benda kecil.",
+            "source_page_pdf": "09"
+          }
+        },
+        {
+          "number": 9,
+          "question": "Jika anda menggelindingkan bola ke anak, apakah ia menggelindingkan/melemparkan kembali bola pada anda?",
+          "domains": [
+            "Gerak halus",
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Apakah anak dapat memegang sendiri cangkir/gelas dan minum dari tempat tersebut tanpa tumpah?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 21,
+      "title": "Kuesioner Praskrining untuk Anak 21 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        10
+      ],
+      "source_pages_printed": [
+        30
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Tanpa berpegangan atau menyentuh lantai, apakah anak dapat membungkuk untuk memungut mainan di lantai dan kemudian berdiri kembali?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Apakah anak dapat menunjukkan apa yang diinginkannya tanpa menangis atau merengek? Jawab YA bila ia menunjuk, menarik atau mengeluarkan suara yang menyenangkan.",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Apakah anak dapat berjalan di sepanjang ruangan tanpa jatuh atau terhuyung-huyung?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Apakah anak dapat mengambil benda kecil seperti kacang, kismis, atau potongan biskuit dengan menggunakan ibu jari dan jari telunjuk seperti pada gambar?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-10-image-01.png",
+            "alt": "Ilustrasi ibu jari dan telunjuk mengambil benda kecil.",
+            "source_page_pdf": "10"
+          }
+        },
+        {
+          "number": 5,
+          "question": "Jika anda menggelindingkan bola ke anak, apakah ia menggelindingkan/melemparkan kembali bola pada anda?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Apakah anak dapat memegang sendiri cangkir/gelas dan minum dari tempat tersebut tanpa tumpah?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Jika anda sedang melakukan pekerjaan rumah tangga, apakah anak meniru apa yang anda lakukan?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Apakah anak dapat meletakkan satu kubus di atas kubus yang lain tanpa menjatuhkan kubus itu? Kubus yang digunakan ukuran 2,5–5,0 cm.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Apakah anak dapat mengucapkan paling sedikit 3 kata yang mempunyai arti selain “papa” dan “mama”?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Apakah anak dapat berjalan mundur 5 langkah atau lebih tanpa kehilangan keseimbangan? (Anda mungkin dapat melihatnya ketika anak menarik mainannya)",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 24,
+      "title": "Kuesioner Praskrining untuk Anak 24 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        11
+      ],
+      "source_pages_printed": [
+        31
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Jika anda sedang melakukan pekerjaan rumah tangga, apakah anak meniru apa yang anda lakukan?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Apakah anak dapat meletakkan 1 buah kubus di atas kubus yang lain tanpa menjatuhkan kubus itu? Kubus yang digunakan ukuran 2.5 — 5 cm.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Apakah anak dapat mengucapkan paling sedikit 3 kata yang mempunyai arti selain \"papa\" dan \"mama\"?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Apakah anak dapat berjalan mundur 5 langkah atau lebih tanpa kehilangan keseimbangan? (Anda mungkin dapat melihatnya ketika anak menarik mainannya).",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Dapatkah anak melepas pakaiannya seperti: baju, rok, atau celananya? (topi dan kaos kaki tidak ikut dinilai).",
+          "domains": [
+            "Gerak halus",
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Dapatkah anak berjalan naik tangga sendiri? Jawab YA jika ia naik tangga dengan posisi tegak atau berpegangan pada dinding atau pegangan tangga. Jawab TIDAK jika ia naik tangga dengan merangkak atau anda tidak membolehkan anak naik tangga atau anak harus berpegangan pada seseorang.",
+          "domains": [],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Tanpa bimbingan, petunjuk atau bantuan anda, dapatkah anak menunjuk dengan benar paling sedikit satu bagian badannya (rambut, mata, hidung, mulut, atau bagian badan yang lain)?",
+          "domains": [],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Dapatkah anak makan nasi sendiri tanpa banyak tumpah?",
+          "domains": [],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Dapatkah anak membantu memungut mainannya sendiri atau membantu mengangkat piring jika diminta?",
+          "domains": [],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Dapatkah anak menendang bola kecil (sebesar bola tenis) ke depan tanpa berpegangan pada apa pun? Mendorong tidak ikut dinilai.",
+          "domains": [],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 30,
+      "title": "Kuesioner Praskrining untuk Anak 30 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        12
+      ],
+      "source_pages_printed": [
+        32
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Dapatkah anak melepas pakaiannya seperti: baju, rok, atau celananya? (Topi dan kaos kaki tidak ikut dinilai.)",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Dapatkah anak berjalan naik tangga sendiri? Jawab YA jika ia naik tangga dengan posisi tegak atau berpegangan pada dinding atau pegangan tangga. Jawab TIDAK jika ia naik tangga dengan merangkak atau anda tidak membolehkan anak naik tangga atau anak harus berpegangan pada seseorang.",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Tanpa bimbingan, petunjuk atau bantuan anda, dapatkah anak menunjuk dengan benar paling sedikit satu bagian badannya (rambut, mata, hidung, mulut, atau bagian badan yang lain)?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Dapatkah anak makan nasi sendiri tanpa banyak tumpah?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Dapatkah anak membantu memungut mainannya sendiri atau membantu mengangkat piring jika diminta?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Dapatkah anak menendang bola kecil (sebesar bola tenis) ke depan tanpa berpegangan pada apa pun? Mendorong tidak ikut dinilai.",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Bila diberi pensil, apakah anak mencoret-coret kertas tanpa bantuan/petunjuk?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Dapatkah anak meletakkan 4 buah kubus satu persatu di atas kubus yang lain tanpa menjatuhkan kubus itu? Kubus yang digunakan ukuran 2.5 – 5 cm.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Dapatkah anak menggunakan 2 kata pada saat berbicara seperti “minta minum”, “mau tidur”? “Terima kasih” dan “Dadag” tidak ikut dinilai.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Apakah anak dapat menyebut 2 diantara gambar-gambar ini tanpa bantuan?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-12-image-01.png",
+            "alt": "Gambar hewan untuk disebutkan anak.",
+            "source_page_pdf": "12"
+          }
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 36,
+      "title": "Kuesioner Praskrining untuk Anak 36 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        13
+      ],
+      "source_pages_printed": [
+        33
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Bila diberi pensil, apakah anak mencoret-coret kertas tanpa bantuan/petunjuk?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Dapatkah anak meletakkan 4 buah kubus satu persatu di atas kubus yang lain tanpa menjatuhkan kubus itu? Kubus yang digunakan ukuran 2.5 – 5 cm.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Dapatkah anak menggunakan 2 kata pada saat berbicara seperti \"minta minum\"; \"mau tidur\"? \"Terimakasih\" dan \"Dadag\" tidak ikut dinilai.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Apakah anak dapat menyebut 2 diantara gambar-gambar ini tanpa bantuan?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-13-image-01.png",
+            "alt": "Gambar yang diminta untuk disebutkan anak.",
+            "source_page_pdf": "13"
+          }
+        },
+        {
+          "number": 5,
+          "question": "Dapatkah anak melempar bola lurus ke arah perut atau dada anda dari jarak 1,5 meter?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Ikuti perintah ini dengan seksama. Jangan memberi isyarat dengan telunjuk atau mata pada saat memberikan perintah berikut ini: \"Letakkan kertas ini di lantai\". \"Letakkan kertas ini di kursi\". \"Berikan kertas ini kepada ibu\". Dapatkah anak melaksanakan ketiga perintah tadi?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Buat garis lurus ke bawah sepanjang sekurang-kurangnya 2,5 cm. Suruh anak menggambar garis lain di samping garis tersebut.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-13-image-02.png",
+            "alt": "Contoh garis untuk ditiru anak.",
+            "source_page_pdf": "13"
+          }
+        },
+        {
+          "number": 8,
+          "question": "Letakkan selembar kertas seukuran buku di lantai. Apakah anak dapat melompati bagian lebar kertas dengan mengangkat kedua kakinya secara bersamaan tanpa didahului lari?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Dapatkah anak mengenakan sepatunya sendiri?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Dapatkah anak mengayuh sepeda roda tiga sejauh sedikitnya 3 meter?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 42,
+      "title": "Kuesioner Praskrining untuk Anak 42 bulan",
+      "item_count": 9,
+      "source_pages_pdf": [
+        14
+      ],
+      "source_pages_printed": [
+        34
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Dapatkah anak mengenakan sepatunya sendiri?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Dapatkah anak mengayuh sepeda roda tiga sejauh sedikitnya 3 meter?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Setelah makan, apakah anak mencuci dan mengeringkan tangannya dengan baik sehingga anda tidak perlu mengulanginya?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Suruh anak berdiri satu kaki tanpa berpegangan. Jika perlu tunjukkan caranya dan beri anak anda kesempatan melakukannya 3 kali. Dapatkah ia mempertahankan keseimbangan dalam waktu 2 detik atau lebih?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Letakkan selembar kertas seukuran buku ini di lantai. Apakah anak dapat melompati panjang kertas ini dengan mengangkat kedua kakinya secara bersamaan tanpa didahului lari?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Jangan membantu anak dan jangan menyebut lingkaran. Suruh anak menggambar seperti contoh ini di kertas kosong yang tersedia. Dapatkah anak menggambar lingkaran?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-14-image-01.png",
+            "alt": "Contoh gambar lingkaran dan coretan pembanding.",
+            "source_page_pdf": "14"
+          }
+        },
+        {
+          "number": 7,
+          "question": "Dapatkah anak meletakkan 8 buah kubus satu persatu di atas yang lain tanpa menjatuhkan kubus tersebut? Kubus yang digunakan ukuran 2.5 – 5 cm.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Apakah anak dapat bermain petak umpet, ular naga atau permainan lain dimana ia ikut bermain dan mengikuti aturan bermain?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Dapatkah anak mengenakan celana panjang, kemeja, baju atau kaos kaki tanpa dibantu? (Tidak termasuk kemandirian memasang kancing, gesper atau ikat pinggang)",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 48,
+      "title": "Kuesioner Praskrining untuk Anak 48 bulan",
+      "item_count": 9,
+      "source_pages_pdf": [
+        15
+      ],
+      "source_pages_printed": [
+        35
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Dapatkah anak mengayuh sepeda roda tiga sejauh sedikitnya 3 meter?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Setelah makan, apakah anak mencuci dan mengeringkan tangannya dengan baik sehingga anda tidak perlu mengulanginya?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Suruh anak berdiri satu kaki tanpa berpegangan. Jika perlu tunjukkan caranya dan beri anak anda kesempatan melakukannya 3 kali. Dapatkah ia mempertahankan keseimbangan dalam waktu 2 detik atau lebih?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Letakkan selembar kertas seukuran buku ini di lantai. Apakah anak dapat melompati panjang kertas ini dengan mengangkat kedua kakinya secara bersamaan tanpa didahului lari?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Jangan membantu anak dan jangan menyebut lingkaran. Suruh anak menggambar seperti contoh ini di kertas kosong yang tersedia. Dapatkah anak menggambar lingkaran?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-15-image-01.png",
+            "alt": "Contoh gambar lingkaran dan coretan pembanding.",
+            "source_page_pdf": "15"
+          }
+        },
+        {
+          "number": 6,
+          "question": "Dapatkah anak meletakkan 8 buah kubus satu persatu di atas yang lain tanpa menjatuhkan kubus tersebut? Kubus yang digunakan ukuran 2.5 – 5 cm.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Apakah anak dapat bermain petak umpet, ular naga atau permainan lain dimana ia ikut bermain dan mengikuti aturan bermain?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Dapatkah anak mengenakan celana panjang, kemeja, baju atau kaos kaki tanpa dibantu? (Tidak termasuk memasang kancing, gesper atau ikat pinggang)",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Dapatkah anak menyebutkan nama lengkapnya tanpa dibantu? Jawab TIDAK jika ia hanya menyebutkan sebagian namanya atau ucapannya sulit dimengerti.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 54,
+      "title": "Kuesioner Praskrining untuk Anak 54 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        16,
+        17
+      ],
+      "source_pages_printed": [
+        36,
+        37
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Dapatkah anak meletakkan 8 buah kubus satu persatu di atas yang lain tanpa menjatuhkan kubus tersebut? Kubus yang digunakan ukuran 2,5–5 cm.",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 2,
+          "question": "Apakah anak dapat bermain petak umpet, ular naga atau permainan lain dimana ia ikut bermain dan mengikuti aturan bermain?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Dapatkah anak mengenakan celana panjang, kemeja, baju atau kaos kaki tanpa dibantu? (Tidak termasuk memasang kancing, gesper atau ikat pinggang)",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Dapatkah anak menyebutkan nama lengkapnya tanpa dibantu? Jawab TIDAK jika ia hanya menyebut sebagian namanya atau ucapannya sulit dimengerti.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Isi titik-titik di bawah ini dengan jawaban anak. Jangan membantu kecuali mengulangi pertanyaan. “Apa yang kamu lakukan jika kamu kedinginan?” “Apa yang kamu lakukan jika kamu lapar?” “Apa yang kamu lakukan jika kamu lelah?”",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null,
+          "examiner_note": "Panduan pemeriksa — jawab YA bila ketiga jawaban benar dan bukan gerakan/isyarat. Kedinginan: “menggigil”, “pakai mantel” atau “masuk ke dalam rumah”. Lapar: “makan”. Lelah: “mengantuk”, “tidur”, “berbaring/tidur-tiduran”, “istirahat” atau “diam sejenak”."
+        },
+        {
+          "number": 6,
+          "question": "Apakah anak dapat mengancingkan bajunya atau pakaian boneka?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Suruh anak berdiri satu kaki tanpa berpegangan. Jika perlu tunjukkan caranya dan beri anak anda kesempatan melakukannya 3 kali. Dapatkah ia mempertahankan keseimbangan dalam waktu 6 detik atau lebih?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Jangan mengoreksi/membantu anak. Jangan menyebut kata \"lebih panjang\". Perlihatkan gambar kedua garis ini pada anak. Tanyakan: \"Mana garis yang lebih panjang?\" Minta anak menunjuk garis yang lebih panjang. Setelah anak menunjuk, putar lembar ini dan ulangi pertanyaan tersebut. Setelah anak menunjuk, putar lembar ini lagi dan ulangi pertanyaan tadi. Apakah anak dapat menunjuk garis yang lebih panjang sebanyak 3 kali dengan benar?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-17-image-02.png",
+            "alt": "Dua garis untuk dibandingkan anak.",
+            "source_page_pdf": "17"
+          }
+        },
+        {
+          "number": 9,
+          "question": "Jangan membantu anak dan jangan memberitahu nama gambar ini, suruh anak menggambar seperti contoh ini di kertas kosong yang tersedia. Berikan 3 kali kesempatan. Apakah anak dapat menggambar seperti contoh ini?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-17-image-01.png",
+            "alt": "Contoh bentuk garis untuk ditiru anak.",
+            "source_page_pdf": "17"
+          }
+        },
+        {
+          "number": 10,
+          "question": "Ikuti perintah ini dengan seksama. Jangan memberi isyarat dengan telunjuk atau mata pada saat memberikan perintah berikut ini: “Letakkan kertas ini di atas lantai”. “Letakkan kertas ini di bawah kursi”. “Letakkan kertas ini di depan kamu”. “Letakkan kertas ini di belakang kamu”. Jawab YA hanya jika anak mengerti arti “di atas”, “di bawah”, “di depan” dan “di belakang”.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 60,
+      "title": "Kuesioner Praskrining untuk Anak 60 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        18,
+        19
+      ],
+      "source_pages_printed": [
+        38,
+        39
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Isi titik-titik di bawah ini dengan jawaban anak. Jangan membantu kecuali mengulangi pertanyaan. “Apa yang kamu lakukan jika kamu kedinginan?” “Apa yang kamu lakukan jika kamu lapar?” “Apa yang kamu lakukan jika kamu lelah?”",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null,
+          "examiner_note": "Panduan pemeriksa — jawab YA bila ketiga jawaban benar dan bukan gerakan/isyarat. Kedinginan: “menggigil”, “pakai mantel” atau “masuk ke dalam rumah”. Lapar: “makan”. Lelah: “mengantuk”, “tidur”, “berbaring/tidur-tiduran”, “istirahat” atau “diam sejenak”."
+        },
+        {
+          "number": 2,
+          "question": "Apakah anak dapat mengancingkan bajunya atau pakaian boneka?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Suruh anak berdiri satu kaki tanpa berpegangan. Jika perlu tunjukkan caranya dan beri anak anda kesempatan melakukannya 3 kali. Dapatkah ia mempertahankan keseimbangan dalam waktu 6 detik atau lebih?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Jangan mengoreksi/membantu anak. Jangan menyebut kata \"lebih panjang\". Perlihatkan gambar kedua garis ini pada anak. Tanyakan: \"Mana garis yang lebih panjang?\" Minta anak menunjuk garis yang lebih panjang. Setelah anak menunjuk, putar lembar ini dan ulangi pertanyaan tersebut. Setelah anak menunjuk, putar lembar ini lagi dan ulangi pertanyaan tadi. Apakah anak dapat menunjuk garis yang lebih panjang sebanyak 3 kali dengan benar?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-18-image-01.png",
+            "alt": "Dua garis untuk dibandingkan anak.",
+            "source_page_pdf": "18"
+          }
+        },
+        {
+          "number": 5,
+          "question": "Jangan membantu anak dan jangan memberitahu nama gambar ini, suruh anak menggambar seperti contoh ini di kertas kosong yang tersedia. Berikan 3 kali kesempatan. Apakah anak dapat menggambar seperti contoh ini?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-19-image-01.png",
+            "alt": "Contoh bentuk garis untuk ditiru anak.",
+            "source_page_pdf": "19"
+          }
+        },
+        {
+          "number": 6,
+          "question": "Ikuti perintah ini dengan seksama. Jangan memberi isyarat dengan telunjuk atau mata pada saat memberikan perintah berikut ini: “Letakkan kertas ini di atas lantai”. “Letakkan kertas ini di bawah kursi”. “Letakkan kertas ini di depan kamu”. “Letakkan kertas ini di belakang kamu”. Jawab YA hanya jika anak mengerti arti “di atas”, “di bawah”, “di depan” dan “di belakang”.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Apakah anak bereaksi dengan tenang dan tidak rewel (tanpa menangis atau menggelayut pada anda) pada saat anda meninggalkannya?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Jangan menunjuk, membantu atau membetulkan, katakan pada anak: “Tunjukkan segi empat merah.” “Tunjukkan segi empat kuning.” “Tunjukkan segi empat biru.” “Tunjukkan segi empat hijau.” Dapatkah anak menunjuk keempat warna itu dengan benar?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-19-image-02.jpg",
+            "alt": "Empat bidang warna merah, kuning, biru, dan hijau.",
+            "source_page_pdf": "19"
+          }
+        },
+        {
+          "number": 9,
+          "question": "Suruh anak melompat dengan satu kaki beberapa kali tanpa berpegangan (lompatan dengan dua kaki tidak ikut dinilai). Apakah ia dapat melompat 2-3 kali dengan satu kaki?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 10,
+          "question": "Dapatkah anak sepenuhnya berpakaian sendiri tanpa bantuan?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 66,
+      "title": "Kuesioner Praskrining untuk Anak 66 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        20,
+        21
+      ],
+      "source_pages_printed": [
+        40,
+        41
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Jangan membantu anak dan jangan memberitahu nama gambar ini, suruh anak menggambar seperti contoh ini di kertas kosong yang tersedia. Berikan 3 kali kesempatan. Apakah anak dapat menggambar seperti contoh ini?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-20-image-01.png",
+            "alt": "Contoh gambar untuk ditiru anak.",
+            "source_page_pdf": "20"
+          }
+        },
+        {
+          "number": 2,
+          "question": "Ikuti perintah ini dengan seksama. Jangan memberi isyarat dengan telunjuk atau mata pada saat memberikan perintah berikut ini: “Letakkan kertas ini di atas lantai”. “Letakkan kertas ini di bawah kursi”. “Letakkan kertas ini di depan kamu”. “Letakkan kertas ini di belakang kamu”. Jawab YA hanya jika anak mengerti arti “di atas”, “di bawah”, “di depan” dan “di belakang”.",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Apakah anak bereaksi dengan tenang dan tidak rewel (tanpa menangis atau menggelayut pada anda) pada saat anda meninggalkannya?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Jangan menunjuk, membantu atau membetulkan, katakan pada anak: “Tunjukkan segi empat merah”. “Tunjukkan segi empat kuning”. “Tunjukkan segi empat biru”. “Tunjukkan segi empat hijau”. Dapatkah anak menunjuk keempat warna itu dengan benar?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-20-image-02.jpg",
+            "alt": "Empat bidang warna merah, kuning, biru, dan hijau.",
+            "source_page_pdf": "20"
+          }
+        },
+        {
+          "number": 5,
+          "question": "Suruh anak melompat dengan satu kaki beberapa kali tanpa berpegangan (lompatan dengan dua kaki tidak ikut dinilai). Apakah ia dapat melompat 2-3 kali dengan satu kaki?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Dapatkah anak sepenuhnya berpakaian sendiri tanpa bantuan?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 7,
+          "question": "Suruh anak menggambar di tempat kosong yang tersedia. Katakan padanya: “Buatlah gambar orang”. Jangan memberi perintah lebih dari itu. Jangan bertanya/mengingatkan anak bila ada bagian yang belum tergambar. Dalam memberi nilai, hitunglah berapa bagian tubuh yang tergambar. Untuk bagian tubuh yang berpasangan seperti mata, telinga, lengan dan kaki, setiap pasang dinilai satu bagian. Dapatkah anak menggambar sedikitnya 3 bagian tubuh?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Pada gambar orang yang dibuat pada nomor 7, dapatkah anak menggambar sedikitnya 6 bagian tubuh?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Tulis apa yang dikatakan anak pada kalimat-kalimat yang belum selesai ini. Jangan membantu kecuali mengulang pertanyaan: “Jika kuda besar maka tikus …” “Jika api panas maka es …” “Jika ibu seorang wanita maka ayah seorang …”",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null,
+          "examiner_note": "Panduan pemeriksa — jawaban benar: tikus kecil, es dingin, ayah seorang pria. Jangan membacakan jawaban ini kepada anak."
+        },
+        {
+          "number": 10,
+          "question": "Apakah anak dapat menangkap bola kecil sebesar bola tenis/bola kasti hanya dengan menggunakan kedua tangannya? (Bola besar tidak ikut dinilai)",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    },
+    {
+      "age_months": 72,
+      "title": "Kuesioner Praskrining untuk Anak 72 bulan",
+      "item_count": 10,
+      "source_pages_pdf": [
+        22,
+        23
+      ],
+      "source_pages_printed": [
+        42,
+        43
+      ],
+      "items": [
+        {
+          "number": 1,
+          "question": "Jangan menunjuk, membantu atau membetulkan, katakan pada anak: \"Tunjukkan segi empat merah\" \"Tunjukkan segi empat kuning\" \"Tunjukkan segi empat biru\" \"Tunjukkan segi empat hijau\" Dapatkah anak menunjuk keempat warna itu dengan benar?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-22-image-01.jpg",
+            "alt": "Empat bidang warna merah, kuning, biru, dan hijau.",
+            "source_page_pdf": "22"
+          }
+        },
+        {
+          "number": 2,
+          "question": "Suruh anak melompat dengan satu kaki beberapa kali tanpa berpegangan (lompatan dengan dua kaki tidak ikut dinilai). Apakah ia dapat melompat 2-3 kali dengan satu kaki?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 3,
+          "question": "Dapatkah anak sepenuhnya berpakaian sendiri tanpa bantuan?",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 4,
+          "question": "Suruh anak menggambar di tempat kosong yang tersedia. Katakan padanya: “Buatlah gambar orang”. Jangan memberi perintah lebih dari itu. Jangan bertanya/mengingatkan anak bila ada bagian yang belum tergambar. Dalam memberi nilai, hitunglah berapa bagian tubuh yang tergambar. Untuk bagian tubuh yang berpasangan seperti mata, telinga, lengan dan kaki, setiap pasang dinilai satu bagian. Dapatkah anak menggambar sedikitnya 3 bagian tubuh?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 5,
+          "question": "Pada gambar orang yang dibuat pada nomor 7, dapatkah anak menggambar sedikitnya 6 bagian tubuh?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 6,
+          "question": "Tulis apa yang dikatakan anak pada kalimat-kalimat yang belum selesai ini. Jangan membantu kecuali mengulang pertanyaan: “Jika kuda besar maka tikus …” “Jika api panas maka es …” “Jika ibu seorang wanita maka ayah seorang …”",
+          "domains": [
+            "Sosialisasi & kemandirian"
+          ],
+          "stimulus": null,
+          "examiner_note": "Panduan pemeriksa — jawaban benar: tikus kecil, es dingin, ayah seorang pria. Jangan membacakan jawaban ini kepada anak."
+        },
+        {
+          "number": 7,
+          "question": "Apakah anak dapat menangkap bola kecil sebesar bola tenis/bola kasti hanya dengan menggunakan kedua tangannya? (Bola besar tidak ikut dinilai).",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 8,
+          "question": "Suruh anak berdiri satu kaki tanpa berpegangan. Jika perlu tunjukkan caranya dan beri anak anda kesempatan melakukannya 3 kali. Dapatkah ia mempertahankan keseimbangan dalam waktu 11 detik atau lebih?",
+          "domains": [
+            "Gerak kasar"
+          ],
+          "stimulus": null
+        },
+        {
+          "number": 9,
+          "question": "Jangan membantu anak dan jangan memberitahu nama gambar ini. Suruh anak menggambar seperti contoh ini di kertas kosong yang tersedia. Berikan 3 kali kesempatan. Apakah anak dapat menggambar seperti contoh ini?",
+          "domains": [
+            "Gerak halus"
+          ],
+          "stimulus": {
+            "url": "/kpsp-assets/page-23-image-01.png",
+            "alt": "Contoh gambar untuk ditiru anak.",
+            "source_page_pdf": "23"
+          }
+        },
+        {
+          "number": 10,
+          "question": "Isi titik-titik di bawah ini dengan jawaban anak. Jangan membantu kecuali mengulangi pertanyaan sampai 3 kali bila anak menanyakannya. “Sendok dibuat dari apa?” “Sepatu dibuat dari apa?” “Pintu dibuat dari apa?” Apakah anak dapat menjawab ketiga pertanyaan di atas dengan benar?",
+          "domains": [
+            "Bicara & bahasa"
+          ],
+          "stimulus": null,
+          "examiner_note": "Panduan pemeriksa — jawaban yang diterima: sendok dari besi, baja, plastik, atau kayu; sepatu dari kulit, karet, kain, plastik, atau kayu; pintu dari kayu, besi, atau kaca."
+        }
+      ],
+      "source_version": "transkripsi demo 0.1"
+    }
+  ]
+}

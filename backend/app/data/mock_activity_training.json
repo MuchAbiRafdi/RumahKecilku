@@ -1,0 +1,979 @@
+{
+  "metadata": {
+    "dataset": "mock-activity-training-v1",
+    "purpose": "Demo classifier untuk memilih kategori ide aktivitas nonklinis dari aspek dan status observasi terstruktur.",
+    "synthetic": true,
+    "clinical_labels": false,
+    "child_records_used": false,
+    "model_use_limit": "Tidak memprediksi kemampuan, diagnosis, keterlambatan, atau hasil perkembangan. Tidak divalidasi secara klinis.",
+    "example_count": 96,
+    "model_features": [
+      "aspect",
+      "evidence_state",
+      "count_band"
+    ],
+    "context_family_is_model_input": false
+  },
+  "examples": [
+    {
+      "example_id": "mock-001",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "play",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_data; konteks play."
+    },
+    {
+      "example_id": "mock-002",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "shared_reading",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_data; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-003",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "daily_routine",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_data; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-004",
+      "aspect": "Motorik kasar",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; observed; konteks play."
+    },
+    {
+      "example_id": "mock-005",
+      "aspect": "Motorik kasar",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-006",
+      "aspect": "Motorik kasar",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-007",
+      "aspect": "Motorik kasar",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; observed; konteks play."
+    },
+    {
+      "example_id": "mock-008",
+      "aspect": "Motorik kasar",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-009",
+      "aspect": "Motorik kasar",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-010",
+      "aspect": "Motorik kasar",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-011",
+      "aspect": "Motorik kasar",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-012",
+      "aspect": "Motorik kasar",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-013",
+      "aspect": "Motorik kasar",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-014",
+      "aspect": "Motorik kasar",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-015",
+      "aspect": "Motorik kasar",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-016",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-017",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-018",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-019",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-020",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-021",
+      "aspect": "Motorik kasar",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-022",
+      "aspect": "Motorik kasar",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; mixed; konteks play."
+    },
+    {
+      "example_id": "mock-023",
+      "aspect": "Motorik kasar",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; mixed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-024",
+      "aspect": "Motorik kasar",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik kasar; mixed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-025",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "play",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_data; konteks play."
+    },
+    {
+      "example_id": "mock-026",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "shared_reading",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_data; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-027",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "daily_routine",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_data; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-028",
+      "aspect": "Motorik halus",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; observed; konteks play."
+    },
+    {
+      "example_id": "mock-029",
+      "aspect": "Motorik halus",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-030",
+      "aspect": "Motorik halus",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-031",
+      "aspect": "Motorik halus",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; observed; konteks play."
+    },
+    {
+      "example_id": "mock-032",
+      "aspect": "Motorik halus",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-033",
+      "aspect": "Motorik halus",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-034",
+      "aspect": "Motorik halus",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-035",
+      "aspect": "Motorik halus",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-036",
+      "aspect": "Motorik halus",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-037",
+      "aspect": "Motorik halus",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-038",
+      "aspect": "Motorik halus",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-039",
+      "aspect": "Motorik halus",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-040",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-041",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-042",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-043",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-044",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-045",
+      "aspect": "Motorik halus",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-046",
+      "aspect": "Motorik halus",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; mixed; konteks play."
+    },
+    {
+      "example_id": "mock-047",
+      "aspect": "Motorik halus",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; mixed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-048",
+      "aspect": "Motorik halus",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Motorik halus; mixed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-049",
+      "aspect": "Bahasa",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "play",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_data; konteks play."
+    },
+    {
+      "example_id": "mock-050",
+      "aspect": "Bahasa",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "shared_reading",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_data; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-051",
+      "aspect": "Bahasa",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "daily_routine",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_data; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-052",
+      "aspect": "Bahasa",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; observed; konteks play."
+    },
+    {
+      "example_id": "mock-053",
+      "aspect": "Bahasa",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-054",
+      "aspect": "Bahasa",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-055",
+      "aspect": "Bahasa",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; observed; konteks play."
+    },
+    {
+      "example_id": "mock-056",
+      "aspect": "Bahasa",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-057",
+      "aspect": "Bahasa",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-058",
+      "aspect": "Bahasa",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-059",
+      "aspect": "Bahasa",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-060",
+      "aspect": "Bahasa",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-061",
+      "aspect": "Bahasa",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-062",
+      "aspect": "Bahasa",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-063",
+      "aspect": "Bahasa",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-064",
+      "aspect": "Bahasa",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-065",
+      "aspect": "Bahasa",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-066",
+      "aspect": "Bahasa",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-067",
+      "aspect": "Bahasa",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-068",
+      "aspect": "Bahasa",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-069",
+      "aspect": "Bahasa",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-070",
+      "aspect": "Bahasa",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; mixed; konteks play."
+    },
+    {
+      "example_id": "mock-071",
+      "aspect": "Bahasa",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; mixed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-072",
+      "aspect": "Bahasa",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Bahasa; mixed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-073",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "play",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_data; konteks play."
+    },
+    {
+      "example_id": "mock-074",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "shared_reading",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_data; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-075",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_data",
+      "count_band": "none",
+      "context_family": "daily_routine",
+      "activity_idea_label": "general_idea",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_data; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-076",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; observed; konteks play."
+    },
+    {
+      "example_id": "mock-077",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-078",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-079",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; observed; konteks play."
+    },
+    {
+      "example_id": "mock-080",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-081",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "repeat_variation",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-082",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-083",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-084",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "not_observed",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-085",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; not_observed; konteks play."
+    },
+    {
+      "example_id": "mock-086",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; not_observed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-087",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "not_observed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "alternate_context",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; not_observed; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-088",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-089",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-090",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_opportunity",
+      "count_band": "single",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-091",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_opportunity; konteks play."
+    },
+    {
+      "example_id": "mock-092",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_opportunity; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-093",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "no_opportunity",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "create_opportunity",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; no_opportunity; konteks daily_routine."
+    },
+    {
+      "example_id": "mock-094",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "play",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; mixed; konteks play."
+    },
+    {
+      "example_id": "mock-095",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "shared_reading",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; mixed; konteks shared_reading."
+    },
+    {
+      "example_id": "mock-096",
+      "aspect": "Sosial-emosional",
+      "evidence_state": "mixed",
+      "count_band": "multiple",
+      "context_family": "daily_routine",
+      "activity_idea_label": "compare_contexts",
+      "synthetic": true,
+      "scenario": "Skenario sintetis untuk memilih ide aktivitas umum: Sosial-emosional; mixed; konteks daily_routine."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "rumah-kecilku-daycare-monorepo",
+  "private": true,
+  "workspaces": ["frontend"],
+  "scripts": {
+    "dev": "bash scripts/start-preview.sh",
+    "preview": "bash scripts/start-production-preview.sh",
+    "dev:stack": "concurrently --kill-others --names API,WEB --prefix-colors cyan,magenta \"npm run dev:api\" \"npm run dev:frontend\"",
+    "dev:api": "bash scripts/run-backend.sh",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "build": "npm run build --workspace frontend",
+    "typecheck": "npm run typecheck --workspace frontend",
+    "start": "npm run start --workspace frontend",
+    "test:api": "bash scripts/test-backend.sh",
+    "test:client": "npm run test:client --workspace frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

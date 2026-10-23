@@ -1,0 +1,12 @@
+node_modules/
+frontend/.next/
+frontend/out/
+backend/.venv/
+backend/__pycache__/
+backend/.pytest_cache/
+backend/data/*.sqlite3
+backend/data/*.db
+.env
+.env.*
+!.env.example
+.DS_Store
