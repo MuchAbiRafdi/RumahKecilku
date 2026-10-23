@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import base64
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request
 
 from app.ai.messacare import create_activity_announcement
 from app.api.dependencies import require_roles
@@ -50,13 +50,13 @@ def create_activity(
     if payload.child_id not in user.get("child_ids", []):
         raise HTTPException(status_code=403, detail="Akun ini tidak memiliki akses ke profil anak tersebut.")
 
+    # Bulk logging may include children without a family account. Keep the activity
+    # internal for those children, while sharing it for each child that has a
+    # verified parent link.
+    share_to_parent = payload.share_to_parent and request.app.state.auth_repository.has_linked_parent(payload.child_id)
+    payload = payload.model_copy(update={"share_to_parent": share_to_parent})
     announcement = None
     if payload.share_to_parent:
-        if not request.app.state.auth_repository.has_linked_parent(payload.child_id):
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Belum ada akun keluarga yang terhubung ke profil anak ini.",
-            )
         announcement = create_activity_announcement(
             MessaCareAnnouncementRequest(
                 child_name=payload.child_name,
